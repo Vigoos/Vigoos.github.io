@@ -11,8 +11,8 @@ useHead({
 <template>
   <main class="min-h-screen bg-slate-50 overflow-x-hidden">
     
-    <header class="relative w-full pt-48 pb-32 flex items-center justify-center overflow-hidden bg-slate-950">
-      <ContactNetworkCanvas />
+    <header class="relative w-full pt-30 pb-38 flex items-center justify-center overflow-hidden bg-slate-950">
+      <AbstractNetworkCanvas />
       
       <div class="absolute inset-0 bg-linear-to-b from-transparent via-slate-950/60 to-slate-50 pointer-events-none z-0"></div>
       
@@ -23,7 +23,7 @@ useHead({
         <h1 class="text-5xl md:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight">
           Estamos aquí para <span class="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-blue-500">ayudarte.</span>
         </h1>
-        <p class="text-lg md:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
+        <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
           Nuestro equipo de especialistas está disponible para resolver tus dudas comerciales, consultas médicas o brindar soporte sobre nuestro portafolio.
         </p>
       </div>

@@ -1,3 +1,46 @@
+<script setup>
+import { computed } from 'vue'
+
+// 1. Importamos el JSON (Ruta relativa)
+import catalogoBruto from '../data/catalogo.json'
+
+// 2. Tomamos solo los primeros 6 productos para el Home
+const productosDestacados = computed(() => {
+  return catalogoBruto.slice(0, 6)
+})
+
+// 3. Paleta de colores dinámica adaptada para el nuevo diseño Holográfico
+const colorThemes = [
+  {
+    gradientFrom: 'from-teal-600/30',
+    gradientTo: 'to-slate-900',
+    badgeText: 'text-teal-400'
+  },
+  {
+    gradientFrom: 'from-blue-600/30',
+    gradientTo: 'to-slate-900',
+    badgeText: 'text-blue-400'
+  },
+  {
+    gradientFrom: 'from-rose-600/30', // Un tono rosado/rojizo para productos dermatológicos (ARN)
+    gradientTo: 'to-slate-900',
+    badgeText: 'text-rose-400'
+  }
+]
+
+// Funciones de utilidad
+const getInitials = (name) => {
+  if (!name) return 'PR'
+  return name.substring(0, 3).toUpperCase() // Toma 3 letras como en tu captura "TNK", "ARN"
+}
+
+// 4. Función temporal para el botón de Ficha Técnica
+const handleFichaClick = () => {
+  // Aquí usamos un alert nativo, pero a futuro podrías usar una librería de Toasts de Vue
+  alert("La Ficha Técnica no está disponible en este momento. El documento PDF se encuentra en proceso de solicitud al laboratorio.");
+}
+</script>
+
 <template>
   <div>
     <header class="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-950">
@@ -153,7 +196,8 @@
       <div class="absolute left-0 right-0 top-0 -z-10 m-auto h-77.5 w-77.5 rounded-full bg-blue-500 opacity-20 blur-[100px]"></div>
       
       <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <div class="max-w-2xl">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-blue-900/30 border border-blue-500/30 text-blue-400 text-xs font-mono tracking-widest mb-4">
               [ DATABASE_ACCESSED ]
@@ -163,97 +207,70 @@
           </div>
           
           <button class="group flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 px-6 py-3 rounded-xl text-white font-semibold transition-all backdrop-blur-md">
-            <span>Desplegar Catálogo</span>
+            <span>Catálogo Completo</span>
             <div class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center group-hover:bg-teal-500 group-hover:text-white transition-colors">
               <LucideChevronRight :size="18" />
             </div>
           </button>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           
-          <div class="group relative bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl p-8 hover:bg-slate-800/50 hover:border-teal-500/50 transition-all duration-500 flex flex-col h-full overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-linear-to-bl from-teal-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            <div class="flex justify-between items-start mb-10">
-              <div class="w-20 h-20 rounded-2xl border border-slate-700 bg-slate-950 flex flex-col items-center justify-center shadow-lg group-hover:border-teal-500 group-hover:shadow-[0_0_20px_rgba(20,184,166,0.3)] transition-all duration-500">
-                <span class="text-xs text-slate-500 font-mono mb-0.5">Pv</span>
-                <span class="text-2xl font-black text-white">B12</span>
+          <div 
+            v-for="(producto, index) in productosDestacados" 
+            :key="producto.id"
+            class="relative h-150 rounded-4xl overflow-hidden group cursor-pointer border border-slate-800 hover:border-slate-600 transition-all duration-500 shadow-lg"
+          >
+            <div class="absolute inset-0 bg-slate-900"></div>
+
+            <div :class="['absolute inset-0 bg-linear-to-br opacity-30 group-hover:opacity-60 transition-opacity duration-700', colorThemes[index % 3].gradientFrom, colorThemes[index % 3].gradientTo]"></div>
+
+            <div class="absolute top-0 inset-x-0 h-[65%] p-8 flex items-center justify-center">
+              <img 
+                :src="producto.image" 
+                :alt="producto.name"
+                class="w-full h-full object-contain drop-shadow-2xl opacity-90 group-hover:opacity-100 transform group-hover:-translate-y-3 group-hover:scale-110 transition-all duration-700 ease-out"
+              />
+            </div>
+
+            <div class="absolute top-6 right-6 w-12 h-12 rounded-full border border-white/10 bg-slate-950/60 backdrop-blur-md flex items-center justify-center text-white font-bold text-sm z-20 shadow-xl group-hover:border-white/30 transition-colors">
+              {{ getInitials(producto.name) }}
+            </div>
+
+            <div class="absolute bottom-2 left-2 right-2 rounded-3xl bg-slate-950/80 backdrop-blur-xl border border-white/10 p-5 transform transition-transform duration-500 z-30 flex flex-col justify-end">
+              
+              <span :class="['text-[10px] font-bold uppercase tracking-widest mb-1.5 block truncate', colorThemes[index % 3].badgeText]">
+                {{ producto.category || 'Especialidad' }}
+              </span>
+              
+              <h3 class="text-lg font-bold text-white mb-2 leading-tight truncate">
+                {{ producto.name }}
+              </h3>
+              
+              <div class="h-10 overflow-hidden relative mb-4">
+                <p class="text-slate-400 text-xs leading-relaxed">
+                  {{ producto.shortDescription }}
+                </p>
+                <div class="absolute bottom-0 left-0 w-full h-6 bg-linear-to-t from-[#0b1120] to-transparent"></div>
               </div>
-              <div class="px-3 py-1 rounded-full border border-slate-700 bg-slate-800/50 text-[10px] uppercase tracking-widest text-slate-400">
-                Suplemento
-              </div>
-            </div>
+              
+              <div class="mt-auto pt-3 border-t border-white/10 flex items-center justify-between">
+                
+                <button @click.prevent="handleFichaClick" class="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 hover:text-white transition-colors group/btn z-40 relative">
+                  <LucideFileText :size="14" class="group-hover/btn:text-rose-400 transition-colors" />
+                  <span>FICHA.PDF</span>
+                </button>
 
-            <div class="flex-1">
-              <h4 class="text-2xl font-bold text-white mb-3 group-hover:text-teal-400 transition-colors">PROVIT B12</h4>
-              <p class="text-slate-400 text-sm leading-relaxed mb-8 font-light">
-                Intervención crucial para el metabolismo celular, formación de glóbulos rojos y mantenimiento óptimo del sistema nervioso central.
-              </p>
-            </div>
-
-            <div class="border-t border-slate-800 pt-6 mt-auto">
-              <button class="w-full flex items-center justify-between text-sm font-mono text-slate-300 group-hover:text-white transition-colors">
-                <span>FICHA_TECNICA.PDF</span>
-                <LucideArrowRight :size="16" class="text-slate-600 group-hover:text-teal-400 group-hover:translate-x-1 transition-all" />
-              </button>
-            </div>
-          </div>
-
-          <div class="group relative bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl p-8 hover:bg-slate-800/50 hover:border-blue-500/50 transition-all duration-500 flex flex-col h-full overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-linear-to-bl from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            <div class="flex justify-between items-start mb-10">
-              <div class="w-20 h-20 rounded-2xl border border-slate-700 bg-slate-950 flex flex-col items-center justify-center shadow-lg group-hover:border-blue-500 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-500">
-                <span class="text-xs text-slate-500 font-mono mb-0.5">Tk</span>
-                <span class="text-2xl font-black text-white">TNK</span>
-              </div>
-              <div class="px-3 py-1 rounded-full border border-slate-700 bg-slate-800/50 text-[10px] uppercase tracking-widest text-slate-400">
-                Trombolítico
-              </div>
-            </div>
-
-            <div class="flex-1">
-              <h4 class="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">Tenecteplasa (TNK-tPA)</h4>
-              <p class="text-slate-400 text-sm leading-relaxed mb-8 font-light">
-                Tratamiento trombolítico de urgencia cardiovascular. Fármaco de alta especialidad exclusivo para uso intrahospitalario y atención crítica.
-              </p>
-            </div>
-
-            <div class="border-t border-slate-800 pt-6 mt-auto">
-              <button class="w-full flex items-center justify-between text-sm font-mono text-slate-300 group-hover:text-white transition-colors">
-                <span>FICHA_TECNICA.PDF</span>
-                <LucideArrowRight :size="16" class="text-slate-600 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
-              </button>
-            </div>
-          </div>
-
-          <div class="group relative bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl p-8 hover:bg-slate-800/50 hover:border-slate-300/50 transition-all duration-500 flex flex-col h-full overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-linear-to-bl from-slate-100/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            <div class="flex justify-between items-start mb-10">
-              <div class="w-20 h-20 rounded-2xl border border-slate-700 bg-slate-950 flex flex-col items-center justify-center shadow-lg group-hover:border-slate-300 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-500">
-                <span class="text-xs text-slate-500 font-mono mb-0.5">Ar</span>
-                <span class="text-2xl font-black text-white">ARN</span>
-              </div>
-              <div class="px-3 py-1 rounded-full border border-slate-700 bg-slate-800/50 text-[10px] uppercase tracking-widest text-slate-400">
-                Dermatológico
+                <NuxtLink :to="`/productos/${producto.slug}`" class="flex items-center gap-2 text-xs font-medium text-slate-300 hover:text-white transition-colors relative z-40">
+                  <span>Detalles</span>
+                  <div class="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/20 transition-colors border border-white/5">
+                    <LucideArrowRight :size="12" class="-rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+                  </div>
+                </NuxtLink>
+                
               </div>
             </div>
 
-            <div class="flex-1">
-              <h4 class="text-2xl font-bold text-white mb-3 group-hover:text-slate-200 transition-colors">Arnik Forte Crema</h4>
-              <p class="text-slate-400 text-sm leading-relaxed mb-8 font-light">
-                Solución dermatológica avanzada para el bienestar muscular. Calidad comprobada para el alivio rápido y tratamiento focalizado del dolor.
-              </p>
-            </div>
-
-            <div class="border-t border-slate-800 pt-6 mt-auto">
-              <button class="w-full flex items-center justify-between text-sm font-mono text-slate-300 group-hover:text-white transition-colors">
-                <span>FICHA_TECNICA.PDF</span>
-                <LucideArrowRight :size="16" class="text-slate-600 group-hover:text-slate-200 group-hover:translate-x-1 transition-all" />
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -278,7 +295,6 @@
                   <div class="text-2xl font-light text-white">2.0°C - 8.0°C</div>
                 </div>
              </div>
-             
              <div class="absolute -z-10 -bottom-8 -right-8 w-64 h-64 border border-teal-500/20 rounded-full"></div>
           </div>
 
@@ -327,6 +343,7 @@
         </div>
       </div>
     </section>
+    
     <SeccionPartners />
   </div>
 </template>

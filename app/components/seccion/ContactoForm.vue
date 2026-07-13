@@ -1,7 +1,10 @@
 <script setup>
 import { ref, reactive } from 'vue'
 
-const formStatus = ref('idle') // idle, submitting, success
+const formStatus = ref('idle') // idle, submitting, success, error
+
+// 1. Instanciamos la configuración de Nuxt para leer la llave pública
+const config = useRuntimeConfig()
 
 const formData = reactive({
   nombre: '',
@@ -13,25 +16,46 @@ const formData = reactive({
 
 const handleSubmit = async () => {
   formStatus.value = 'submitting'
-  
-  // Simulamos el envío (aquí conectarás tu API en el futuro)
-  console.log("Enviando datos:", formData)
-  
-  await new Promise(resolve => setTimeout(resolve, 1500))
-  
-  formStatus.value = 'success'
-  
-  // Resetear el formulario después de 5 segundos
-  setTimeout(() => {
-    formStatus.value = 'idle'
-    Object.assign(formData, {
-      nombre: '',
-      email: '',
-      institucion: '',
-      area: 'ventas',
-      mensaje: ''
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        // CORREGIMOS LA LETRA 'f' MINÚSCULA AQUÍ:
+        access_key: config.public.web3formsKey,
+        
+        subject: `Nueva consulta - ${formData.area}`,
+        from_name: formData.nombre,
+        nombre: formData.nombre,
+        email: formData.email,
+        institucion: formData.institucion || 'No especificada',
+        area: formData.area,
+        mensaje: formData.mensaje
+      })
     })
-  }, 5000)
+
+    const result = await response.json()
+
+    if (result.success) {
+      formStatus.value = 'success'
+      setTimeout(() => {
+        formStatus.value = 'idle'
+        Object.assign(formData, {
+          nombre: '',
+          email: '',
+          institucion: '',
+          area: 'ventas',
+          mensaje: ''
+        })
+      }, 5000)
+    } else {
+      formStatus.value = 'error'
+    }
+  } catch (err) {
+    console.error('Error al enviar el formulario:', err)
+    formStatus.value = 'error'
+  }
 }
 </script>
 
@@ -42,8 +66,8 @@ const handleSubmit = async () => {
         
         <div class="lg:col-span-2 space-y-8">
           
-          <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-            <h3 class="text-2xl font-bold text-slate-900 mb-8">Sede Central</h3>
+          <div class="bg-slate-950 border border-slate-200 rounded-3xl p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+            <h3 class="text-2xl font-bold text-white mb-8">Sede Central</h3>
             
             <ul class="space-y-8">
               <li class="flex items-start gap-4 group">
@@ -51,8 +75,8 @@ const handleSubmit = async () => {
                   <LucideMapPin :size="22" />
                 </div>
                 <div>
-                  <h4 class="text-slate-900 font-bold mb-1">Dirección Legal</h4>
-                  <p class="text-slate-600 text-sm leading-relaxed">
+                  <h4 class="text-teal-400 font-bold mb-1">Dirección Legal</h4>
+                  <p class="text-slate-400 text-sm leading-relaxed">
                     Av. Simón Bolívar, Edificio Altar II<br />
                     Piso 2, Oficina 1 (Zona Miraflores)<br />
                     La Paz, Bolivia
@@ -65,8 +89,8 @@ const handleSubmit = async () => {
                   <LucidePhone :size="22" />
                 </div>
                 <div>
-                  <h4 class="text-slate-900 font-bold mb-1">Líneas de Atención</h4>
-                  <p class="text-slate-600 text-sm font-mono">+591 69105198 / 76265905</p>
+                  <h4 class="text-teal-400 font-bold mb-1">Líneas de Atención</h4>
+                  <p class="text-slate-400 text-sm font-mono">+591 69105198 / 76265905</p>
                 </div>
               </li>
 
@@ -75,8 +99,8 @@ const handleSubmit = async () => {
                   <LucideClock :size="22" />
                 </div>
                 <div>
-                  <h4 class="text-slate-900 font-bold mb-1">Horarios</h4>
-                  <p class="text-slate-600 text-sm">Lun - Vie: 9:00 - 20:00</p>
+                  <h4 class="text-teal-400 font-bold mb-1">Horarios</h4>
+                  <p class="text-slate-400 text-sm">Lun - Vie: 9:00 - 20:00</p>
                   <p class="text-rose-500 text-xs font-bold mt-1">Sábado y Domingo: Cerrado</p>
                 </div>
               </li>
@@ -90,7 +114,7 @@ const handleSubmit = async () => {
               <h3 class="text-lg font-bold text-slate-900">Farmacovigilancia</h3>
             </div>
             <p class="text-sm text-slate-600 mb-5 relative z-10">Reporte eventos adversos o solicite información médica técnica.</p>
-            <a href="mailto:farmacovigilancia@biadoxidpharma.com" class="inline-flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700 transition-colors bg-white px-4 py-2 rounded-xl shadow-xs border border-slate-100 relative z-10">
+            <a href="mailto:biadoxidpharma@outlook.com" class="inline-flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700 transition-colors bg-white px-4 py-2 rounded-xl shadow-xs border border-slate-100 relative z-10">
               <LucideMail :size="16" /> Contactar área médica
             </a>
           </div>
@@ -104,6 +128,20 @@ const handleSubmit = async () => {
               </div>
               <h3 class="text-2xl font-bold text-slate-900">Mensaje Enviado</h3>
               <p class="text-slate-500 mt-2">Nos comunicaremos con usted a la brevedad.</p>
+            </div>
+
+            <div v-else-if="formStatus === 'error'" class="text-center py-10">
+              <div class="w-20 h-20 bg-rose-500 rounded-full flex items-center justify-center text-white mx-auto mb-6">
+                <LucideAlertCircle :size="40" />
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900">No se pudo enviar</h3>
+              <p class="text-slate-500 mt-2">
+                Intenta de nuevo o escríbenos directo a
+                <a href="mailto:biadoxidpharma@outlook.com" class="text-teal-600 font-bold underline">biadoxidpharma@outlook.com</a>
+              </p>
+              <button @click="formStatus = 'idle'" class="mt-6 text-sm font-bold text-slate-600 underline">
+                Volver a intentar
+              </button>
             </div>
 
             <form v-else @submit.prevent="handleSubmit" class="space-y-6">
