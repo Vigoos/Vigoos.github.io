@@ -3,8 +3,17 @@ import process from 'node:process'
 import tailwindcss from "@tailwindcss/vite"
 
 export default defineNuxtConfig({
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/BIADOXID-PHARMA-LOGO.webp' },
+        // Opcional: para mejor compatibilidad
+        { rel: 'apple-touch-icon', href: '/BIADOXID-PHARMA-LOGO.webp' }
+      ]
+    }
+  },
   modules: [
-    'nuxt-lucide-icons', 
+    'nuxt-lucide-icons',
     'nuxt-security'
   ],
   compatibilityDate: '2025-07-15',
@@ -15,19 +24,19 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
-  
+
   security: {
     headers: {
       contentSecurityPolicy: {
         'img-src': [
-          "'self'", 
-          'data:', 
-          'https://ui-avatars.com', 
+          "'self'",
+          'data:',
+          'https://ui-avatars.com',
           'https://images.unsplash.com'
         ],
         'script-src': ["'self'", "'unsafe-inline'", "'wasm-unsafe-eval'"],
         // AÑADIMOS ESTO PARA PERMITIR EL ENVÍO DEL FORMULARIO
-        'connect-src': ["'self'", "https://api.web3forms.com"] 
+        'connect-src': ["'self'", "https://api.web3forms.com"]
       },
       xFrameOptions: 'DENY',
       xContentTypeOptions: 'nosniff',
@@ -38,7 +47,7 @@ export default defineNuxtConfig({
     },
     rateLimiter: {
       tokensPerInterval: 15,
-      interval: 10000,       
+      interval: 10000,
     }
   },
   runtimeConfig: {
