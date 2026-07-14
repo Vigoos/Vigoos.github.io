@@ -66,7 +66,7 @@ onUnmounted(() => {
           <NuxtLink to="/nosotros" class="hover:text-teal-400 transition-colors pb-1" active-class="text-white border-b-2 border-teal-500">
             Identidad
           </NuxtLink>
-          <a href="/#productos" class="hover:text-teal-400 transition-colors pb-1">Portafolio Clínico</a>
+          <a href="/productos" class="hover:text-teal-400 transition-colors pb-1">Portafolio Clínico</a>
           <a href="/#logistica" class="hover:text-teal-400 transition-colors pb-1">Logística Integral</a>
         </div>
 

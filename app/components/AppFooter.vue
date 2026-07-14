@@ -25,14 +25,15 @@ const openModal = (type) => {
 
         <div class="lg:col-span-4">
           <div class="flex items-center gap-3 mb-6">
-            <div
-              class="w-10 h-10 rounded-xl bg-linear-to-br from-teal-400 to-blue-600 flex items-center justify-center text-white shadow-[0_0_15px_rgba(20,184,166,0.3)]">
-              <LucideDna :size="22" />
-            </div>
-            <div>
-              <h2 class="text-xl font-black tracking-tight text-white leading-none">BIADOXID</h2>
-              <span class="text-[10px] uppercase tracking-widest text-teal-400 font-bold">Pharma S.R.L.</span>
-            </div>
+            <NuxtLink to="/" class="flex items-center gap-3 cursor-pointer">
+              <img src="/BIADOXID-PHARMA-LOGO.webp" alt="Biadoxid Pharma S.R.L."
+                class="w-9 h-9 md:w-10 md:h-10 rounded-xl object-contain">
+              <div>
+                <h1 class="text-lg md:text-xl font-black tracking-tight text-white leading-none">BIADOXID</h1>
+                <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-teal-400 font-bold">Pharma
+                  S.R.L.</span>
+              </div>
+            </NuxtLink>
           </div>
           <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light max-w-sm">
             Innovación, ética y compromiso absoluto con la salud pública y privada. Somos el puente vital entre la

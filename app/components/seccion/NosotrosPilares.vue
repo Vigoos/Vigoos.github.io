@@ -1,4 +1,17 @@
 <script setup>
+// Importamos tu base de datos JSON
+import catalogo from '../../data/catalogo.json'
+// 1. Pilar Vitaminas (Buscamos algún producto que sea Vitamina o C Vim)
+const pilarVitamina = catalogo.find(p => p.name.includes('Vim') || p.name.includes('Vitamina'))
+const imgVitamina = pilarVitamina ? pilarVitamina.image : ''
+
+// 2. Pilar Dermatología (Buscamos Arnik Forte o Arnik Baby)
+const pilarArnica = catalogo.find(p => p.name.includes('Arnik'))
+const imgArnica = pilarArnica ? pilarArnica.image : ''
+
+// 3. Pilar Biotecnología (Buscamos la Tenecteplasa)
+const pilarBiotec = catalogo.find(p => p.name.includes('Tenecteplasa') || p.name.includes('TNK'))
+const imgTenecteplasa = pilarBiotec ? pilarBiotec.image : ''
 // Reutilizamos el composable de animaciones
 useScrollReveal()
 </script>
@@ -17,10 +30,13 @@ useScrollReveal()
       <div class="grid md:grid-cols-3 gap-8">
         
         <div class="rounded-[2.5rem] bg-slate-50 border border-slate-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group reveal-on-scroll opacity-0 translate-y-10">
-          <div class="h-52 relative overflow-hidden">
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center group-hover:scale-110 transition-transform duration-700"></div>
-            <div class="absolute inset-0 bg-linear-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-            <div class="absolute bottom-6 left-8 text-orange-400">
+          <div class="h-52 relative overflow-hidden bg-white">
+            <div 
+              class="absolute inset-0 bg-contain bg-no-repeat bg-center group-hover:scale-110 transition-transform duration-700" 
+              :style="{ backgroundImage: `url(${imgVitamina})` }">
+            </div>
+            <div class="absolute inset-0 bg-linear-to-t from-slate-900/90 via-slate-900/20 to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-6 left-8 text-orange-400 z-10">
               <LucideTarget :size="32" stroke-width="2" />
             </div>
           </div>
@@ -34,10 +50,13 @@ useScrollReveal()
         </div>
 
         <div class="rounded-[2.5rem] bg-slate-50 border border-slate-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group reveal-on-scroll opacity-0 translate-y-10" style="transition-delay: 100ms;">
-          <div class="h-52 relative overflow-hidden">
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center group-hover:scale-110 transition-transform duration-700"></div>
-            <div class="absolute inset-0 bg-linear-to-t from-emerald-900/90 via-emerald-900/20 to-transparent"></div>
-            <div class="absolute bottom-6 left-8 text-emerald-400">
+          <div class="h-52 relative overflow-hidden bg-white">
+            <div 
+              class="absolute inset-0 bg-contain bg-no-repeat bg-center group-hover:scale-110 transition-transform duration-700" 
+              :style="{ backgroundImage: `url(${imgArnica})` }">
+            </div>
+            <div class="absolute inset-0 bg-linear-to-t from-emerald-900/90 via-emerald-900/20 to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-6 left-8 text-emerald-400 z-10">
               <LucideBeaker :size="32" stroke-width="2" />
             </div>
           </div>
@@ -51,10 +70,13 @@ useScrollReveal()
         </div>
 
         <div class="rounded-[2.5rem] bg-slate-900 border border-slate-800 overflow-hidden hover:shadow-[0_20px_50px_rgba(14,165,233,0.2)] hover:-translate-y-2 transition-all duration-500 group reveal-on-scroll opacity-0 translate-y-10" style="transition-delay: 200ms;">
-          <div class="h-52 relative overflow-hidden">
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1579154204601-52ee82ce0273?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center mix-blend-luminosity opacity-60 group-hover:scale-110 group-hover:opacity-80 transition-all duration-700"></div>
-            <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-blue-900/40 to-transparent"></div>
-            <div class="absolute bottom-6 left-8 text-blue-400">
+          <div class="h-52 relative overflow-hidden bg-white">
+            <div 
+              class="absolute inset-0 bg-contain bg-no-repeat bg-center mix-blend-luminosity opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all duration-700"
+              :style="{ backgroundImage: `url(${imgTenecteplasa})` }">
+            </div>
+            <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-blue-900/50 to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-6 left-8 text-blue-400 z-10">
               <LucideActivity :size="32" stroke-width="2" />
             </div>
           </div>
