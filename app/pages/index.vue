@@ -94,10 +94,6 @@ const handleFichaClick = () => {
               Explorar Productos
               <LucideArrowRight :size="18" />
             </button>
-            <button
-              class="bg-transparent hover:bg-white/5 border border-slate-600 text-white px-8 py-4 rounded-full text-base font-medium transition-all flex items-center justify-center">
-              Portal Médico
-            </button>
           </div>
         </div>
 
