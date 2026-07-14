@@ -95,7 +95,7 @@ onUnmounted(() => {
           @click="isMobileMenuOpen = false">Inicio</NuxtLink>
         <NuxtLink to="/nosotros" class="text-slate-300 font-semibold text-lg hover:text-teal-400"
           @click="isMobileMenuOpen = false">Identidad corporativa</NuxtLink>
-        <a href="/#productos" class="text-slate-300 font-semibold text-lg hover:text-white"
+        <a href="/productos" class="text-slate-300 font-semibold text-lg hover:text-white"
           @click="isMobileMenuOpen = false">Portafolio Clínico</a>
         <a href="/#logistica" class="text-slate-300 font-semibold text-lg hover:text-white"
           @click="isMobileMenuOpen = false">Logística</a>
