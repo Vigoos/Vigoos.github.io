@@ -36,7 +36,7 @@ useScrollReveal()
         <div class="flex flex-col md:flex-row items-center justify-between mb-32 relative">
           <!-- Imagen a la izquierda -->
           <div class="w-full md:w-5/12 hidden md:block reveal-on-scroll opacity-0 translate-y-10 pr-12">
-            <div class="relative rounded-3xl overflow-hidden aspect-4/3 border border-slate-800 shadow-2xl group">
+            <div class="relative rounded-3xl overflow-hidden border border-slate-800 shadow-2xl group" style="aspect-ratio: 4/3; content-visibility: auto; contain-intrinsic-size: 400px 300px;">
               <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-60 group-hover:opacity-80 transition-opacity duration-700"></div>
               <div class="absolute inset-0 bg-linear-to-tr from-slate-950/80 to-transparent"></div>
             </div>
@@ -59,7 +59,7 @@ useScrollReveal()
         <div class="flex flex-col md:flex-row-reverse items-center justify-between mb-32 relative">
           <!-- Imagen a la derecha -->
           <div class="w-full md:w-5/12 hidden md:block reveal-on-scroll opacity-0 translate-y-10 pl-12">
-            <div class="relative rounded-3xl overflow-hidden aspect-4/3 border border-slate-800 shadow-2xl group">
+            <div class="relative rounded-3xl overflow-hidden border border-slate-800 shadow-2xl group" style="aspect-ratio: 4/3; content-visibility: auto; contain-intrinsic-size: 400px 300px;">
               <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-60 group-hover:opacity-80 transition-opacity duration-700"></div>
               <div class="absolute inset-0 bg-linear-to-tl from-blue-900/40 to-transparent mix-blend-color"></div>
             </div>
@@ -82,7 +82,7 @@ useScrollReveal()
         <div class="flex flex-col md:flex-row items-center justify-between relative">
           <!-- Imagen a la izquierda -->
           <div class="w-full md:w-5/12 hidden md:block reveal-on-scroll opacity-0 translate-y-10 pr-12">
-            <div class="relative rounded-3xl overflow-hidden aspect-4/3 border border-teal-900/50 shadow-[0_0_40px_rgba(20,184,166,0.1)] group">
+            <div class="relative rounded-3xl overflow-hidden border border-teal-900/50 shadow-[0_0_40px_rgba(20,184,166,0.1)] group" style="aspect-ratio: 4/3; content-visibility: auto; contain-intrinsic-size: 400px 300px;">
               <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-70 group-hover:opacity-90 transition-opacity duration-700"></div>
               <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent to-transparent"></div>
             </div>

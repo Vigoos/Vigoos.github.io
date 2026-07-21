@@ -9,6 +9,8 @@ let animationFrameId
 let resizeObserver
 let handleMouseMove
 let handleMouseLeave
+let visibilityObserver
+let isVisible = true // ← Nueva flag para pausar/reanudar animación
 
 onMounted(() => {
   // En Vue, accedemos al elemento del DOM usando .value en lugar de .current
@@ -73,6 +75,12 @@ onMounted(() => {
   }
 
   const animate = () => {
+    // Si el canvas no es visible, saltamos el frame (ahorra CPU/batería)
+    if (!isVisible) {
+      animationFrameId = requestAnimationFrame(animate)
+      return
+    }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = 'rgba(20, 184, 166, 0.8)' // Teal-500
     
@@ -134,12 +142,24 @@ onMounted(() => {
 
   canvas.addEventListener('mousemove', handleMouseMove)
   canvas.addEventListener('mouseleave', handleMouseLeave)
+
+  // === IntersectionObserver: pausa la animación cuando el canvas no está visible ===
+  visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isVisible = entry.isIntersecting
+    })
+  }, { threshold: 0.1 })
+
+  if (container) {
+    visibilityObserver.observe(container)
+  }
 })
 
 // Limpiamos los eventos cuando el componente se destruye (equivalente al return en useEffect)
 onBeforeUnmount(() => {
   cancelAnimationFrame(animationFrameId)
   if (resizeObserver) resizeObserver.disconnect()
+  if (visibilityObserver) visibilityObserver.disconnect()
   if (canvasRef.value) {
     canvasRef.value.removeEventListener('mousemove', handleMouseMove)
     canvasRef.value.removeEventListener('mouseleave', handleMouseLeave)

@@ -2,9 +2,14 @@
 import { ref, computed, watch } from 'vue'
 import catalogo from '../data/catalogo.json'
 
+const { notification, showNotification } = useNotification()
+
 // Metadatos SEO
 useHead({
-  title: 'Portafolio Clínico | Biadoxid Pharma'
+  title: 'Portafolio Clínico | Biadoxid Pharma',
+  meta: [
+    { name: 'description', content: 'Explore nuestro catálogo completo de medicamentos de alta especialidad, dermocosméticos y suplementos. Representación exclusiva de laboratorios internacionales.' }
+  ]
 })
 
 // Variables de estado
@@ -36,7 +41,7 @@ const closeProductModal = () => {
 }
 
 const handleFichaClick = () => {
-  alert("La Ficha Técnica no está disponible en este momento. El documento PDF se encuentra en proceso de solicitud al laboratorio.")
+  showNotification("La Ficha Técnica no está disponible en este momento. El documento PDF se encuentra en proceso de solicitud al laboratorio.")
 }
 
 const getInitials = (name) => {
@@ -150,9 +155,9 @@ const resetFilters = () => {
           </div>
 
           <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h3 class="text-slate-900 font-bold uppercase tracking-widest text-xs mb-6 flex items-center gap-2">
+            <h2 class="text-slate-900 font-bold uppercase tracking-widest text-xs mb-6 flex items-center gap-2">
               <LucideLayers class="w-4 h-4 text-teal-500" /> Categorías Clínicas
-            </h3>
+            </h2>
             <ul class="space-y-1.5">
               <li>
                 <button 
@@ -164,7 +169,7 @@ const resetFilters = () => {
                     <div class="w-1.5 h-1.5 rounded-full transition-colors" :class="activeCategory === 'Todos' ? 'bg-teal-500 shadow-[0_0_8px_#2dd4bf]' : 'bg-slate-300'"></div>
                     Todos los productos
                   </div>
-                  <span class="text-xs font-semibold px-2 py-0.5 rounded-md border" :class="activeCategory === 'Todos' ? 'bg-teal-100/50 border-teal-200 text-teal-700' : 'bg-slate-100 border-slate-200 text-slate-500'">
+                  <span class="text-xs font-semibold px-2 py-0.5 rounded-md border" :class="activeCategory === 'Todos' ? 'bg-teal-100/50 border-teal-200 text-teal-700' : 'bg-slate-100 border-slate-200 text-slate-600'">
                     {{ catalogo.length }}
                   </span>
                 </button>
@@ -179,7 +184,7 @@ const resetFilters = () => {
                     <div class="w-1.5 h-1.5 rounded-full transition-colors" :class="activeCategory === cat.name ? 'bg-teal-500 shadow-[0_0_8px_#2dd4bf]' : 'bg-slate-300'"></div>
                     <span class="truncate max-w-35 block">{{ cat.name }}</span>
                   </div>
-                  <span class="text-xs font-semibold px-2 py-0.5 rounded-md border" :class="activeCategory === cat.name ? 'bg-teal-100/50 border-teal-200 text-teal-700' : 'bg-slate-100 border-slate-200 text-slate-500'">
+                  <span class="text-xs font-semibold px-2 py-0.5 rounded-md border" :class="activeCategory === cat.name ? 'bg-teal-100/50 border-teal-200 text-teal-700' : 'bg-slate-100 border-slate-200 text-slate-600'">
                     {{ cat.count }}
                   </span>
                 </button>
@@ -190,7 +195,7 @@ const resetFilters = () => {
           <div class="bg-linear-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white shadow-lg overflow-hidden relative group hidden lg:block">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-teal-500/20 rounded-full blur-2xl group-hover:bg-teal-400/30 transition-colors"></div>
             <LucideHeadset class="w-8 h-8 text-teal-400 mb-4 relative z-10" />
-            <h4 class="font-bold text-lg mb-2 relative z-10">¿Necesitas asesoría?</h4>
+            <h3 class="font-bold text-lg mb-2 relative z-10">¿Necesitas asesoría?</h3>
             <p class="text-slate-400 text-sm mb-4 relative z-10">Nuestros especialistas médicos están listos para resolver tus dudas de inmediato.</p>
             <a href="https://wa.me/59176265905" target="_blank" class="w-full bg-teal-500 hover:bg-teal-400 text-white text-sm font-bold py-3 rounded-xl transition-colors relative z-10 shadow-[0_0_15px_rgba(20,184,166,0.3)] flex justify-center items-center gap-2">
               Contactar Asesor
@@ -208,7 +213,7 @@ const resetFilters = () => {
             <div class="flex items-center gap-3">
               <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest hidden sm:inline-block">Ordenar por:</span>
               <div class="relative">
-                <select v-model="sortBy" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-xl pl-4 pr-10 py-2 focus:outline-hidden appearance-none cursor-pointer hover:bg-slate-100 transition-colors">
+                <select v-model="sortBy" aria-label="Ordenar productos" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-xl pl-4 pr-10 py-2 focus:outline-hidden appearance-none cursor-pointer hover:bg-slate-100 transition-colors">
                   <option>Relevancia</option>
                   <option>Nombre (A - Z)</option>
                   <option>Más recientes</option>
@@ -244,7 +249,10 @@ const resetFilters = () => {
                 <img 
                   :src="producto.image" 
                   :alt="producto.name"
+                  loading="lazy"
                   class="w-full h-full object-contain drop-shadow-md opacity-90 group-hover:opacity-100 transform group-hover:-translate-y-3 group-hover:scale-110 transition-all duration-700 ease-out mix-blend-multiply"
+                  style="aspect-ratio: 1 / 1;"
+                  @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '20%'"
                 />
               </div>
 
@@ -292,6 +300,7 @@ const resetFilters = () => {
               <button 
                 @click="currentPage > 1 && currentPage--" 
                 :disabled="currentPage === 1"
+                aria-label="Página anterior"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
               >
                 <LucideChevronLeft class="w-5 h-5" />
@@ -309,6 +318,7 @@ const resetFilters = () => {
               <button 
                 @click="currentPage < totalPages && currentPage++" 
                 :disabled="currentPage === totalPages"
+                aria-label="Página siguiente"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
               >
                 <LucideChevronRight class="w-5 h-5" />
@@ -319,6 +329,16 @@ const resetFilters = () => {
         </section>
       </div>
     </main>
+
+    <!-- Notificación Toast -->
+    <Teleport to="body">
+      <Transition name="toast-anim">
+        <div v-if="notification.show" class="fixed top-6 left-1/2 -translate-x-1/2 z-200 bg-slate-800 border border-teal-500/30 text-white px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-3 pointer-events-none">
+          <LucideCheckCircle :size="18" class="text-teal-400 shrink-0" />
+          <span class="text-xs font-medium whitespace-nowrap">{{ notification.message }}</span>
+        </div>
+      </Transition>
+    </Teleport>
 
     <ProductModal 
       :show="isProductModalOpen" 

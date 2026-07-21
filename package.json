@@ -7,11 +7,16 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
     "@lucide/vue": "^1.24.0",
     "@tailwindcss/vite": "^4.3.2",
+    "dompurify": "^3.4.12",
     "lucide-vue-next": "^1.0.0",
     "nuxt": "^4.4.8",
     "nuxt-lucide-icons": "^2.1.0",
@@ -20,7 +25,12 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.61.1",
     "@types/node": "^24.10.1",
-    "nuxt-security": "^2.6.0"
+    "@vite-pwa/assets-generator": "^1.0.2",
+    "@vite-pwa/nuxt": "^1.1.1",
+    "nuxt-security": "^2.6.0",
+    "sharp": "^0.35.3"
   }
 }

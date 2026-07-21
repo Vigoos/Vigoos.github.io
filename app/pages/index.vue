@@ -1,5 +1,16 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+
+const { notification, showNotification } = useNotification()
+
+// Metadatos SEO para la página principal
+useHead({
+  title: 'Biadoxid Pharma S.R.L. | Importación y Distribución Farmacéutica',
+  meta: [
+    { name: 'description', content: 'Biadoxid Pharma S.R.L. Importación y distribución de medicamentos de alta calidad en Bolivia. Representación exclusiva de laboratorios internacionales. Cadena de frío garantizada.' }
+  ]
+})
+
 
 // 1. Importamos el JSON (Ruta relativa)
 import catalogoBruto from '../data/catalogo.json'
@@ -53,8 +64,7 @@ const getInitials = (name) => {
 
 // 4. Función temporal para el botón de Ficha Técnica
 const handleFichaClick = () => {
-  // Aquí usamos un alert nativo, pero a futuro podrías usar una librería de Toasts de Vue
-  alert("La Ficha Técnica no está disponible en este momento. El documento PDF se encuentra en proceso de solicitud al laboratorio.");
+  showNotification("La Ficha Técnica no está disponible en este momento. El documento PDF se encuentra en proceso de solicitud al laboratorio.")
 }
 </script>
 
@@ -77,11 +87,11 @@ const handleFichaClick = () => {
             La salud no espera. Nosotros tampoco.
           </div>
 
-          <h2 class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-6 tracking-tight">
+          <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-6 tracking-tight">
             Garantizando el acceso a <span
               class="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-blue-500">medicamentos de alta
               calidad</span>
-          </h2>
+          </h1>
 
           <p class="text-lg md:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl font-light">
             Importación y distribución eficiente de productos farmacéuticos innovadores y seguros a nivel nacional.
@@ -89,11 +99,11 @@ const handleFichaClick = () => {
           </p>
 
           <div class="flex flex-col sm:flex-row gap-5">
-            <button
+            <NuxtLink to="/productos"
               class="bg-linear-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-white px-8 py-4 rounded-full text-base font-bold transition-all shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)] flex items-center justify-center gap-3">
               Explorar Productos
               <LucideArrowRight :size="18" />
-            </button>
+            </NuxtLink>
           </div>
         </div>
 
@@ -102,7 +112,7 @@ const handleFichaClick = () => {
           <div
             class="w-full h-96 lg:h-112.5 rounded-4xl overflow-hidden shadow-2xl relative border border-white/10 group">
             <div
-              class="absolute inset-0 bg-[url('/HERO-IMAGEN.jpeg')] bg-cover bg-center opacity-40 mix-blend-luminosity group-hover:opacity-60 transition-opacity duration-700">
+              class="absolute inset-0 bg-[url('/HERO-IMAGEN.webp')] bg-cover bg-center opacity-40 mix-blend-luminosity group-hover:opacity-60 transition-opacity duration-700">
             </div>
             <div class="absolute inset-0 bg-linear-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
 
@@ -218,7 +228,7 @@ const handleFichaClick = () => {
                 </div>
                 <div class="w-full">
                   <h4 class="text-2xl font-extrabold text-slate-900 mb-6 tracking-tight">Valores Inquebrantables</h4>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-slate-50 p-4 rounded-2xl flex items-center gap-3 border border-slate-100">
                       <div
                         class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-teal-500 font-bold text-xs">
@@ -273,14 +283,14 @@ const handleFichaClick = () => {
               clase mundial. Fármacos aprobados bajo los más rigurosos estándares internacionales de farmacopea.</p>
           </div>
 
-          <button
+          <NuxtLink to="/productos"
             class="group flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 px-6 py-3 rounded-xl text-white font-semibold transition-all backdrop-blur-md">
             <span>Catálogo Completo</span>
             <div
               class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center group-hover:bg-teal-500 group-hover:text-white transition-colors">
               <LucideChevronRight :size="18" />
             </div>
-          </button>
+          </NuxtLink>
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -291,11 +301,11 @@ const handleFichaClick = () => {
 
             <div
               :class="['absolute inset-0 bg-linear-to-br opacity-30 group-hover:opacity-60 transition-opacity duration-700', colorThemes[index % 3].gradientFrom, colorThemes[index % 3].gradientTo]">
-            </div>
-
-            <div class="absolute top-0 inset-x-0 h-[65%] p-8 flex items-center justify-center">
-              <img :src="producto.image" :alt="producto.name"
-                class="w-full h-full object-contain drop-shadow-2xl opacity-90 group-hover:opacity-100 transform group-hover:-translate-y-3 group-hover:scale-110 transition-all duration-700 ease-out" />
+            </div>              <div class="absolute top-0 inset-x-0 h-[65%] p-8 flex items-center justify-center">
+              <img :src="producto.image" :alt="producto.name" loading="lazy"
+                class="w-full h-full object-contain drop-shadow-2xl opacity-90 group-hover:opacity-100 transform group-hover:-translate-y-3 group-hover:scale-110 transition-all duration-700 ease-out"
+                style="aspect-ratio: 1 / 1;"
+                @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '20%'" />
             </div>
 
             <div
@@ -356,7 +366,7 @@ const handleFichaClick = () => {
       <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
         <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-          <div class="order-2 lg:order-1 relative">
+          <div class="order-2 lg:order-1 relative overflow-hidden">
             <div class="relative h-125 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] group">
               <div
                 class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1582719471384-894fbb16e074?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-50 mix-blend-luminosity group-hover:opacity-70 transition-opacity duration-700 group-hover:scale-105 transform">
@@ -427,6 +437,16 @@ const handleFichaClick = () => {
         </div>
       </div>
     </section>
+
+    <!-- Notificación Toast -->
+    <Teleport to="body">
+      <Transition name="toast-anim">
+        <div v-if="notification.show" class="fixed top-6 left-1/2 -translate-x-1/2 z-200 bg-slate-800 border border-teal-500/30 text-white px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-3 pointer-events-none">
+          <LucideCheckCircle :size="18" class="text-teal-400 shrink-0" />
+          <span class="text-xs font-medium whitespace-nowrap">{{ notification.message }}</span>
+        </div>
+      </Transition>
+    </Teleport>
 
     <SeccionPartners />
     <ProductModal 

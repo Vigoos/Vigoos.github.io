@@ -25,11 +25,11 @@ const openModal = (type) => {
 
         <div class="lg:col-span-4">
           <div class="flex items-center gap-3 mb-6">
-            <NuxtLink to="/" class="flex items-center gap-3 cursor-pointer">
-              <img src="/BIADOXID-PHARMA-LOGO.webp" alt="Biadoxid Pharma S.R.L."
-                class="w-9 h-9 md:w-10 md:h-10 rounded-xl object-contain">
+            <NuxtLink to="/" class="flex items-center gap-4 cursor-pointer">
+              <img src="/BIADOXID-PHARMA-LOGO-v2.webp" alt="Biadoxid Pharma S.R.L."
+                class="w-9 h-9 md:w-10 md:h-10 rounded-xl object-contain" loading="lazy">
               <div>
-                <h1 class="text-lg md:text-xl font-black tracking-tight text-white leading-none">BIADOXID</h1>
+                <div class="text-lg md:text-xl font-black tracking-tight text-white leading-none">BIADOXID</div>
                 <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-teal-400 font-bold">Pharma
                   S.R.L.</span>
               </div>
@@ -82,26 +82,26 @@ const openModal = (type) => {
         </div>
 
         <div class="lg:col-span-2">
-          <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Compañía</h4>
+          <h2 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Compañía</h2>
           <ul class="space-y-4">
-            <li><a href="#"
+            <li><NuxtLink to="/"
                 class="text-slate-400 text-sm hover:text-teal-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Inicio</a></li>
-            <li><a href="#nosotros"
+                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Inicio</NuxtLink></li>
+            <li><NuxtLink to="/nosotros"
                 class="text-slate-400 text-sm hover:text-teal-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Identidad</a></li>
-            <li><a href="#productos"
+                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Identidad</NuxtLink></li>
+            <li><NuxtLink to="/productos"
                 class="text-slate-400 text-sm hover:text-teal-400 transition-colors flex items-center gap-2 group"><span
                   class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Portafolio
-                Clínico</a></li>
-            <li><a href="#logistica"
+                Clínico</NuxtLink></li>
+            <li><NuxtLink to="/#logistica"
                 class="text-slate-400 text-sm hover:text-teal-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Logística</a></li>
+                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Logística</NuxtLink></li>
           </ul>
         </div>
 
         <div class="lg:col-span-3">
-          <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Regulación</h4>
+          <h2 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Regulación</h2>
           <ul class="space-y-4 mb-6">
             <li>
               <button @click="openModal('privacidad')"
@@ -115,9 +115,9 @@ const openModal = (type) => {
                   class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span>Términos y
                 Condiciones</button>
             </li>
-            <li><a href="#"
-                class="text-slate-400 text-sm hover:text-teal-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span>Farmacovigilancia</a>
+            <li><NuxtLink to="/contacto"
+                class="text-slate-400 text-sm hover:text-teal-400 transition-colors w-full text-left flex items-center gap-2 group"><span
+                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span>Farmacovigilancia</NuxtLink>
             </li>
           </ul>
 
@@ -138,7 +138,7 @@ const openModal = (type) => {
         </div>
 
         <div class="lg:col-span-3">
-          <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Contacto Directo</h4>
+          <h2 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Contacto Directo</h2>
           <ul class="space-y-5">
 
             <li>
@@ -149,7 +149,7 @@ const openModal = (type) => {
                 </div>
                 <span class="text-slate-400 text-sm pt-1.5 leading-relaxed group-hover:text-teal-400 transition-colors">
                   La Paz, Bolivia<br />
-                  <span class="text-slate-500 text-xs group-hover:text-teal-500/80 transition-colors">Sede Operativa
+                  <span class="text-slate-400 text-xs group-hover:text-teal-400 transition-colors">Sede Operativa
                     Central</span>
                 </span>
               </NuxtLink>
@@ -185,10 +185,10 @@ const openModal = (type) => {
       </div>
 
       <div class="pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-slate-500 text-xs font-medium">
+        <p class="text-slate-400 text-xs font-medium">
           © {{ currentYear }} Biadoxid Pharma S.R.L. Todos los derechos reservados.
         </p>
-        <div class="flex items-center gap-2 text-slate-500 text-xs font-medium">
+        <div class="flex items-center gap-2 text-slate-400 text-xs font-medium">
           Diseñado con <span class="text-teal-400 relative inline-block">
             precisión clínica
             <span class="absolute -right-2 top-0 w-1 h-1 bg-teal-400 rounded-full animate-ping"></span>

@@ -48,10 +48,10 @@ onUnmounted(() => {
       ]">
 
         <NuxtLink to="/" class="flex items-center gap-3 cursor-pointer">
-          <img src="/BIADOXID-PHARMA-LOGO.webp" alt="Biadoxid Pharma S.R.L."
+          <img src="/BIADOXID-PHARMA-LOGO-v2.webp" alt="Biadoxid Pharma S.R.L."
             class="w-9 h-9 md:w-10 md:h-10 rounded-xl object-contain">
           <div>
-            <h1 class="text-lg md:text-xl font-black tracking-tight text-white leading-none">BIADOXID</h1>
+            <div class="text-lg md:text-xl font-black tracking-tight text-white leading-none">BIADOXID</div>
             <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-teal-400 font-bold">Pharma
               S.R.L.</span>
           </div>
@@ -69,10 +69,11 @@ onUnmounted(() => {
           <NuxtLink to="/productos" class="hover:text-teal-400 transition-colors pb-1"
             active-class="text-white border-b-2 border-teal-500">Portafolio Clínico
           </NuxtLink>
-          <a href="/#logistica" class="hover:text-teal-400 transition-colors pb-1">Logística Integral</a>
+          <NuxtLink to="/#logistica" class="hover:text-teal-400 transition-colors pb-1">Logística Integral</NuxtLink>
         </div>
 
-        <div class="hidden lg:block">
+        <div class="hidden lg:flex items-center gap-3">
+          <PwaInstallButton />
           <NuxtLink to="/contacto"
             class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg flex items-center gap-2 group">
             Contáctanos
@@ -94,11 +95,10 @@ onUnmounted(() => {
         <NuxtLink to="/" class="text-slate-300 font-semibold text-lg hover:text-teal-400"
           @click="isMobileMenuOpen = false">Inicio</NuxtLink>
         <NuxtLink to="/nosotros" class="text-slate-300 font-semibold text-lg hover:text-teal-400"
-          @click="isMobileMenuOpen = false">Identidad corporativa</NuxtLink>
-        <a href="/productos" class="text-slate-300 font-semibold text-lg hover:text-white"
-          @click="isMobileMenuOpen = false">Portafolio Clínico</a>
-        <a href="/#logistica" class="text-slate-300 font-semibold text-lg hover:text-white"
-          @click="isMobileMenuOpen = false">Logística</a>
+          @click="isMobileMenuOpen = false">Identidad corporativa</NuxtLink>          <NuxtLink to="/productos" class="text-slate-300 font-semibold text-lg hover:text-white"
+          @click="isMobileMenuOpen = false">Portafolio Clínico</NuxtLink>
+        <NuxtLink to="/#logistica" class="text-slate-300 font-semibold text-lg hover:text-white"
+          @click="isMobileMenuOpen = false">Logística</NuxtLink>
 
         <div class="pt-4 mt-2 border-t border-slate-800">
           <NuxtLink to="/contacto"

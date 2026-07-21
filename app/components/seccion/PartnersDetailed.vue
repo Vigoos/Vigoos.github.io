@@ -134,6 +134,8 @@ const detailedPartners = [
                   :src="partner.logo" 
                   :alt="partner.name" 
                   class="w-10 h-10 object-contain mix-blend-multiply"
+                  loading="lazy"
+                  @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '2px'"
                 />
              </div>
              <span :class="['text-2xl font-black uppercase tracking-widest transition-colors', partner.colorClass]">

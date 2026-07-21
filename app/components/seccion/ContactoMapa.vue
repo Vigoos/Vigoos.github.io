@@ -5,7 +5,7 @@
         <iframe 
           src="https://maps.google.com/maps?q=-16.5001073,-68.1260071&z=17&output=embed" 
           class="w-full h-full border-0 filter grayscale contrast-[1.1] opacity-80 transition-all duration-700 group-hover:grayscale-0 group-hover:opacity-100" 
-          allowfullscreen="true"
+          allowfullscreen
           loading="lazy" 
           referrerpolicy="no-referrer-when-downgrade"
           title="Ubicación Biadoxid Pharma - Av. Simón Bolívar, Edificio Altar II"

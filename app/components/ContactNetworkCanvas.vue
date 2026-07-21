@@ -6,6 +6,8 @@ const containerRef = ref(null)
 
 let animationFrameId
 let resizeObserver
+let visibilityObserver
+let isVisible = true
 
 onMounted(() => {
   const canvas = canvasRef.value
@@ -59,6 +61,12 @@ onMounted(() => {
   }
 
   const animate = () => {
+    // Pausa la animación cuando no es visible (ahorra CPU/batería)
+    if (!isVisible) {
+      animationFrameId = requestAnimationFrame(animate)
+      return
+    }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     
     for (let i = 0; i < particles.length; i++) {
@@ -96,6 +104,17 @@ onMounted(() => {
     resizeObserver.observe(containerRef.value)
   }
 
+  // IntersectionObserver: pausa cuando no visible
+  visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isVisible = entry.isIntersecting
+    })
+  }, { threshold: 0.1 })
+
+  if (containerRef.value) {
+    visibilityObserver.observe(containerRef.value)
+  }
+
   const handleMouseMove = (e) => {
     const rect = canvas.getBoundingClientRect()
     mouse.x = e.clientX - rect.left
@@ -116,6 +135,7 @@ onMounted(() => {
   onBeforeUnmount(() => {
     cancelAnimationFrame(animationFrameId)
     resizeObserver.disconnect()
+    if (visibilityObserver) visibilityObserver.disconnect()
     canvas.removeEventListener('mousemove', handleMouseMove)
     canvas.removeEventListener('mouseleave', handleMouseLeave)
   })

@@ -24,7 +24,7 @@ const partners = [
 </script>
 
 <template>
-  <section class="py-24 border-y border-slate-800/50 bg-slate-950 overflow-hidden relative">
+  <section class="py-24 border-y border-slate-800/50 bg-slate-950 overflow-clip relative">
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.03)_0%,transparent_70%)] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-6 md:px-8 mb-16 flex flex-col items-center md:items-start relative z-10">
@@ -37,7 +37,7 @@ const partners = [
       </h3>
     </div>
 
-    <div class="relative w-full flex overflow-hidden marquee-container group/marquee">
+    <div class="relative w-full overflow-clip contain-paint marquee-container group/marquee">
        <div class="absolute inset-y-0 left-0 w-24 md:w-64 bg-linear-to-r from-slate-950 via-slate-950/80 to-transparent z-20 pointer-events-none"></div>
        <div class="absolute inset-y-0 right-0 w-24 md:w-64 bg-linear-to-l from-slate-950 via-slate-950/80 to-transparent z-20 pointer-events-none"></div>
 
@@ -84,5 +84,10 @@ const partners = [
 
 .group\/marquee:hover .animate-marquee {
   animation-play-state: paused;
+}
+
+.marquee-container {
+  overflow-x: clip !important;
+  contain: paint;
 }
 </style>

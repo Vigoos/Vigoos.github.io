@@ -1,6 +1,13 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import catalogo from '../data/catalogo.json'
+import DOMPurify from 'dompurify'
+
+// Función para sanitizar HTML antes de renderizar con v-html
+const sanitizeHtml = (html) => {
+  if (!html) return '<p>Información técnica en proceso de actualización.</p>'
+  return DOMPurify.sanitize(html)
+}
 
 const props = defineProps({
   show: Boolean,
@@ -64,7 +71,7 @@ const triggerAction = (msg) => {
               {{ product.category || 'Especialidad' }}
             </div>
 
-            <img :src="product.image" :alt="product.name" class="relative z-10 w-full h-full object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)] transform group-hover:scale-105 transition-transform duration-700 ease-out" />
+            <img :src="product.image" :alt="product.name" loading="lazy" style="aspect-ratio: 1 / 1;" class="relative z-10 w-full h-full object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)] transform group-hover:scale-105 transition-transform duration-700 ease-out" @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '20%'" />
           </div>
 
           <div class="w-full md:w-7/12 flex flex-col bg-slate-900 h-full relative">
@@ -105,7 +112,7 @@ const triggerAction = (msg) => {
               <div class="absolute top-0 left-0 right-0 h-4 bg-linear-to-b from-slate-900 to-transparent pointer-events-none z-10"></div>
               
               <div v-show="activeTab === 'desc'" class="animate-fadeIn wp-content">
-                <div v-html="product.descriptionHtml || '<p>Información técnica en proceso de actualización.</p>'"></div>
+                <div v-html="sanitizeHtml(product.descriptionHtml)"></div>
               </div>
 
               <div v-show="activeTab === 'uso'" class="animate-fadeIn">
@@ -141,7 +148,7 @@ const triggerAction = (msg) => {
                   <div v-for="related in relatedProducts" :key="related.slug" @click="emit('change-product', related)" class="group flex items-center gap-4 p-3 rounded-2xl bg-slate-800/50 border border-white/5 hover:border-teal-500/30 hover:bg-slate-800 transition-all cursor-pointer">
                     <div class="w-16 h-16 rounded-xl bg-slate-950 border border-white/5 shrink-0 overflow-hidden relative">
                       <div class="absolute inset-0 bg-linear-to-br from-teal-500/10 to-transparent z-10"></div>
-                      <img :src="related.image" :alt="related.name" class="relative z-20 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
+                      <img :src="related.image" :alt="related.name" loading="lazy" style="aspect-ratio: 1 / 1;" class="relative z-20 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'">
                     </div>
                     <div class="flex-1 min-w-0">
                       <p class="text-[9px] uppercase tracking-widest text-teal-400 font-semibold mb-0.5 truncate">{{ related.category || 'Fármaco' }}</p>

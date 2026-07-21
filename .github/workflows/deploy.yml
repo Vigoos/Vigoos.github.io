@@ -37,6 +37,9 @@ jobs:
       - name: Generate static site
         run: pnpm dlx nuxi generate
         env:
+          # Clave privada (server route) - si usas Node.js server
+          WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+          # Clave pública (fallback para GitHub Pages / static)
           NUXT_PUBLIC_WEB3FORMS_KEY: ${{ secrets.NUXT_PUBLIC_WEB3FORMS_KEY }}
  
       - name: Configure Pages
