@@ -1,34 +1,31 @@
 <script setup>
 // Llamamos a nuestro composable de animaciones
 useScrollReveal()
+const { t } = useI18n()
 </script>
 
 <template>
   <div class="nosotros-wrapper">
     <!-- --- HERO DE LA PÁGINA "NOSOTROS" --- -->
-    <header class="relative w-full pt-48 pb-32 flex items-center justify-center overflow-hidden bg-slate-950">
-      <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-0 right-0 w-200 h-200 border border-teal-500/30 rounded-full -translate-y-1/2 translate-x-1/3"></div>
-        <div class="absolute bottom-0 left-0 w-150 h-150 border border-blue-500/20 rounded-full translate-y-1/3 -translate-x-1/4"></div>
-      </div>
-      
+    <header class="relative w-full pt-48 pb-32 flex items-center justify-center overflow-hidden bg-white">
       <div class="max-w-4xl mx-auto px-6 relative z-10 text-center reveal-on-scroll opacity-0 translate-y-10">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-300 text-xs font-bold uppercase tracking-[0.2em] mb-6">
-          <LucideActivity :size="14" class="text-teal-400" /> Nuestro Legado
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white text-xs font-bold uppercase tracking-widest mb-6 bg-linear-to-br from-[#F40001] via-[#B30000] to-[#7F0000] shadow-lg shadow-biadoxid-900/30">
+          <span class="w-2 h-2 rounded-full bg-white animate-pulse shrink-0"></span>
+          {{ t('nosotrosPage.heroBadge') }}
         </div>
-        <h1 class="text-5xl md:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight">
-          Más de <span class="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-blue-500">15 años</span> transformando la salud.
+        <h1 class="text-5xl md:text-7xl font-black text-slate-900 leading-[1.1] mb-6 tracking-tight">
+          {{ t('nosotrosPage.heroTitlePre') }} <span class="text-transparent bg-clip-text bg-linear-to-r from-teal-500 to-teal-700">{{ t('nosotrosPage.heroTitleHighlight') }}</span> {{ t('nosotrosPage.heroTitlePost') }}
         </h1>
-        <p class="text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed">
-          Nacimos en La Paz con una convicción clara: Bolivia merecía una red sólida, transparente y de clase mundial para la importación farmacéutica.
+        <p class="text-xl text-slate-600 font-light max-w-2xl mx-auto leading-relaxed">
+          {{ t('nosotrosPage.heroText') }}
         </p>
       </div>
     </header>
 
     <!-- --- TIMELINE CON IMÁGENES (DISEÑO EQUILIBRADO) --- -->
-    <section class="py-32 bg-slate-950 relative overflow-hidden">
+    <section class="py-32 bg-white relative overflow-hidden">
       <!-- Línea central vertical -->
-      <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 -ml-1px timeline-line opacity-50"></div>
+      <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 -ml-1px timeline-line opacity-60"></div>
 
       <div class="max-w-6xl mx-auto px-6 md:px-8 relative">
         
@@ -36,10 +33,12 @@ useScrollReveal()
         <div class="flex flex-col md:flex-row items-center justify-between mb-32 relative">
           <!-- Imagen a la izquierda -->
           <div class="w-full md:w-5/12 hidden md:block reveal-on-scroll opacity-0 translate-y-10 pr-12">
-            <div class="relative rounded-3xl overflow-hidden border border-slate-800 shadow-2xl group" style="aspect-ratio: 4/3; content-visibility: auto; contain-intrinsic-size: 400px 300px;">
-              <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-60 group-hover:opacity-80 transition-opacity duration-700"></div>
-              <div class="absolute inset-0 bg-linear-to-tr from-slate-950/80 to-transparent"></div>
-            </div>
+            <ImageZoom src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=70" alt="Visión Fundacional - El Origen">
+              <div class="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl group" style="aspect-ratio: 4/3; content-visibility: auto; contain-intrinsic-size: 400px 300px;">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=70')] bg-cover bg-center opacity-80 group-hover:opacity-95 transition-opacity duration-700"></div>
+                <div class="absolute inset-0 bg-linear-to-tr from-slate-900/20 to-transparent"></div>
+              </div>
+            </ImageZoom>
           </div>
           
           <!-- Nodo Central Animado -->
@@ -47,10 +46,10 @@ useScrollReveal()
           
           <!-- Texto a la derecha -->
           <div class="w-full md:w-5/12 pl-8 md:pl-12 reveal-on-scroll opacity-0 translate-y-10">
-            <span class="text-teal-500 font-mono text-sm mb-3 block tracking-widest uppercase">El Origen</span>
-            <h3 class="text-3xl font-bold text-white mb-5">Visión Fundacional</h3>
-            <p class="text-slate-400 leading-relaxed text-lg">
-              Impulsados por nuestro fundador, <strong class="text-white">Elvis Boyan</strong>, iniciamos operaciones en La Paz identificando la necesidad crítica de abastecimiento continuo y ético de medicamentos en instituciones públicas y privadas del país.
+            <span class="text-teal-600 font-bold text-sm mb-3 block tracking-widest uppercase">{{ t('nosotrosPage.hito1Tag') }}</span>
+            <h3 class="text-3xl font-bold text-slate-900 mb-5">{{ t('nosotrosPage.hito1Title') }}</h3>
+            <p class="text-slate-600 leading-relaxed text-lg">
+              {{ t('nosotrosPage.hito1Text') }} <strong class="text-teal-600">{{ t('nosotrosPage.hito1TextHighlight') }}</strong>, {{ t('nosotrosPage.hito1TextPost') }}
             </p>
           </div>
         </div>
@@ -59,10 +58,12 @@ useScrollReveal()
         <div class="flex flex-col md:flex-row-reverse items-center justify-between mb-32 relative">
           <!-- Imagen a la derecha -->
           <div class="w-full md:w-5/12 hidden md:block reveal-on-scroll opacity-0 translate-y-10 pl-12">
-            <div class="relative rounded-3xl overflow-hidden border border-slate-800 shadow-2xl group" style="aspect-ratio: 4/3; content-visibility: auto; contain-intrinsic-size: 400px 300px;">
-              <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-60 group-hover:opacity-80 transition-opacity duration-700"></div>
-              <div class="absolute inset-0 bg-linear-to-tl from-blue-900/40 to-transparent mix-blend-color"></div>
-            </div>
+            <ImageZoom src="https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=800&q=70" alt="Expansión Estratégica - Crecimiento">
+              <div class="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl group" style="aspect-ratio: 4/3; content-visibility: auto; contain-intrinsic-size: 400px 300px;">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=800&q=70')] bg-cover bg-center opacity-80 group-hover:opacity-95 transition-opacity duration-700"></div>
+                <div class="absolute inset-0 bg-linear-to-tl from-teal-500/20 to-transparent"></div>
+              </div>
+            </ImageZoom>
           </div>
           
           <!-- Nodo Central Animado -->
@@ -70,10 +71,10 @@ useScrollReveal()
           
           <!-- Texto a la izquierda -->
           <div class="w-full md:w-5/12 pl-8 md:pl-0 md:pr-12 md:text-right reveal-on-scroll opacity-0 translate-y-10">
-            <span class="text-blue-500 font-mono text-sm mb-3 block tracking-widest uppercase">Crecimiento</span>
-            <h3 class="text-3xl font-bold text-white mb-5">Expansión Estratégica</h3>
-            <p class="text-slate-400 leading-relaxed text-lg">
-              Basados en la transparencia, forjamos alianzas internacionales sólidas en <strong class="text-white">España, Corea del Sur, Inglaterra y Bangladesh</strong>. Esto nos permitió ampliar nuestro portafolio garantizando estabilidad en el mercado boliviano.
+            <span class="text-teal-600 font-bold text-sm mb-3 block tracking-widest uppercase">{{ t('nosotrosPage.hito2Tag') }}</span>
+            <h3 class="text-3xl font-bold text-slate-900 mb-5">{{ t('nosotrosPage.hito2Title') }}</h3>
+            <p class="text-slate-600 leading-relaxed text-lg">
+              {{ t('nosotrosPage.hito2Text') }} <strong class="text-teal-600">{{ t('nosotrosPage.hito2TextHighlight') }}</strong>. {{ t('nosotrosPage.hito2TextPost') }}
             </p>
           </div>
         </div>
@@ -82,10 +83,12 @@ useScrollReveal()
         <div class="flex flex-col md:flex-row items-center justify-between relative">
           <!-- Imagen a la izquierda -->
           <div class="w-full md:w-5/12 hidden md:block reveal-on-scroll opacity-0 translate-y-10 pr-12">
-            <div class="relative rounded-3xl overflow-hidden border border-teal-900/50 shadow-[0_0_40px_rgba(20,184,166,0.1)] group" style="aspect-ratio: 4/3; content-visibility: auto; contain-intrinsic-size: 400px 300px;">
-              <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-70 group-hover:opacity-90 transition-opacity duration-700"></div>
-              <div class="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent to-transparent"></div>
-            </div>
+            <ImageZoom src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=70" alt="Excelencia Sostenida - Presente y Futuro">
+              <div class="relative rounded-3xl overflow-hidden border border-teal-500/30 shadow-[0_0_40px_rgba(244,0,1,0.12)] group" style="aspect-ratio: 4/3; content-visibility: auto; contain-intrinsic-size: 400px 300px;">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=70')] bg-cover bg-center opacity-85 group-hover:opacity-95 transition-opacity duration-700"></div>
+                <div class="absolute inset-0 bg-linear-to-t from-slate-900/20 via-transparent to-transparent"></div>
+              </div>
+            </ImageZoom>
           </div>
           
           <!-- Nodo Central Animado -->
@@ -93,12 +96,12 @@ useScrollReveal()
           
           <!-- Texto a la derecha en caja resaltada -->
           <div class="w-full md:w-5/12 pl-8 md:pl-12 reveal-on-scroll opacity-0 translate-y-10">
-            <div class="bg-linear-to-br from-teal-900/40 to-slate-900 border border-teal-500/30 p-8 rounded-3xl relative overflow-hidden group">
-              <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl group-hover:bg-teal-500/20 transition-all"></div>
-              <span class="text-teal-400 font-mono text-sm mb-2 block relative z-10">PRESENTE Y FUTURO</span>
-              <h3 class="text-2xl font-bold text-white mb-4 relative z-10">Excelencia Sostenida</h3>
-              <p class="text-slate-300 leading-relaxed relative z-10">
-                Hoy operamos bajo estrictos estándares de calidad (AGEMED), ética y cumplimiento normativo. No solo importamos fármacos; importamos innovación y esperanza para el sector médico.
+            <div class="bg-white border border-slate-200/70 p-8 rounded-3xl relative overflow-hidden group shadow-[0_16px_40px_-20px_rgba(15,23,42,0.18)]">
+              <span class="absolute top-0 inset-x-0 h-1 bg-teal-500" aria-hidden="true"></span>
+              <span class="text-teal-600 font-bold text-sm mb-2 block relative z-10">{{ t('nosotrosPage.hito3Tag') }}</span>
+              <h3 class="text-2xl font-bold text-slate-900 mb-4 relative z-10">{{ t('nosotrosPage.hito3Title') }}</h3>
+              <p class="text-slate-600 leading-relaxed relative z-10">
+                {{ t('nosotrosPage.hito3Text') }}
               </p>
             </div>
           </div>
@@ -114,6 +117,6 @@ useScrollReveal()
   transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
 }
 .timeline-line {
-  background: linear-gradient(to bottom, transparent, #0f172a 10%, #14b8a6 50%, #0f172a 90%, transparent);
+  background: linear-gradient(to bottom, transparent, #ffffff 10%, #F40001 50%, #ffffff 90%, transparent);
 }
 </style>

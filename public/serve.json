@@ -17,11 +17,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "base-uri 'self'; font-src 'self' https: data:; form-action 'self' https://api.web3forms.com; img-src 'self' data: https://ui-avatars.com https://images.unsplash.com; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; upgrade-insecure-requests; worker-src 'self' blob:; connect-src 'self' https://api.web3forms.com;"
-        },
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
+          "value": "base-uri 'self'; font-src 'self' data:; form-action 'self' https://api.web3forms.com; frame-ancestors 'none'; img-src 'self' data: https://ui-avatars.com https://images.unsplash.com; object-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src 'self' https://maps.google.com https://www.google.com"
         }
       ]
     },

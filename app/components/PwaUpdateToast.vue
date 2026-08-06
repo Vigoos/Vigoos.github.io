@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 
+const { t } = useI18n()
+
 const { $pwa } = useNuxtApp()
 const isUpdating = ref(false)
 const dismissed = ref(false)
@@ -44,14 +46,14 @@ const handleDismiss = () => {
         v-if="shouldShow && $pwa"
         role="alert"
         aria-live="polite"
-        class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] w-[calc(100%-2rem)] max-w-md"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 z-9999 w-[calc(100%-2rem)] max-w-md"
       >
         <div
           class="relative bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl p-4 shadow-2xl
                  shadow-teal-500/10 overflow-hidden"
         >
           <!-- Barra decorativa superior -->
-          <div class="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-teal-500 via-blue-500 to-teal-500"></div>
+          <div class="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-teal-500 via-teal-400 to-teal-500"></div>
 
           <div class="flex items-start gap-4">
             <!-- Icono -->
@@ -74,18 +76,18 @@ const handleDismiss = () => {
             <div class="flex-1 min-w-0">
               <p class="text-white text-sm font-bold">
                 <template v-if="$pwa.needRefresh">
-                  Nueva versión disponible
+                  {{ t('pwa.updateTitle') }}
                 </template>
                 <template v-else>
-                  App lista para usar sin conexión
+                  {{ t('pwa.offlineTitle') }}
                 </template>
               </p>
               <p class="text-slate-400 text-xs mt-0.5">
                 <template v-if="$pwa.needRefresh">
-                  Actualiza para obtener las últimas mejoras y funcionalidades.
+                  {{ t('pwa.updateText') }}
                 </template>
                 <template v-else>
-                  Ya puedes navegar la aplicación sin conexión a internet.
+                  {{ t('pwa.offlineText') }}
                 </template>
               </p>
             </div>
@@ -106,14 +108,14 @@ const handleDismiss = () => {
                   class="animate-spin"
                 />
                 <template v-else>
-                  Actualizar
+                  {{ t('pwa.updateBtn') }}
                 </template>
               </button>
               <button
                 @click="handleDismiss"
                 class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-500
                        hover:text-white hover:bg-slate-800 transition-all active:scale-90"
-                aria-label="Cerrar"
+                :aria-label="t('pwa.close')"
               >
                 <LucideX :size="16" />
               </button>

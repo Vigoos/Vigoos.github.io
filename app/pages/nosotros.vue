@@ -4,16 +4,22 @@
 
     <SeccionNosotrosPilares />
 
+    <!-- Misión / Visión / Valores (movido desde el home) -->
+    <SeccionNosotrosMisionVision />
+
     <SeccionPartnersDetailed />
   </main>
 </template>
 
 <script setup>
+useScrollReveal()
+const { t } = useI18n()
+
 // Definimos los metadatos para SEO de esta página
 useHead({
-  title: 'Identidad Corporativa | Biadoxid Pharma',
+  title: computed(() => t('seo.identidadTitle')),
   meta: [
-    { name: 'description', content: 'Conozca la historia, misión y visión de Biadoxid Pharma S.R.L. Más de 15 años importando salud a Bolivia.' }
+    { name: 'description', content: computed(() => t('seo.identidadDescription')) }
   ]
 })
 </script>

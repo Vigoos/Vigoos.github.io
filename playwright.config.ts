@@ -11,7 +11,7 @@ export default defineConfig({
   timeout: 60000,
 
   use: {
-    baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'http://127.0.0.1:3100',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
@@ -35,8 +35,10 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'pnpm run preview',
-    url: 'http://127.0.0.1:3000',
+    // Puerto 3100: el servidor dev del usuario suele ocupar 3000 ([::1]) y en Windows
+    // impide que el preview bindee el puerto 3000 (EADDRINUSE en ::).
+    command: 'pnpm run preview:e2e',
+    url: 'http://127.0.0.1:3100',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
     stdout: 'pipe',

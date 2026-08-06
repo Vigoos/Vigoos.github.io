@@ -4,6 +4,18 @@ export const useScrollReveal = () => {
   let observer
 
   onMounted(() => {
+    const elements = document.querySelectorAll('.reveal-on-scroll')
+
+    // Red de seguridad: navegadores muy antiguos sin IntersectionObserver
+    // muestran todo el contenido de inmediato (nada queda invisible).
+    if (typeof IntersectionObserver === 'undefined') {
+      elements.forEach(el => {
+        el.classList.add('opacity-100', 'translate-y-0')
+        el.classList.remove('opacity-0', 'translate-y-10')
+      })
+      return
+    }
+
     const observerCallback = (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -26,9 +38,6 @@ export const useScrollReveal = () => {
     }
 
     observer = new IntersectionObserver(observerCallback, observerOptions)
-    
-    // Buscamos todos los elementos con la clase reveal
-    const elements = document.querySelectorAll('.reveal-on-scroll')
     elements.forEach(el => observer.observe(el))
   })
 
