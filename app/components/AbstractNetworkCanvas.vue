@@ -4,11 +4,6 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 const canvasRef = ref(null)
 const containerRef = ref(null)
 
-// Prop para elegir el estilo del canvas:
-// - 'dark': heroes oscuros azulados
-// - 'light': hero blanco
-// - 'red': hero vino oscuro Biadoxid (partículas blancas, el blanco del logo)
-// - 'crimson': rojo brillante de marca #F40001 con partículas blancas
 const props = defineProps({
   variant: {
     type: String,
@@ -17,18 +12,16 @@ const props = defineProps({
   }
 })
 
-// Declaramos las variables fuera para poder limpiarlas cuando el componente se destruya
 let animationFrameId
 let resizeObserver
 let handleMouseMove
 let handleMouseLeave
 let visibilityObserver
-let isVisible = true // ← Nueva flag para pausar/reanudar animación
+let isVisible = true
 let isAnimating = false
 const reducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 onMounted(() => {
-  // En Vue, accedemos al elemento del DOM usando .value en lugar de .current
   const canvas = canvasRef.value
   const container = containerRef.value
   const ctx = canvas.getContext('2d')
@@ -130,7 +123,6 @@ onMounted(() => {
     if (!reducedMotion) animationFrameId = requestAnimationFrame(animate)
   }
 
-  // Arranca (o reanuda) el bucle de animación
   const start = () => {
     if (isAnimating || reducedMotion) return
     isAnimating = true
@@ -182,7 +174,6 @@ onMounted(() => {
   canvas.addEventListener('mousemove', handleMouseMove)
   canvas.addEventListener('mouseleave', handleMouseLeave)
 
-  // === IntersectionObserver: pausa la animación cuando el canvas no está visible ===
   visibilityObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       isVisible = entry.isIntersecting
@@ -195,7 +186,6 @@ onMounted(() => {
   }
 })
 
-// Limpiamos los eventos cuando el componente se destruye (equivalente al return en useEffect)
 onBeforeUnmount(() => {
   cancelAnimationFrame(animationFrameId)
   if (resizeObserver) resizeObserver.disconnect()

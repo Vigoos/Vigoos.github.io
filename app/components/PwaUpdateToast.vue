@@ -52,11 +52,9 @@ const handleDismiss = () => {
           class="relative bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl p-4 shadow-2xl
                  shadow-teal-500/10 overflow-hidden"
         >
-          <!-- Barra decorativa superior -->
           <div class="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-teal-500 via-teal-400 to-teal-500"></div>
 
           <div class="flex items-start gap-4">
-            <!-- Icono -->
             <div
               class="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center shrink-0"
             >
@@ -72,7 +70,6 @@ const handleDismiss = () => {
               />
             </div>
 
-            <!-- Contenido -->
             <div class="flex-1 min-w-0">
               <p class="text-white text-sm font-bold">
                 <template v-if="$pwa.needRefresh">
@@ -92,7 +89,6 @@ const handleDismiss = () => {
               </p>
             </div>
 
-            <!-- Acciones -->
             <div class="flex items-center gap-2 shrink-0">
               <button
                 v-if="$pwa.needRefresh"

@@ -32,7 +32,6 @@ const handleInstall = async () => {
     <LucideDownload :size="14" class="group-hover:animate-bounce" />
     <span class="hidden xl:inline">App</span>
 
-    <!-- Tooltip -->
     <span
       class="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-3 py-1.5 rounded-lg
              opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap

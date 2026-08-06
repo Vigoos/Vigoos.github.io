@@ -1,5 +1,4 @@
 <script setup>
-// Importamos tu base de datos JSON
 import catalogo from '../../data/catalogo.json'
 // 1. Pilar Vitaminas (Buscamos algún producto que sea Vitamina o C Vim)
 const pilarVitamina = catalogo.find(p => p.name.includes('Vim') || p.name.includes('Vitamina'))
@@ -12,7 +11,6 @@ const imgArnica = pilarArnica ? pilarArnica.image : ''
 // 3. Pilar Biotecnología (Buscamos la Tenecteplasa)
 const pilarBiotec = catalogo.find(p => p.name.includes('Tenecteplasa') || p.name.includes('TNK'))
 const imgTenecteplasa = pilarBiotec ? pilarBiotec.image : ''
-// Reutilizamos el composable de animaciones
 useScrollReveal()
 const { t } = useI18n()
 </script>

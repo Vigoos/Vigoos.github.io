@@ -1,7 +1,6 @@
 <script setup>
 const { t } = useI18n()
 
-// Animación de entrada al hacer scroll
 useScrollReveal()
 
 // Coordenadas de la sede: fuente única para el enlace y la ruta
@@ -127,7 +126,6 @@ const MAP_EMBED = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.5!
 </template>
 
 <style scoped>
-/* Animación de entrada suave de la sección (coherente con el formulario y proveedores) */
 .reveal-on-scroll {
   transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
 }

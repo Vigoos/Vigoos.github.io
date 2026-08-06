@@ -13,12 +13,10 @@ const sites = [
   { image: '/HERO-IMAGEN.webp', nameKey: 'mapaBolivia.sede' }
 ]
 
-// Zoom de la imagen de la sede (ojito)
 const zoomSite = ref(null)
 const openZoom = (site) => { zoomSite.value = site }
 const closeZoom = () => { zoomSite.value = null }
 
-// Bloqueo de scroll del fondo mientras el lightbox está abierto
 watch(zoomSite, (v) => {
   document.body.style.overflow = v ? 'hidden' : ''
 })
@@ -38,7 +36,6 @@ onBeforeUnmount(() => {
   <section class="py-24 bg-white">
     <div class="max-w-5xl mx-auto px-6 md:px-8">
 
-      <!-- Cabecera de la sección (badge al estilo del sitio) -->
       <div class="max-w-2xl mx-auto text-center mb-14 reveal-on-scroll opacity-0 translate-y-10">
         <div
           class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white text-xs font-bold uppercase tracking-widest mb-6 bg-linear-to-br from-[#F40001] via-[#B30000] to-[#7F0000] shadow-lg shadow-biadoxid-900/30">
@@ -57,7 +54,6 @@ onBeforeUnmount(() => {
       <!-- Tarjeta (izquierda) + Mapa (derecha, subido) -->
       <div class="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-10 lg:gap-14">
 
-        <!-- Tarjeta de la sede (flotante) -->
         <div v-for="(site, i) in sites" :key="i" class="w-64 shrink-0 floating-card lg:mt-16"
           :style="{ animationDelay: (i * 0.7) + 's' }">
           <div
@@ -68,11 +64,9 @@ onBeforeUnmount(() => {
             <div class="relative">
               <img :src="site.image" :alt="t(site.nameKey)" loading="lazy" class="w-full h-36 object-cover"
                 @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '12px'; $event.target.style.objectFit = 'contain'" />
-              <!-- Velo inferior para legibilidad de la etiqueta -->
               <div class="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent pointer-events-none"
                 aria-hidden="true"></div>
 
-              <!-- Ojito: abre la imagen ampliada -->
               <button type="button" @click="openZoom(site)"
                 class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 flex items-center justify-center text-slate-600 shadow-lg hover:bg-biadoxid-600 hover:text-white hover:border-biadoxid-600 transition-all duration-300 cursor-pointer"
                 :aria-label="t('mapaBolivia.viewImage', { name: t(site.nameKey) })"
@@ -80,14 +74,12 @@ onBeforeUnmount(() => {
                 <LucideEye :size="16" />
               </button>
 
-              <!-- Etiqueta de la sede sobre la imagen -->
               <div class="absolute bottom-3 left-3 flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse" aria-hidden="true"></span>
                 <span class="text-white text-[10px] font-bold uppercase tracking-widest drop-shadow">{{ t(site.nameKey) }}</span>
               </div>
             </div>
 
-            <!-- Datos de cobertura -->
             <div class="p-4">
               <div class="grid grid-cols-2 gap-2.5">
                 <div class="rounded-xl bg-slate-50 border border-slate-200 p-3 text-center">
@@ -103,7 +95,6 @@ onBeforeUnmount(() => {
           </div>
         </div>
 
-        <!-- Mapa de cobertura nacional -->
         <div class="w-full max-w-125 shrink-0 relative" role="img" :aria-label="t('mapaBolivia.aria')">
           <BoliviaHeroMap />
 
@@ -123,7 +114,6 @@ onBeforeUnmount(() => {
 
       </div>
 
-      <!-- Botón estratégico: conoce nuestra identidad (centrado) -->
       <div class="mt-14 flex justify-center reveal-on-scroll opacity-0 translate-y-10">
         <NuxtLink to="/nosotros"
           class="group inline-flex items-center gap-3 bg-biadoxid-600 hover:bg-biadoxid-700 text-white pl-7 pr-2 py-2 rounded-full font-bold shadow-lg shadow-biadoxid-900/30 hover:shadow-xl hover:shadow-biadoxid-900/40 hover:-translate-y-0.5 transition-all duration-300">
@@ -136,7 +126,6 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <!-- Lightbox: imagen ampliada de la sede -->
     <Teleport to="body">
       <Transition name="zoom-fade">
         <div v-if="zoomSite" class="fixed inset-0 z-300 bg-slate-950/85 backdrop-blur-md" @click="closeZoom"></div>
@@ -164,7 +153,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* Flotación suave de la tarjeta (sincronizada con los pulsos del mapa) */
 .floating-card {
   animation: float-card 5.5s ease-in-out infinite;
 }
@@ -174,7 +162,6 @@ onBeforeUnmount(() => {
   50% { transform: translateY(-9px); }
 }
 
-/* Flecha conectora: los puntitos fluyen hacia la tarjeta */
 .connector-path {
   stroke-dasharray: 6 6;
   animation: connector-flow 1.4s linear infinite;
@@ -184,7 +171,6 @@ onBeforeUnmount(() => {
   to { stroke-dashoffset: -12; }
 }
 
-/* Lightbox */
 .zoom-fade-enter-active, .zoom-fade-leave-active { transition: opacity 0.3s ease; }
 .zoom-fade-enter-from, .zoom-fade-leave-to { opacity: 0; }
 

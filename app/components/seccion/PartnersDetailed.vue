@@ -2,11 +2,9 @@
 import { ref, computed } from 'vue'
 import { Globe, ChevronRight, BadgeCheck, Eye } from 'lucide-vue-next'
 
-// Usamos el composable para la animación al hacer scroll
 useScrollReveal()
 const { t } = useI18n()
 
-// Modal de detalle del socio (abierto desde el ojito de cada tarjeta)
 const selectedPartner = ref(null)
 const isPartnerModalOpen = ref(false)
 
@@ -19,7 +17,6 @@ const closePartnerModal = () => {
   isPartnerModalOpen.value = false
 }
 
-// Índice del socio visible en el modal (para la navegación anterior/siguiente)
 const currentPartnerIndex = computed(() => {
   if (!selectedPartner.value) return 0
   const i = detailedPartners.findIndex(p => p.name === selectedPartner.value.name)
@@ -134,7 +131,6 @@ const detailedPartners = [
   <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-6 md:px-8">
       
-      <!-- Título de la sección -->
       <div class="max-w-3xl mx-auto text-center mb-20 reveal-on-scroll opacity-0 translate-y-10">
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white font-bold uppercase tracking-widest text-xs mb-6 bg-linear-to-br from-[#F40001] via-[#B30000] to-[#7F0000] shadow-lg shadow-biadoxid-900/30">
           <span class="w-2 h-2 rounded-full bg-white animate-pulse shrink-0"></span>
@@ -147,10 +143,8 @@ const detailedPartners = [
         </p>
       </div>
 
-      <!-- Cuadrícula generada dinámicamente -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
-        <!-- Las 8 tarjetas de los socios (rediseñadas: logo grande + detalle de empresa) -->
         <div 
           v-for="(partner, index) in detailedPartners" 
           :key="index"
@@ -160,9 +154,7 @@ const detailedPartners = [
           ]"
           :style="{ transitionDelay: partner.delay }"
         >
-          <!-- Banner superior: logo REAL GRANDE sobre el color de la empresa -->
           <div :class="['relative h-40 flex items-center justify-center overflow-hidden', partner.bgClass]">
-            <!-- Marca de agua decorativa del logotipo -->
             <img
               :src="partner.logo"
               alt=""
@@ -178,7 +170,6 @@ const detailedPartners = [
               loading="lazy"
               @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '4px'"
             />
-            <!-- Ojito: abre el modal de detalle del socio -->
             <button type="button" @click="openPartnerModal(partner)"
               class="absolute top-3 left-3 z-20 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 flex items-center justify-center text-slate-600 shadow-lg hover:bg-teal-500 hover:text-white hover:border-teal-500 hover:shadow-[0_0_15px_rgba(244,0,1,0.4)] transition-all duration-300 cursor-pointer"
               :aria-label="t('partnersDetailed.viewAria', { name: partner.name })"
@@ -190,7 +181,6 @@ const detailedPartners = [
             </span>
           </div>
 
-          <!-- Cuerpo de la tarjeta: más detalle de la empresa -->
           <div class="p-6 flex flex-col flex-1">
             <h3 class="font-black text-slate-900 text-xl leading-tight mb-0.5">{{ partner.name }}</h3>
             <span :class="['text-xs font-black uppercase tracking-[0.2em]', partner.colorClass]">{{ partner.shortName }}</span>
@@ -198,7 +188,6 @@ const detailedPartners = [
               {{ partner.desc }}
             </p>
 
-            <!-- Detalles de la alianza -->
             <div class="mt-5 pt-5 border-t border-slate-100 space-y-3">
               <div class="flex items-center gap-2.5 text-sm">
                 <Globe :size="15" class="text-slate-400 shrink-0" />
@@ -212,7 +201,6 @@ const detailedPartners = [
           </div>
         </div>
 
-        <!-- 9. Tarjeta CTA: Y muchos más... -->
         <NuxtLink to="/contacto"
           class="relative bg-white p-10 rounded-[2rem] border border-slate-200/70 overflow-hidden flex flex-col justify-center items-center text-center group cursor-pointer reveal-on-scroll opacity-0 translate-y-10 hover:-translate-y-2 hover:border-teal-400/60 hover:shadow-[0_24px_48px_-20px_rgba(15,23,42,0.28)] transition-all duration-500"
           style="transition-delay: 200ms;">

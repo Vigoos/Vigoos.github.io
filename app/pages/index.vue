@@ -4,14 +4,8 @@ import { computed, ref } from 'vue'
 const { notification, showNotification } = useNotification()
 const { t } = useI18n()
 
-// Hero definitivo: video (el elegido tras las pruebas).
-// Los demás héroes (Carousel, Rojo, Canvas) quedan disponibles como componentes
-// para reutilizar sus fondos en otras secciones si hace falta.
-
-// Animaciones reveal al hacer scroll en las secciones del home
 useScrollReveal()
 
-// Metadatos SEO para la página principal
 useHead({
   title: computed(() => t('seo.homeTitle')),
   meta: [
@@ -20,20 +14,17 @@ useHead({
 })
 
 
-// 1. Importamos el JSON (Ruta relativa)
 import catalogoBruto from '../data/catalogo.json'
 import { useCatalog } from '../composables/useCatalog'
-// Iconos para las tarjetas de logística (componente dinámico con :is)
 import { Snowflake, Activity, ShieldCheck } from 'lucide-vue-next'
 
 const { catName, localizeProduct } = useCatalog()
 
-// 2. Tomamos solo los primeros 6 productos para el Home (localizados al idioma activo)
+// Primeros 6 productos del catálogo (localizados al idioma activo)
 const productosDestacados = computed(() => {
   return catalogoBruto.slice(0, 6).map(localizeProduct)
 })
 
-// 3. Paleta de colores dinámica adaptada para el nuevo diseño Holográfico
 const colorThemes = [
   {
     gradientFrom: 'from-teal-500/10',
@@ -51,16 +42,12 @@ const colorThemes = [
     badgeText: 'text-teal-500'
   }
 ]
-// ... tus otros imports (catalogo, colorThemes, etc)
-
-// --- VARIABLES PARA EL MODAL DE PRODUCTOS ---
 const isProductModalOpen = ref(false)
 const selectedProduct = ref(null)
 
 const openProductModal = (producto) => {
   selectedProduct.value = producto
   isProductModalOpen.value = true
-  // Evitar que el fondo haga scroll cuando el modal está abierto
   document.body.style.overflow = 'hidden'
 }
 
@@ -69,18 +56,15 @@ const closeProductModal = () => {
   document.body.style.overflow = ''
 }
 
-// Funciones de utilidad
 const getInitials = (name) => {
   if (!name) return 'PR'
-  return name.substring(0, 3).toUpperCase() // Toma 3 letras como en tu captura "TNK", "ARN"
+  return name.substring(0, 3).toUpperCase()
 }
 
-// 4. Función temporal para el botón de Ficha Técnica
 const handleFichaClick = () => {
   showNotification(t('portafolio.fichaToast'))
 }
 
-// --- CARACTERÍSTICAS DE LOGÍSTICA (lista ordenada con separadores) ---
 const logisticaItems = [
   { icon: Snowflake, num: '01', titleKey: 'logistica.item1Title', textKey: 'logistica.item1Text' },
   { icon: Activity, num: '02', titleKey: 'logistica.item2Title', textKey: 'logistica.item2Text' },
@@ -90,10 +74,8 @@ const logisticaItems = [
 
 <template>
   <div>
-    <!-- Hero definitivo: video -->
     <HeroVideo />
 
-    <!-- Mapa de cobertura nacional con la tarjeta de la sede central -->
     <SeccionMapaBolivia />
 
     <section id="productos" class="py-32 bg-white relative overflow-hidden">
@@ -188,7 +170,6 @@ const logisticaItems = [
     <section id="logistica" class="py-32 bg-white text-slate-900 relative overflow-hidden">
       <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
 
-        <!-- Cabecera centrada (mismo lenguaje que la sección nosotros) -->
         <div class="max-w-3xl mx-auto text-center mb-20 reveal-on-scroll opacity-0 translate-y-10">
           <div
             class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white text-xs font-bold uppercase tracking-widest mb-6 bg-linear-to-br from-teal-500 via-teal-700 to-[#7F0000] shadow-lg shadow-biadoxid-900/30">
@@ -202,7 +183,6 @@ const logisticaItems = [
           <p class="text-slate-600 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
             {{ t('logistica.text') }}
           </p>
-          <!-- Divisor de marca -->
           <div class="flex items-center justify-center gap-2">
             <span class="w-10 h-px bg-slate-200"></span>
             <span class="w-16 h-1 rounded-full bg-teal-500"></span>
@@ -210,10 +190,8 @@ const logisticaItems = [
           </div>
         </div>
 
-        <!-- Grid: imagen + lista ordenada de características -->
         <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
 
-          <!-- Imagen: foto nítida + card de temperatura -->
           <div class="order-2 lg:order-1 relative reveal-on-scroll opacity-0 translate-y-10">
             <ImageZoom src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=800&q=70" :alt="t('logistica.imgAlt')">
               <div class="relative h-125 rounded-[2.5rem] overflow-hidden shadow-[0_20px_60px_-20px_rgba(15,23,42,0.3)] group border border-slate-200/70">
@@ -222,10 +200,8 @@ const logisticaItems = [
                 </div>
                 <!-- Gradiente sutil inferior SOLO para legibilidad de la tarjeta (sin lavado blanco) -->
                 <div class="absolute inset-0 bg-linear-to-t from-slate-950/45 via-transparent to-transparent" aria-hidden="true"></div>
-                <!-- Anillo de marca en hover -->
                 <div class="absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-white/10 group-hover:ring-teal-500/50 transition-all duration-500 pointer-events-none" aria-hidden="true"></div>
 
-                <!-- Card de temperatura premium -->
                 <div
                   class="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-58 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl p-4 shadow-xl overflow-hidden">
                   <span class="absolute top-0 inset-x-0 h-1 bg-teal-500" aria-hidden="true"></span>
@@ -244,7 +220,6 @@ const logisticaItems = [
             </ImageZoom>
           </div>
 
-          <!-- Tarjetas de características: fondo rojo degradado (sin partículas) al hover/focus -->
           <div class="order-1 lg:order-2 reveal-on-scroll opacity-0 translate-y-10" style="transition-delay: 100ms">
             <div class="space-y-5">
               <div v-for="(item, index) in logisticaItems" :key="item.num"
@@ -280,7 +255,6 @@ const logisticaItems = [
       </div>
     </section>
 
-    <!-- Notificación Toast -->
     <Teleport to="body">
       <Transition name="toast-anim">
         <div v-if="notification.show" class="fixed top-6 left-1/2 -translate-x-1/2 z-200 bg-slate-800 border border-teal-500/30 text-white px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-3 pointer-events-none">

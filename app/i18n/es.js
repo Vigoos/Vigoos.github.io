@@ -27,9 +27,7 @@ export default {
   },
   hero: {
     badge: 'La salud no espera. Nosotros tampoco.',
-    // 3 mensajes rotativos del hero (cambio de escena cada pocos segundos)
-    // Títulos recortados (máx. 2-3 líneas), rojo solo en las 2 últimas palabras, subtítulo de una línea directa.
-    // Cada slide tiene CTA primario (rojo de marca) y secundario (contorno) para no duplicar acciones.
+    // 3 mensajes rotativos: rojo solo en las 2 últimas palabras, CTA primario y secundario por slide
     slides: [
       {
         titlePre: 'Conectamos laboratorios con todo el',
@@ -56,7 +54,6 @@ export default {
         secondaryTo: '/productos'
       }
     ],
-    // Texto constante del CTA primario (no cambia entre slides porque todos los CTAs primarios hacen la misma acción)
     primaryCta: 'Ver Catálogo',
     rotatingLabel: 'Mensajes destacados',
     rotatingGo: 'Ir al mensaje',

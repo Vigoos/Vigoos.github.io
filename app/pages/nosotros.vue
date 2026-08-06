@@ -15,7 +15,6 @@
 useScrollReveal()
 const { t } = useI18n()
 
-// Definimos los metadatos para SEO de esta página
 useHead({
   title: computed(() => t('seo.identidadTitle')),
   meta: [

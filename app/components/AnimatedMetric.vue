@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="elRef" :class="minimal ? 'text-left' : 'text-center'">
-    <!-- Variante minimal: sin icono, número grande + etiqueta con punto rojo de marca -->
+
     <template v-if="minimal">
       <span class="block text-3xl md:text-4xl font-black text-white leading-none tracking-tight">
         <span class="inline-flex items-center gap-1.5">
@@ -78,14 +78,13 @@ onBeforeUnmount(() => {
           <span>{{ displayed }}{{ suffix }}</span>
         </span>
       </span>
-      <!-- Altura fija para el label: 2 líneas máx. Evita que "Productos Importados" (2 palabras)
-           desalinee las métricas respecto a "Años de Experiencia" y "Laboratorios Aliados". -->
+      <!-- min-h-[2.5em]: evita que un label de 2 líneas desalinee las métricas -->
       <span class="block mt-2 text-[10px] md:text-xs font-bold text-white/70 uppercase tracking-widest leading-tight min-h-[2.5em]">
         {{ label }}
       </span>
     </template>
 
-    <!-- Variante clásica: caja de icono + número + etiqueta centrados -->
+
     <template v-else>
       <div
         :class="dark

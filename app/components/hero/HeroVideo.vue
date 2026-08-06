@@ -81,14 +81,11 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <!-- Altura ligeramente mayor al viewport (112vh): la ola blanca del borde inferior
-       queda justo debajo del pliegue de la pantalla al cargar, sin franja visible.
-       Padding inferior generoso para que la ola no tape contenido. -->
+  <!-- Altura 112vh: la ola blanca del borde inferior queda bajo el pliegue al cargar -->
     <header class="hero relative w-full min-h-[112vh] flex flex-col overflow-hidden bg-[#8f0000]">
     <!-- Fondo: video de la empresa a pantalla completa -->
     <div class="absolute inset-0 z-0">
-      <!-- SIN autoplay en el HTML (SSR-safe): el video no descarga en la carga inicial.
-           En desktop onMounted arranca la reproducción; en móvil espera scroll/interacción. -->
+      <!-- Sin autoplay en HTML (SSR-safe); onMounted arranca en desktop, scroll/tap en móvil -->
       <video
         ref="videoRef"
         class="w-full h-full object-cover"
@@ -114,17 +111,13 @@ onBeforeUnmount(() => {
     <!-- Remate inferior: ola suave blanca -->
     <HeroWaveDivider />
 
-    <!-- Contenido principal del Hero: centrado pero ligeramente elevado (pt menor + pb mayor)
-         para compensar el hero más alto (112vh) y que el badge/CTAs/métricas queden a la
-         altura visual correcta sin chocar con el nav fijo. -->
+    <!-- Contenido elevado (pt menor + pb mayor) para compensar el hero de 112vh sin chocar con el nav -->
     <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10 w-full flex-1 flex flex-col justify-center pt-24 lg:pt-28 pb-24 md:pb-28 pointer-events-none">
       <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end w-full">
-        <!-- Columna izquierda: HeroContent (Badge + Título + Subtítulo + CTAs + Puntos) -->
         <div class="lg:col-span-7 xl:col-span-8">
           <HeroContent />
         </div>
 
-        <!-- Columna derecha: Métricas (25+ Años, 5+ Labs, 100+ Productos) alineadas abajo a la derecha -->
         <div class="lg:col-span-5 xl:col-span-4 flex justify-start lg:justify-end pb-2 pointer-events-auto">
           <HeroMetrics />
         </div>

@@ -3,7 +3,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <!-- Métricas animadas del Hero -->
+
   <div class="hero-metrics-shadow animate-fade-up flex flex-wrap lg:flex-nowrap items-center gap-4 md:gap-8 select-none"
     style="animation-delay: 450ms">
     <AnimatedMetric :value="25" suffix="+" :label="t('hero.metricYears')" minimal autoplay :start-delay="800" />

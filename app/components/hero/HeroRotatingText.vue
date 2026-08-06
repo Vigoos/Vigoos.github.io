@@ -92,9 +92,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="relative flex flex-col" @mouseenter="pause" @mouseleave="resume" @focusin="pause" @focusout="onFocusOut">
-    <!-- Slides rotativos: solo título + subtítulo. Los CTAs están fuera para no animarse. -->
-    <!-- Los slides no activos siguen en el flujo del grid (sin absolute) para que la
-         altura del contenedor SIEMPRE sea la del slide más alto → hero estable. -->
+    <!-- Slides en grid (sin absolute): la altura del contenedor es siempre la del slide más alto -->
     <div class="grid" role="group" aria-roledescription="carousel" :aria-label="t('hero.rotatingLabel')" aria-live="off">
       <div
         v-for="(slide, i) in slides"
@@ -115,25 +113,23 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <!-- Botones CTA — fuera del loop de animación. Siempre visibles, sin transición de entrada.
-         Tamaño idéntico: mismos px, py, text-size y min-width para que ambos botones
-         se vean del mismo ancho visual. -->
+    <!-- CTAs fuera del loop de animación; mismo tamaño para que se vean igual de ancho -->
     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pointer-events-auto mt-8 mb-2">
-      <!-- CTA primario (rojo de marca) -->
+
       <NuxtLink :to="primaryCtaTo"
         class="cta-btn bg-teal-500 hover:bg-teal-600 text-white px-8 py-3.5 sm:px-9 sm:py-4 rounded-full text-sm sm:text-base font-bold transition-all duration-300 shadow-[0_0_20px_rgba(15,173,173,0.45)] hover:shadow-[0_0_30px_rgba(15,173,173,0.65)] hover:-translate-y-0.5 flex items-center justify-center gap-3 min-w-55 sm:min-w-60">
         <span>{{ primaryCtaText }}</span>
         <LucideArrowRight :size="18" />
       </NuxtLink>
 
-      <!-- CTA secundario (contorno cristal) -->
+
       <NuxtLink :to="secondaryCtaTo"
         class="cta-btn border border-white/40 bg-white/5 hover:bg-white/15 hover:border-white text-white px-8 py-3.5 sm:px-9 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.25)] hover:-translate-y-0.5 flex items-center justify-center hero-text-shadow min-w-55 sm:min-w-60">
         <span>{{ secondaryCtaText }}</span>
       </NuxtLink>
     </div>
 
-    <!-- Puntos indicadores de paginación + barra de progreso de los slides -->
+
     <div class="mt-2 flex items-center gap-3 pointer-events-auto z-20" role="group" :aria-label="t('hero.rotatingLabel')">
       <button
         v-for="i in slides.length"

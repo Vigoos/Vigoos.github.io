@@ -2,11 +2,7 @@
 @import "@fontsource/jetbrains-mono/latin-400.css";
 @import "@fontsource/jetbrains-mono/latin-700.css";
 
-/* ============================================
-   Tipografía auto-hospedada (offline, sin terceros).
-   Inter Variable: @font-face manual SOLO latin (el sitio es español) para no
-   inflar el CSS bloqueante con subsets de cirílico/griego/vietnamita.
-   ============================================ */
+/* Inter Variable auto-hospedada, solo subset latin (el sitio es español) */
 @font-face {
   font-family: 'Inter Variable';
   font-style: normal;
@@ -16,35 +12,19 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* ============================================
-   Tipografía global: Inter Variable (reina de la web moderna)
-   Auto-hospedada vía @fontsource → offline/PWA sin depender de Google.
-   Bold/Extra-Bold para títulos, Regular para subtítulos (manual recomendado).
-   ============================================ */
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-/* ============================================
-   Anti-desbordamiento horizontal global
-   Evita scroll horizontal fantasma en cualquier dispositivo (Nest Hub Max,
-   tablets, celulares estrechos, etc.). "clip" no rompe position: sticky ni
-   position: fixed (a diferencia de "hidden", que en iOS viejo rompía los
-   iconos fijos como WhatsApp/BackToTop) y no crea contenedor de scroll.
-   ============================================ */
+/* Anti-desbordamiento horizontal: "clip" no rompe position: fixed ni sticky */
 html,
 body {
   overflow-x: clip;
 }
 
-/* ============================================
-   Paleta de marca Biadoxid Pharma (logo: blanco + rojo #F40001)
-   Sobrescribe la escala "teal" para que todos los componentes
-   usen automáticamente el rojo de la marca.
-   DEFAULT = #F40001 · hover = #B30000 · light = #FFF0F0
-   ============================================ */
+/* Paleta de marca: la escala "teal" queda sobrescrita por el rojo del logo */
 @theme {
   --color-teal-50: #FFF0F0;
   --color-teal-100: #FFE0E1;
@@ -58,13 +38,6 @@ body {
   --color-teal-900: #6B0001;
   --color-teal-950: #3D0001;
 
-  /* ============================================
-     Paleta oficial Biadoxid Pharma (logo: blanco + rojo #F50000)
-     Uso: bg-biadoxid-600 = rojo exacto del logo ·
-          bg-biadoxid-50 = fondos suaves tipo alert/badge ·
-          hover:bg-biadoxid-700 = hover states ·
-          text-biadoxid-900 = texto sobre fondo claro
-     ============================================ */
   --color-biadoxid-50: #FFF0F0;
   --color-biadoxid-100: #FFE0E0;
   --color-biadoxid-200: #FFBDBD;
@@ -78,17 +51,12 @@ body {
   --color-biadoxid-950: #470606;
 }
 
-/* ============================================
-   Scrollbar global de marca (rojo Biadoxid #F40001)
-   Aplica en toda la página y en los contenedores con scroll
-   ============================================ */
-/* Firefox: cubre TODOS los contenedores con scroll, no solo la página */
+/* Scrollbar de marca: Firefox (todos los contenedores con scroll) */
 * {
   scrollbar-color: #F40001 rgba(15, 23, 42, 0.08);
   scrollbar-width: thin;
 }
 
-/* WebKit / Chromium */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -112,22 +80,15 @@ body {
   background: rgba(15, 23, 42, 0.08);
 }
 
-/* ============================================
-   Animaciones elegantes para el Home
-   ============================================ */
-/* Entrada escalonada del hero: sube y aparece suavemente */
 @keyframes fade-up {
   0% { opacity: 0; transform: translateY(28px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-up {
-  /* backwards: aplica el estado inicial durante el delay pero no bloquea
-     los transforms de hover (hover:-translate-y-2) después de terminar */
   animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
-/* Reveal al hacer scroll (usado por useScrollReveal) */
 .reveal-on-scroll {
   transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -149,7 +110,6 @@ body {
   }
 }
 
-/* Animación global para notificaciones toast */
 .toast-anim-enter-active,
 .toast-anim-leave-active {
   transition: all 0.3s ease;
@@ -160,9 +120,6 @@ body {
   transform: translate(-50%, -10px);
 }
 
-/* ============================================
-   Transiciones entre páginas (Page Transitions)
-   ============================================ */
 .page-enter-active,
 .page-leave-active {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);

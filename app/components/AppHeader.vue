@@ -84,8 +84,7 @@ watch(() => route.path, () => nextTick(resetIndicatorToActive))
       ]">
 
         <NuxtLink to="/" class="flex items-center gap-2 md:gap-3 cursor-pointer min-w-0">
-          <!-- Logo oficial sin recortes + réplica tipográfica del logotipo.
-               Tamaños compactos en móvil para que el nav nunca desborde (hamburguesa siempre dentro). -->
+          <!-- Logo + réplica tipográfica; tamaños compactos en móvil para que el nav no desborde -->
           <img src="/BIADOXID-PHARMA-LOGO-v2.webp" alt="Biadoxid Pharma S.R.L."
             class="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-xl object-contain shrink-0">
           <div class="leading-none min-w-0">
@@ -144,7 +143,6 @@ watch(() => route.path, () => nextTick(resetIndicatorToActive))
           </NuxtLink>
         </div>
 
-        <!-- Selector de idioma + hamburguesa visibles por debajo de lg -->
         <div class="lg:hidden flex items-center gap-1.5 sm:gap-2 shrink-0">
           <LanguageSelector />
           <button

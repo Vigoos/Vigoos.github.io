@@ -43,21 +43,18 @@ onMounted(() => {
       pulseRadius: 0
     }))
 
-    const CURVATURE = 0.16 // qué tanto se "levanta" el arco respecto a la línea recta
+    const CURVATURE = 0.16
     routes = routesData.map(route => {
       const start = cities.find(c => c.id === route[0])
       const end = cities.find(c => c.id === route[1])
 
-      // Punto de control para una curva bezier cuadrática: se desplaza
-      // perpendicularmente al segmento start->end, siempre en el mismo
-      // sentido de rotación. Como todas las rutas parten de La Paz, esto
-      // da el efecto de "abanico" de rutas aéreas, no líneas rectas rígidas.
+      // Punto de control de la curva bezier: perpendicular al segmento start->end,
+      // en el mismo sentido de rotación → efecto de "abanico" de rutas aéreas.
       const dx = end.px - start.px
       const dy = end.py - start.py
       const dist = Math.hypot(dx, dy)
       const midX = (start.px + end.px) / 2
       const midY = (start.py + end.py) / 2
-      // perpendicular unitario rotado 90° (-dy, dx) normalizado
       const perpX = dist === 0 ? 0 : -dy / dist
       const perpY = dist === 0 ? 0 : dx / dist
       const controlX = midX + perpX * dist * CURVATURE
@@ -70,8 +67,7 @@ onMounted(() => {
   }
 
   const initCanvas = () => {
-    // Ajustar para pantallas de alta densidad (Retina)
-    // Tope de densidad: en pantallas 3x el canvas triplicaría su área de dibujo
+    // Densidad Retina con tope 2x (evita triplicar el área de dibujo en pantallas 3x)
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const rect = container.getBoundingClientRect()
 
@@ -87,28 +83,24 @@ onMounted(() => {
 
   class Transport {
     constructor() {
-      // Elegir una ruta aleatoria
       this.route = routes[Math.floor(Math.random() * routes.length)]
 
-      // Dirección aleatoria (ida o vuelta)
       this.reverse = Math.random() > 0.5
       this.startCity = this.reverse ? this.route.end : this.route.start
       this.endCity = this.reverse ? this.route.start : this.route.end
 
       this.progress = 0
-      // Velocidad aleatoria para simular diferentes vehículos
       this.speed = Math.random() * 0.004 + 0.002
       this.active = true
 
-      // Efecto de estela
       this.history = []
     }
 
     update() {
       this.progress += this.speed
 
-      // Interpolación cuadrática a lo largo del mismo arco que se dibuja
-      // (no la línea recta), para que el punto de luz "vuele" sobre la curva.
+      // Interpolación cuadrática sobre el mismo arco que se dibuja
+      // (no la línea recta), para que el punto "vuele" sobre la curva.
       const t = this.reverse ? 1 - this.progress : this.progress
       const p0 = this.route.start
       const p1 = this.route.end
@@ -119,7 +111,7 @@ onMounted(() => {
       const currentY = oneMinusT * oneMinusT * p0.py + 2 * oneMinusT * t * cy + t * t * p1.py
 
       this.history.push({ x: currentX, y: currentY })
-      if (this.history.length > 10) this.history.shift() // Longitud de la estela
+      if (this.history.length > 10) this.history.shift()
 
       if (this.progress >= 1) {
         this.active = false
@@ -129,7 +121,6 @@ onMounted(() => {
     draw() {
       if (!this.active) return
 
-      // Dibujar estela
       if (this.history.length > 1) {
         ctx.beginPath()
         ctx.moveTo(this.history[0].x, this.history[0].y)
@@ -139,13 +130,11 @@ onMounted(() => {
         ctx.strokeStyle = colors.hub
         ctx.lineWidth = 2
         ctx.lineCap = 'round'
-        // Gradiente de desvanecimiento para la estela
         ctx.globalAlpha = 0.5
         ctx.stroke()
         ctx.globalAlpha = 1
       }
 
-      // Dibujar cabeza brillante
       const pos = this.history[this.history.length - 1]
       if (pos) {
         ctx.beginPath()
@@ -168,7 +157,6 @@ onMounted(() => {
 
     ctx.clearRect(0, 0, width, height)
 
-    // 1. Dibujar arcos base (rutas) — curvas bezier en vez de líneas rectas
     routes.forEach(route => {
       if (!route.start || !route.end) return
       ctx.beginPath()
@@ -181,8 +169,7 @@ onMounted(() => {
       ctx.setLineDash([])
     })
 
-    // 2. Actualizar y dibujar transportes (Pulsos)
-    // Generar nuevos transportes aleatoriamente
+    // Actualizar y dibujar transportes (Pulsos)
     if (Math.random() < 0.05 && transports.length < 25) {
       transports.push(new Transport())
       emit('transport-count', transports.length + 15)
@@ -192,14 +179,13 @@ onMounted(() => {
       transports[i].update()
       transports[i].draw()
       if (!transports[i].active) {
-        // Animación de pulso en la ciudad al llegar
         transports[i].endCity.pulseRadius = 15
         transports.splice(i, 1)
         emit('transport-count', transports.length + 15)
       }
     }
 
-    // 3. Dibujar ciudades (Nodos)
+    // Dibujar ciudades (Nodos)
     cities.forEach(city => {
       // Anillo de radar permanente para la sede central (La Paz), para que
       // se lea de inmediato como el origen de la red, no solo un hub más.
@@ -212,7 +198,7 @@ onMounted(() => {
         ctx.stroke()
       }
 
-      // Animar el pulso de llegada
+      // Pulso de llegada
       if (city.pulseRadius > 0) {
         ctx.beginPath()
         ctx.arc(city.px, city.py, 15 - city.pulseRadius + 4, 0, Math.PI * 2)
@@ -235,16 +221,15 @@ onMounted(() => {
       ctx.fill()
       ctx.shadowBlur = 0
 
-      // Etiquetas (Nombres de ciudades)
+      // Etiquetas (nombres de ciudades)
       ctx.font = city.isHub ? "bold 11px 'JetBrains Mono', monospace" : "10px 'JetBrains Mono', monospace"
       ctx.fillStyle = city.isHub ? '#18181B' : '#71717A'
       ctx.textAlign = 'left'
       ctx.textBaseline = 'middle'
 
-      // Ajustar posición de etiqueta para que no tape los nodos
+      // Ajuste de posición para no tapar los nodos
       let textX = city.px + 10
       let textY = city.py
-      // Excepciones manuales para que se vea mejor
       if (city.id === 'LPZ') textX = city.px - 45
       if (city.id === 'ORU') textX = city.px - 45
       if (city.id === 'PTI') textX = city.px - 45
@@ -254,7 +239,7 @@ onMounted(() => {
       // Etiqueta secundaria para la sede central
       if (city.isHub) {
         ctx.font = "9px 'JetBrains Mono', monospace"
-        ctx.fillStyle = colors.hub // Rojo de marca
+        ctx.fillStyle = colors.hub
         ctx.fillText('SEDE CENTRAL', textX, textY + 13)
       }
     })
@@ -273,11 +258,9 @@ onMounted(() => {
   if (reducedMotion) animate() // un solo frame: red estática
   else start()
 
-  // Reajustar en cambios de tamaño del contenedor
   resizeObserver = new ResizeObserver(() => initCanvas())
   if (container) resizeObserver.observe(container)
 
-  // Pausar animación cuando el mapa no está visible
   visibilityObserver = new IntersectionObserver((entries) => {
     isVisible = entries[0].isIntersecting
     if (isVisible) start()

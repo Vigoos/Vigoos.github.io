@@ -5,7 +5,7 @@ const slides = computed(() => t('hero.slides'))
 
 <template>
   <div class="pointer-events-auto flex flex-col justify-center h-full">
-    <!-- Badge superior: pill de cristal sutil alineada a la izquierda -->
+
     <div
       class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/25 text-white text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-md animate-fade-up self-start shrink-0"
       style="animation-delay: 50ms">
@@ -13,7 +13,7 @@ const slides = computed(() => t('hero.slides'))
       {{ t('hero.badge') }}
     </div>
 
-    <!-- Componente de texto rotativo con títulos, subtítulos, CTAs y puntos de paginación integrados -->
+
     <HeroRotatingText :slides="slides" />
   </div>
 </template>

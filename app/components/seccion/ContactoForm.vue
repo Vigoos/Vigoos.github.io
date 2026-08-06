@@ -3,7 +3,6 @@ import { ref, reactive, computed } from 'vue'
 
 const { t } = useI18n()
 
-// Animación de entrada de las tarjetas al hacer scroll
 useScrollReveal()
 
 const formStatus = ref('idle') // idle, submitting, success, error
@@ -20,7 +19,6 @@ const formData = reactive({
   mensaje: ''
 })
 
-// === VALIDACIÓN EN TIEMPO REAL ===
 const errors = reactive({
   nombre: '',
   email: '',
@@ -59,7 +57,6 @@ const buildPayload = () => ({
 })
 
 const handleSubmit = async () => {
-  // Validar todos los campos antes de enviar
   validateField('nombre')
   validateField('email')
   validateField('mensaje')
@@ -203,12 +200,9 @@ const resetForm = () => {
           <div
             class="reveal-on-scroll opacity-0 translate-y-10 relative bg-white border border-slate-200/80 rounded-[2.5rem] p-8 md:p-12 shadow-[0_15px_40px_-15px_rgba(180,0,0,0.16)] transition-all duration-500 overflow-hidden hover:shadow-[0_25px_55px_-20px_rgba(180,0,0,0.22)]"
             style="transition-delay: 150ms">
-            <!-- Franja roja superior discreta, igual que la tarjeta "Y muchos más..." -->
             <span class="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-[#F40001] via-[#B30000] to-[#7F0000]" aria-hidden="true"></span>
-            <!-- Resplandor decorativo rojo muy tenue (no compite con la tarjeta roja de Sede Central) -->
             <div class="absolute -top-24 -right-24 w-56 h-56 bg-teal-500/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
 
-            <!-- Encabezado del formulario -->
             <div class="relative z-10 flex items-start gap-4 mb-8">
               <div
                 class="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 shrink-0 shadow-sm">
@@ -331,7 +325,6 @@ const resetForm = () => {
 </template>
 
 <style scoped>
-/* Animación de entrada suave de las tarjetas (coherente con la sección de proveedores) */
 .reveal-on-scroll {
   transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
 }

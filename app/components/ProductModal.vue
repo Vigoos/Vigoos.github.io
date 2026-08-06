@@ -24,16 +24,14 @@ const emit = defineEmits(['close', 'change-product'])
 const displayProduct = computed(() => localizeProduct(props.product))
 
 const activeTab = ref('desc')
-const isExpanded = ref(false) // Controla el "Ver más" de la descripción
+const isExpanded = ref(false)
 const toast = ref({ show: false, message: '' })
 
-// Resetear variables cuando se abre un nuevo producto
 watch(() => props.product, () => {
   activeTab.value = 'desc'
-  isExpanded.value = false // Vuelve a colapsar el texto al cambiar de producto
+  isExpanded.value = false
 })
 
-// Pestañas exactas de tu diseño (nombres traducidos)
 const tabs = [
   { id: 'desc', nameKey: 'productModal.tabDesc' },
   { id: 'uso', nameKey: 'productModal.tabUso' },
@@ -193,13 +191,11 @@ const triggerAction = (msg) => {
 </template>
 
 <style scoped>
-/* Scrollbar */
 .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.04); border-radius: 4px; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(244,0,1,0.45); border-radius: 4px; }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(244,0,1,0.75); }
 
-/* Animations */
 .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 

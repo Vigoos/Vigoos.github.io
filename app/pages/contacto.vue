@@ -1,7 +1,6 @@
 <script setup>
 const { t } = useI18n()
 
-// Metadatos para que la página sea profesional en Google
 useHead({
   title: computed(() => t('seo.contactoTitle')),
   meta: [

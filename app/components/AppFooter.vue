@@ -3,13 +3,10 @@ import { ref } from 'vue'
 
 const { t } = useI18n()
 
-// Calculamos el año actual dinámicamente
 const currentYear = ref(new Date().getFullYear())
 
-// Estado para controlar qué modal está abierto (null = cerrado, 'privacidad' o 'terminos')
 const activeModalType = ref(null)
 
-// Función para abrir el modal
 const openModal = (type) => {
   activeModalType.value = type
 }
@@ -17,10 +14,8 @@ const openModal = (type) => {
 
 <template>
   <footer id="contacto" class="bg-biadoxid-600 relative overflow-hidden pt-20 pb-10">
-    <!-- Fondo: mismo tratamiento que la tarjeta Visión del home (canvas rojo de marca) -->
     <AbstractNetworkCanvas variant="crimson" />
 
-    <!-- Velo uniforme para legibilidad (sin difuminados ni manchas) -->
     <div class="absolute inset-0 bg-[#3d0001]/15 pointer-events-none" aria-hidden="true"></div>
     <span class="absolute top-0 inset-x-0 h-1 bg-white/40 z-[2]" aria-hidden="true"></span>
 
@@ -28,7 +23,6 @@ const openModal = (type) => {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
 
         <div class="lg:col-span-4">
-          <!-- Logo idéntico al del header nav, en la variante sobre rojo (blanco, como la tarjeta Visión) -->
           <NuxtLink to="/" class="flex items-center gap-2.5 md:gap-3 cursor-pointer mb-6">
             <img src="/BIADOXID-PHARMA-LOGO-v2.webp" alt="Biadoxid Pharma S.R.L."
               class="w-9 h-9 md:w-10 md:h-10 rounded-xl object-contain shrink-0" loading="lazy">

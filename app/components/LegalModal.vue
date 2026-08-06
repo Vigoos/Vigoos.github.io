@@ -22,7 +22,6 @@ const legalKeys = {
   }
 }
 
-// Computada para saber qué contenido mostrar
 const currentContent = computed(() => {
   if (!props.type) return null
   const keys = legalKeys[props.type]
@@ -33,7 +32,6 @@ const currentContent = computed(() => {
   }
 })
 
-// Función real de descarga
 const handleDownloadPDF = () => {
   if (!props.type) return
 
@@ -120,7 +118,6 @@ const handleDownloadPDF = () => {
 </template>
 
 <style scoped>
-/* 1. Animación del fondo (Fade) */
 .modal-pop-enter-active,
 .modal-pop-leave-active {
   transition: opacity 0.3s ease;
@@ -131,7 +128,6 @@ const handleDownloadPDF = () => {
   opacity: 0;
 }
 
-/* 2. Animación de la caja blanca (Zoom y leve desplazamiento) */
 .modal-pop-enter-active .modal-box,
 .modal-pop-leave-active .modal-box {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);

@@ -7,7 +7,6 @@ const { notification, showNotification } = useNotification()
 const { t } = useI18n()
 const { catName, localizeProduct, searchText } = useCatalog()
 
-// Metadatos SEO
 useHead({
   title: computed(() => `${t('productosPage.title')} | Biadoxid Pharma`),
   meta: [
@@ -15,16 +14,13 @@ useHead({
   ]
 })
 
-// Variables de estado
 const searchQuery = ref('')
 const activeCategory = ref('Todos')
 const sortBy = ref('relevance')
 
-// Configuración de Paginación Real
 const itemsPerPage = 9
 const currentPage = ref(1)
 
-// Variables para el Modal de Detalles
 const isProductModalOpen = ref(false)
 const selectedProduct = ref(null)
 
@@ -52,14 +48,12 @@ const getInitials = (name) => {
   return name.substring(0, 3).toUpperCase()
 }
 
-// Colores dinámicos para las tarjetas en Blanco/Claro (Light Holographic)
 const colorThemes = [
   { gradientFrom: 'from-teal-500/10', gradientTo: 'to-slate-100/50', badgeText: 'text-teal-600' },
   { gradientFrom: 'from-teal-600/10', gradientTo: 'to-slate-100/50', badgeText: 'text-teal-700' },
   { gradientFrom: 'from-teal-400/10', gradientTo: 'to-slate-100/50', badgeText: 'text-teal-500' }
 ]
 
-// Generar categorías dinámicas desde el JSON
 const categories = computed(() => {
   const counts = {}
   catalogo.forEach(p => {
@@ -72,7 +66,6 @@ const categories = computed(() => {
   })).sort((a, b) => b.count - a.count)
 })
 
-// Lógica combinada: Filtrado y Búsqueda
 const filteredProducts = computed(() => {
   let filtered = catalogo.filter(p => {
     const cat = p.category || 'Especialidad'
@@ -84,17 +77,15 @@ const filteredProducts = computed(() => {
     return matchCategory && matchSearch
   })
 
-  // Lógica de Ordenamiento
   if (sortBy.value === 'name') {
     filtered.sort((a, b) => a.name.localeCompare(b.name))
   } else if (sortBy.value === 'recent') {
-    filtered.sort((a, b) => b.id - a.id) // Asumiendo que IDs más altos son más nuevos
+    filtered.sort((a, b) => b.id - a.id) // los IDs más altos son los más nuevos
   }
 
   return filtered
 })
 
-// Lógica de Paginación sobre los productos ya filtrados
 const totalPages = computed(() => Math.ceil(filteredProducts.value.length / itemsPerPage))
 
 const paginatedProducts = computed(() => {
@@ -103,10 +94,9 @@ const paginatedProducts = computed(() => {
   return filteredProducts.value.slice(start, end)
 })
 
-// Productos localizados al idioma activo para renderizar
 const displayProducts = computed(() => paginatedProducts.value.map(localizeProduct))
 
-// Resetear a la página 1 cuando el usuario busca algo o cambia de categoría
+// Al filtrar/buscar/ordenar, volver a la página 1
 watch([searchQuery, activeCategory, sortBy], () => {
   currentPage.value = 1
 })
@@ -354,7 +344,6 @@ const resetFilters = () => {
 </template>
 
 <style scoped>
-/* Scrollbar de marca (rojo Biadoxid) */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.08); }
 ::-webkit-scrollbar-thumb { background: #F40001; border-radius: 999px; border: 2px solid rgba(15, 23, 42, 0.08); }

@@ -27,9 +27,7 @@ export default {
   },
   hero: {
     badge: 'Health cannot wait. Neither can we.',
-    // 3 rotating hero messages (scene change every few seconds)
-    // Trimmed titles (max. 2-3 lines), red only in the last 2 words, one-line direct subtitle.
-    // Each slide has a primary CTA (brand red) and a secondary (outline) so actions never duplicate.
+    // 3 rotating messages: red only in the last 2 words, primary + secondary CTA per slide
     slides: [
       {
         titlePre: 'Connecting laboratories across all',
