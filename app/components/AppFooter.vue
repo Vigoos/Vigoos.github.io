@@ -1,48 +1,51 @@
 <script setup>
 import { ref } from 'vue'
 
-// Calculamos el año actual dinámicamente
+const { t } = useI18n()
+
 const currentYear = ref(new Date().getFullYear())
 
-// Estado para controlar qué modal está abierto (null = cerrado, 'privacidad' o 'terminos')
 const activeModalType = ref(null)
 
-// Función para abrir el modal
 const openModal = (type) => {
   activeModalType.value = type
 }
 </script>
 
 <template>
-  <footer id="contacto" class="bg-slate-950 relative overflow-hidden pt-20 pb-10">
-    <div class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-teal-500/50 to-transparent"></div>
+  <footer id="contacto" class="bg-biadoxid-600 relative overflow-hidden pt-20 pb-10">
+    <AbstractNetworkCanvas variant="crimson" />
 
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-teal-900/10 rounded-full blur-[100px] pointer-events-none"></div>
-    <div class="absolute top-0 right-0 w-96 h-96 bg-blue-900/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[#3d0001]/15 pointer-events-none" aria-hidden="true"></div>
+    <span class="absolute top-0 inset-x-0 h-1 bg-white/40 z-[2]" aria-hidden="true"></span>
 
     <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
 
         <div class="lg:col-span-4">
-          <div class="flex items-center gap-3 mb-6">
-            <NuxtLink to="/" class="flex items-center gap-4 cursor-pointer">
-              <img src="/BIADOXID-PHARMA-LOGO-v2.webp" alt="Biadoxid Pharma S.R.L."
-                class="w-9 h-9 md:w-10 md:h-10 rounded-xl object-contain" loading="lazy">
-              <div>
-                <div class="text-lg md:text-xl font-black tracking-tight text-white leading-none">BIADOXID</div>
-                <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-teal-400 font-bold">Pharma
-                  S.R.L.</span>
+          <NuxtLink to="/" class="flex items-center gap-2.5 md:gap-3 cursor-pointer mb-6">
+            <img src="/BIADOXID-PHARMA-LOGO-v2.webp" alt="Biadoxid Pharma S.R.L."
+              class="w-9 h-9 md:w-10 md:h-10 rounded-xl object-contain shrink-0" loading="lazy">
+            <div class="leading-none">
+              <div class="flex items-center gap-1 sm:gap-1.5 md:gap-2">
+                <span
+                  class="text-[15px] sm:text-lg md:text-xl font-black tracking-tight text-white drop-shadow leading-none">BIADOXID</span>
+                <span
+                  class="bg-white text-biadoxid-700 text-[15px] sm:text-lg md:text-xl font-black px-1 sm:px-1.5 md:px-2 py-0.5 rounded-md tracking-wide leading-none">PHARMA</span>
+                <span
+                  class="text-[10px] sm:text-[11px] md:text-xs font-black tracking-tight text-white leading-none">S.R.L</span>
               </div>
-            </NuxtLink>
-          </div>
-          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-light max-w-sm">
-            Innovación, ética y compromiso absoluto con la salud pública y privada. Somos el puente vital entre la
-            biotecnología global y Bolivia.
+              <span class="block italic text-[8px] md:text-[9px] tracking-wide text-white/85">innovation
+                for better health</span>
+            </div>
+          </NuxtLink>
+          <p class="text-white/90 text-sm leading-relaxed mb-6 font-light max-w-sm">
+            {{ t('footer.description') }}
           </p>
           <div class="flex gap-4">
 
             <a href="https://www.facebook.com/biadoxidpharmasrl/" target="_blank" rel="noopener noreferrer"
-              class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:border-blue-500/30 hover:bg-blue-500/10 transition-all group"
+              class="w-10 h-10 rounded-full bg-white/10 border border-white/25 flex items-center justify-center text-white hover:text-blue-400 hover:border-blue-400/50 hover:bg-blue-500/20 transition-all group"
               title="Facebook">
               <svg class="w-5 h-5 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                 <path
@@ -51,7 +54,7 @@ const openModal = (type) => {
             </a>
 
             <a href="https://www.instagram.com/biadoxidpharma/" target="_blank" rel="noopener noreferrer"
-              class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-pink-500 hover:border-pink-500/30 hover:bg-pink-500/10 transition-all group"
+              class="w-10 h-10 rounded-full bg-white/10 border border-white/25 flex items-center justify-center text-white hover:text-pink-400 hover:border-pink-400/50 hover:bg-pink-500/20 transition-all group"
               title="Instagram">
               <svg class="w-5 h-5 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                 <path
@@ -60,7 +63,7 @@ const openModal = (type) => {
             </a>
 
             <a href="https://www.tiktok.com/@biadoxidpharma.srl" target="_blank" rel="noopener noreferrer"
-              class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all group"
+              class="w-10 h-10 rounded-full bg-white/10 border border-white/25 flex items-center justify-center text-white hover:bg-white hover:text-biadoxid-700 hover:border-white transition-all group"
               title="TikTok">
               <svg class="w-5 h-5 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                 <path
@@ -70,7 +73,7 @@ const openModal = (type) => {
 
             <a href="https://wa.me/59176265905?text=Hola%20Biadoxid%20Pharma,%20me%20gustaría%20obtener%20más%20información."
               target="_blank" rel="noopener noreferrer"
-              class="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-green-500 hover:border-green-500/30 hover:bg-green-500/10 transition-all group"
+              class="w-10 h-10 rounded-full bg-white/10 border border-white/25 flex items-center justify-center text-white hover:text-green-400 hover:border-green-400/50 hover:bg-green-500/20 transition-all group"
               title="WhatsApp">
               <svg class="w-5 h-5 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                 <path
@@ -82,75 +85,67 @@ const openModal = (type) => {
         </div>
 
         <div class="lg:col-span-2">
-          <h2 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Compañía</h2>
+          <h2 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">{{ t('footer.company') }}</h2>
           <ul class="space-y-4">
             <li><NuxtLink to="/"
-                class="text-slate-400 text-sm hover:text-teal-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Inicio</NuxtLink></li>
+                class="text-white text-sm hover:text-white transition-colors flex items-center gap-2 group"><span
+                  class="w-0 group-hover:w-2 h-px bg-white transition-all duration-300"></span> {{ t('header.navHome') }}</NuxtLink></li>
             <li><NuxtLink to="/nosotros"
-                class="text-slate-400 text-sm hover:text-teal-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Identidad</NuxtLink></li>
+                class="text-white text-sm hover:text-white transition-colors flex items-center gap-2 group"><span
+                  class="w-0 group-hover:w-2 h-px bg-white transition-all duration-300"></span> {{ t('header.navIdentidad') }}</NuxtLink></li>
             <li><NuxtLink to="/productos"
-                class="text-slate-400 text-sm hover:text-teal-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Portafolio
-                Clínico</NuxtLink></li>
+                class="text-white text-sm hover:text-white transition-colors flex items-center gap-2 group"><span
+                  class="w-0 group-hover:w-2 h-px bg-white transition-all duration-300"></span> {{ t('header.navPortafolio') }}</NuxtLink></li>
             <li><NuxtLink to="/#logistica"
-                class="text-slate-400 text-sm hover:text-teal-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span> Logística</NuxtLink></li>
+                class="text-white text-sm hover:text-white transition-colors flex items-center gap-2 group"><span
+                  class="w-0 group-hover:w-2 h-px bg-white transition-all duration-300"></span> {{ t('header.navLogisticaMobile') }}</NuxtLink></li>
           </ul>
         </div>
 
         <div class="lg:col-span-3">
-          <h2 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Regulación</h2>
+          <h2 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">{{ t('footer.regulation') }}</h2>
           <ul class="space-y-4 mb-6">
             <li>
               <button @click="openModal('privacidad')"
-                class="text-slate-400 text-sm hover:text-teal-400 transition-colors w-full text-left flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span>Aviso de
-                Privacidad</button>
+                class="text-white/75 text-sm hover:text-white transition-colors w-full text-left flex items-center gap-2 group"><span
+                  class="w-0 group-hover:w-2 h-px bg-white transition-all duration-300"></span>{{ t('footer.privacidad') }}</button>
             </li>
             <li>
               <button @click="openModal('terminos')"
-                class="text-slate-400 text-sm hover:text-teal-400 transition-colors w-full text-left flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span>Términos y
-                Condiciones</button>
+                class="text-white/75 text-sm hover:text-white transition-colors w-full text-left flex items-center gap-2 group"><span
+                  class="w-0 group-hover:w-2 h-px bg-white transition-all duration-300"></span>{{ t('footer.terminos') }}</button>
             </li>
             <li><NuxtLink to="/contacto"
-                class="text-slate-400 text-sm hover:text-teal-400 transition-colors w-full text-left flex items-center gap-2 group"><span
-                  class="w-0 group-hover:w-2 h-px bg-teal-400 transition-all duration-300"></span>Farmacovigilancia</NuxtLink>
+                class="text-white/75 text-sm hover:text-white transition-colors w-full text-left flex items-center gap-2 group"><span
+                  class="w-0 group-hover:w-2 h-px bg-white transition-all duration-300"></span>{{ t('footer.farmacovigilancia') }}</NuxtLink>
             </li>
           </ul>
 
           <div
-            class="p-4 rounded-2xl bg-linear-to-br from-teal-500/10 to-blue-500/5 border border-teal-500/20 relative overflow-hidden group">
-            <div
-              class="absolute top-0 right-0 w-16 h-16 bg-teal-500/10 rounded-full blur-xl group-hover:bg-teal-500/20 transition-colors">
-            </div>
+            class="p-4 rounded-2xl bg-white/10 border border-white/25 relative overflow-hidden group">
             <div class="flex gap-3 relative z-10 items-start">
-              <LucideShieldCheck class="text-teal-400 shrink-0 mt-0.5" :size="20" />
+              <LucideShieldCheck class="text-white shrink-0 mt-0.5" :size="20" />
               <div>
-                <div class="text-white font-bold text-sm leading-none mb-1">Certificación AGEMED</div>
-                <div class="text-slate-400 text-xs leading-relaxed">Empresa certificada y regulada bajo la normativa
-                  vigente.</div>
+                <div class="text-white font-bold text-sm leading-none mb-1">{{ t('footer.certTitle') }}</div>
+                <div class="text-white/90 text-xs leading-relaxed">{{ t('footer.certText') }}</div>
               </div>
             </div>
           </div>
         </div>
 
         <div class="lg:col-span-3">
-          <h2 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Contacto Directo</h2>
+          <h2 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">{{ t('footer.contactDirect') }}</h2>
           <ul class="space-y-5">
 
             <li>
               <NuxtLink to="/contacto#mapa" class="flex items-start gap-4 group cursor-pointer">
                 <div
-                  class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-teal-500 shrink-0 group-hover:bg-teal-500 group-hover:text-white transition-colors duration-300">
+                  class="w-8 h-8 rounded-lg bg-white/10 border border-white/25 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-biadoxid-700 group-hover:border-white transition-colors duration-300">
                   <LucideMapPin :size="16" />
                 </div>
-                <span class="text-slate-400 text-sm pt-1.5 leading-relaxed group-hover:text-teal-400 transition-colors">
+                <span class="text-white/90 text-sm pt-1.5 leading-relaxed group-hover:text-white transition-colors">
                   La Paz, Bolivia<br />
-                  <span class="text-slate-400 text-xs group-hover:text-teal-400 transition-colors">Sede Operativa
-                    Central</span>
+                  <span class="text-white/90 text-xs group-hover:text-white transition-colors">{{ t('footer.sede') }}</span>
                 </span>
               </NuxtLink>
             </li>
@@ -158,11 +153,11 @@ const openModal = (type) => {
             <li>
               <a href="tel:+59176265905" class="flex items-center gap-4 group cursor-pointer">
                 <div
-                  class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-teal-500 shrink-0 group-hover:bg-teal-500 group-hover:text-white transition-colors duration-300">
+                  class="w-8 h-8 rounded-lg bg-white/10 border border-white/25 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-biadoxid-700 group-hover:border-white transition-colors duration-300">
                   <LucidePhone :size="16" />
                 </div>
                 <span
-                  class="text-slate-300 font-mono text-sm tracking-wide group-hover:text-teal-400 transition-colors">
+                  class="text-white font-mono text-sm tracking-wide group-hover:text-white transition-colors">
                   +591 76265905
                 </span>
               </a>
@@ -171,10 +166,10 @@ const openModal = (type) => {
             <li>
               <a href="mailto:biadoxidpharma@outlook.com" class="flex items-center gap-4 group cursor-pointer">
                 <div
-                  class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-teal-500 shrink-0 group-hover:bg-teal-500 group-hover:text-white transition-colors duration-300">
+                  class="w-8 h-8 rounded-lg bg-white/10 border border-white/25 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-biadoxid-700 group-hover:border-white transition-colors duration-300">
                   <LucideMail :size="16" />
                 </div>
-                <span class="text-slate-300 text-sm group-hover:text-teal-400 transition-colors">
+                <span class="text-white/90 text-sm group-hover:text-white transition-colors">
                   biadoxidpharma@outlook.com
                 </span>
               </a>
@@ -184,14 +179,14 @@ const openModal = (type) => {
         </div>
       </div>
 
-      <div class="pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-slate-400 text-xs font-medium">
-          © {{ currentYear }} Biadoxid Pharma S.R.L. Todos los derechos reservados.
+      <div class="pt-8 border-t border-white/15 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-white/80 text-xs font-medium">
+          © {{ currentYear }} Biadoxid Pharma S.R.L. {{ t('footer.copyright') }}
         </p>
-        <div class="flex items-center gap-2 text-slate-400 text-xs font-medium">
-          Diseñado con <span class="text-teal-400 relative inline-block">
-            precisión clínica
-            <span class="absolute -right-2 top-0 w-1 h-1 bg-teal-400 rounded-full animate-ping"></span>
+        <div class="flex items-center gap-2 text-white/80 text-xs font-medium">
+          {{ t('footer.designed') }} <span class="text-white relative inline-block">
+            {{ t('footer.precision') }}
+            <span class="absolute -right-2 top-0 w-1 h-1 bg-white rounded-full animate-ping"></span>
           </span>
         </div>
       </div>

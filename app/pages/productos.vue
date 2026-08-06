@@ -1,27 +1,26 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import catalogo from '../data/catalogo.json'
+import { useCatalog } from '../composables/useCatalog'
 
 const { notification, showNotification } = useNotification()
+const { t } = useI18n()
+const { catName, localizeProduct, searchText } = useCatalog()
 
-// Metadatos SEO
 useHead({
-  title: 'Portafolio Clínico | Biadoxid Pharma',
+  title: computed(() => `${t('productosPage.title')} | Biadoxid Pharma`),
   meta: [
-    { name: 'description', content: 'Explore nuestro catálogo completo de medicamentos de alta especialidad, dermocosméticos y suplementos. Representación exclusiva de laboratorios internacionales.' }
+    { name: 'description', content: computed(() => t('productosPage.metaDescription')) }
   ]
 })
 
-// Variables de estado
 const searchQuery = ref('')
 const activeCategory = ref('Todos')
-const sortBy = ref('Relevancia')
+const sortBy = ref('relevance')
 
-// Configuración de Paginación Real
 const itemsPerPage = 9
 const currentPage = ref(1)
 
-// Variables para el Modal de Detalles
 const isProductModalOpen = ref(false)
 const selectedProduct = ref(null)
 
@@ -41,7 +40,7 @@ const closeProductModal = () => {
 }
 
 const handleFichaClick = () => {
-  showNotification("La Ficha Técnica no está disponible en este momento. El documento PDF se encuentra en proceso de solicitud al laboratorio.")
+  showNotification(t('productosPage.fichaToast'))
 }
 
 const getInitials = (name) => {
@@ -49,14 +48,12 @@ const getInitials = (name) => {
   return name.substring(0, 3).toUpperCase()
 }
 
-// Colores dinámicos para las tarjetas en Blanco/Claro (Light Holographic)
 const colorThemes = [
   { gradientFrom: 'from-teal-500/10', gradientTo: 'to-slate-100/50', badgeText: 'text-teal-600' },
-  { gradientFrom: 'from-blue-500/10', gradientTo: 'to-slate-100/50', badgeText: 'text-blue-600' },
-  { gradientFrom: 'from-rose-500/10', gradientTo: 'to-slate-100/50', badgeText: 'text-rose-600' }
+  { gradientFrom: 'from-teal-600/10', gradientTo: 'to-slate-100/50', badgeText: 'text-teal-700' },
+  { gradientFrom: 'from-teal-400/10', gradientTo: 'to-slate-100/50', badgeText: 'text-teal-500' }
 ]
 
-// Generar categorías dinámicas desde el JSON
 const categories = computed(() => {
   const counts = {}
   catalogo.forEach(p => {
@@ -69,32 +66,26 @@ const categories = computed(() => {
   })).sort((a, b) => b.count - a.count)
 })
 
-// Lógica combinada: Filtrado y Búsqueda
 const filteredProducts = computed(() => {
   let filtered = catalogo.filter(p => {
     const cat = p.category || 'Especialidad'
     const matchCategory = activeCategory.value === 'Todos' || cat === activeCategory.value
     
     const searchLower = searchQuery.value.toLowerCase()
-    const descLower = (p.shortDescription || '').toLowerCase()
-    const matchSearch = p.name.toLowerCase().includes(searchLower) || 
-                        cat.toLowerCase().includes(searchLower) ||
-                        descLower.includes(searchLower)
+    const matchSearch = !searchLower || searchText(p).includes(searchLower)
     
     return matchCategory && matchSearch
   })
 
-  // Lógica de Ordenamiento
-  if (sortBy.value === 'Nombre (A - Z)') {
+  if (sortBy.value === 'name') {
     filtered.sort((a, b) => a.name.localeCompare(b.name))
-  } else if (sortBy.value === 'Más recientes') {
-    filtered.sort((a, b) => b.id - a.id) // Asumiendo que IDs más altos son más nuevos
+  } else if (sortBy.value === 'recent') {
+    filtered.sort((a, b) => b.id - a.id) // los IDs más altos son los más nuevos
   }
 
   return filtered
 })
 
-// Lógica de Paginación sobre los productos ya filtrados
 const totalPages = computed(() => Math.ceil(filteredProducts.value.length / itemsPerPage))
 
 const paginatedProducts = computed(() => {
@@ -103,7 +94,9 @@ const paginatedProducts = computed(() => {
   return filteredProducts.value.slice(start, end)
 })
 
-// Resetear a la página 1 cuando el usuario busca algo o cambia de categoría
+const displayProducts = computed(() => paginatedProducts.value.map(localizeProduct))
+
+// Al filtrar/buscar/ordenar, volver a la página 1
 watch([searchQuery, activeCategory, sortBy], () => {
   currentPage.value = 1
 })
@@ -111,25 +104,25 @@ watch([searchQuery, activeCategory, sortBy], () => {
 const resetFilters = () => {
   searchQuery.value = ''
   activeCategory.value = 'Todos'
-  sortBy.value = 'Relevancia'
+  sortBy.value = 'relevance'
   currentPage.value = 1
 }
 </script>
 
 <template>
-  <div class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen selection:bg-teal-500/30 selection:text-teal-900">
+  <div class="bg-white text-slate-800 font-sans antialiased min-h-screen selection:bg-teal-500/30 selection:text-teal-900">
     
-    <div class="bg-slate-950 relative overflow-hidden pb-32">
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[24px_24px] pointer-events-none"></div>
-      <div class="absolute top-0 right-0 w-150 h-150 bg-teal-900/20 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="bg-white relative overflow-hidden pb-32">
       
-      <div class="max-w-7xl mx-auto px-6 pt-24 pb-8 relative z-10 text-center md:text-left">
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-mono tracking-widest mb-6">
-          <LucideDatabase class="w-3.5 h-3.5" /> VADEMÉCUM DIGITAL
+      <div class="max-w-4xl mx-auto px-6 pt-30 pb-8 relative z-10 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white text-xs font-bold uppercase tracking-widest mb-6 bg-linear-to-br from-teal-500 via-teal-700 to-[#7F0000] shadow-lg shadow-biadoxid-900/30">
+          <span class="w-2 h-2 rounded-full bg-white animate-pulse shrink-0"></span>
+          {{ t('productosPage.heroBadge') }}
         </div>
-        <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight mb-4">Portafolio Clínico</h1>
-        <p class="text-slate-400 max-w-2xl text-lg md:text-xl mx-auto md:mx-0 font-light leading-relaxed">
-          Explora nuestro catálogo de soluciones médicas y dermatológicas de alta precisión, respaldadas por estándares internacionales.
+        <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight mb-4">{{ t('productosPage.titlePre') }} <span
+            class="text-transparent bg-clip-text bg-linear-to-r from-teal-500 via-teal-600 to-teal-700">{{ t('productosPage.titleHighlight') }}</span></h1>
+        <p class="text-slate-600 max-w-2xl text-lg md:text-xl mx-auto font-light leading-relaxed">
+          {{ t('productosPage.text') }}
         </p>
       </div>
     </div>
@@ -146,17 +139,17 @@ const resetFilters = () => {
             <input 
               v-model="searchQuery"
               type="text" 
-              placeholder="Buscar producto o activo..." 
+              :placeholder="t('productosPage.searchPlaceholder')" 
               class="w-full bg-slate-50 text-slate-900 rounded-xl pl-10 pr-10 py-3.5 text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-teal-500/20 focus:bg-white transition-all placeholder:text-slate-400"
             >
-            <button v-if="searchQuery" @click="searchQuery = ''" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-rose-500 transition-colors cursor-pointer">
+            <button v-if="searchQuery" @click="searchQuery = ''" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-teal-600 transition-colors cursor-pointer">
               <LucideX class="w-4 h-4" />
             </button>
           </div>
 
           <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <h2 class="text-slate-900 font-bold uppercase tracking-widest text-xs mb-6 flex items-center gap-2">
-              <LucideLayers class="w-4 h-4 text-teal-500" /> Categorías Clínicas
+              <LucideLayers class="w-4 h-4 text-teal-500" /> {{ t('productosPage.categoriesTitle') }}
             </h2>
             <ul class="space-y-1.5">
               <li>
@@ -166,8 +159,8 @@ const resetFilters = () => {
                   :class="activeCategory === 'Todos' ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'"
                 >
                   <div class="flex items-center gap-3">
-                    <div class="w-1.5 h-1.5 rounded-full transition-colors" :class="activeCategory === 'Todos' ? 'bg-teal-500 shadow-[0_0_8px_#2dd4bf]' : 'bg-slate-300'"></div>
-                    Todos los productos
+                    <div class="w-1.5 h-1.5 rounded-full transition-colors" :class="activeCategory === 'Todos' ? 'bg-teal-500 shadow-[0_0_8px_#F40001]' : 'bg-slate-300'"></div>
+                    {{ t('productosPage.allProducts') }}
                   </div>
                   <span class="text-xs font-semibold px-2 py-0.5 rounded-md border" :class="activeCategory === 'Todos' ? 'bg-teal-100/50 border-teal-200 text-teal-700' : 'bg-slate-100 border-slate-200 text-slate-600'">
                     {{ catalogo.length }}
@@ -181,8 +174,8 @@ const resetFilters = () => {
                   :class="activeCategory === cat.name ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'"
                 >
                   <div class="flex items-center gap-3 text-left">
-                    <div class="w-1.5 h-1.5 rounded-full transition-colors" :class="activeCategory === cat.name ? 'bg-teal-500 shadow-[0_0_8px_#2dd4bf]' : 'bg-slate-300'"></div>
-                    <span class="truncate max-w-35 block">{{ cat.name }}</span>
+                    <div class="w-1.5 h-1.5 rounded-full transition-colors" :class="activeCategory === cat.name ? 'bg-teal-500 shadow-[0_0_8px_#F40001]' : 'bg-slate-300'"></div>
+                    <span class="truncate max-w-35 block">{{ catName(cat.name) }}</span>
                   </div>
                   <span class="text-xs font-semibold px-2 py-0.5 rounded-md border" :class="activeCategory === cat.name ? 'bg-teal-100/50 border-teal-200 text-teal-700' : 'bg-slate-100 border-slate-200 text-slate-600'">
                     {{ cat.count }}
@@ -192,13 +185,13 @@ const resetFilters = () => {
             </ul>
           </div>
 
-          <div class="bg-linear-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white shadow-lg overflow-hidden relative group hidden lg:block">
-            <div class="absolute -top-10 -right-10 w-32 h-32 bg-teal-500/20 rounded-full blur-2xl group-hover:bg-teal-400/30 transition-colors"></div>
-            <LucideHeadset class="w-8 h-8 text-teal-400 mb-4 relative z-10" />
-            <h3 class="font-bold text-lg mb-2 relative z-10">¿Necesitas asesoría?</h3>
-            <p class="text-slate-400 text-sm mb-4 relative z-10">Nuestros especialistas médicos están listos para resolver tus dudas de inmediato.</p>
-            <a href="https://wa.me/59176265905" target="_blank" class="w-full bg-teal-500 hover:bg-teal-400 text-white text-sm font-bold py-3 rounded-xl transition-colors relative z-10 shadow-[0_0_15px_rgba(20,184,166,0.3)] flex justify-center items-center gap-2">
-              Contactar Asesor
+          <div class="relative overflow-hidden bg-linear-to-br from-teal-500 via-teal-700 to-[#7F0000] rounded-2xl p-6 text-white shadow-lg group hidden lg:block">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-colors"></div>
+            <LucideHeadset class="w-8 h-8 text-white mb-4 relative z-10" />
+            <h3 class="font-bold text-lg mb-2 relative z-10">{{ t('productosPage.asesorTitle') }}</h3>
+            <p class="text-white/80 text-sm mb-4 relative z-10">{{ t('productosPage.asesorText') }}</p>
+            <a href="https://wa.me/59176265905" target="_blank" class="w-full bg-white hover:bg-slate-50 text-biadoxid-700 text-sm font-bold py-3 rounded-xl transition-colors relative z-10 shadow-lg flex justify-center items-center gap-2">
+              {{ t('productosPage.asesorCta') }}
             </a>
           </div>
         </aside>
@@ -207,16 +200,16 @@ const resetFilters = () => {
           
           <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full">
             <p class="text-slate-600 text-sm">
-              Mostrando <strong class="text-slate-900">{{ filteredProducts.length }}</strong> resultados
-              <span v-if="searchQuery"> para "<strong class="text-teal-600">{{ searchQuery }}</strong>"</span>
+              {{ t('productosPage.showingBefore') }} <strong class="text-slate-900">{{ filteredProducts.length }}</strong> {{ t('productosPage.showingAfter') }}
+              <span v-if="searchQuery"> {{ t('productosPage.forQuery') }} "<strong class="text-teal-600">{{ searchQuery }}</strong>"</span>
             </p>
             <div class="flex items-center gap-3">
-              <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest hidden sm:inline-block">Ordenar por:</span>
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest hidden sm:inline-block">{{ t('productosPage.sortLabel') }}</span>
               <div class="relative">
-                <select v-model="sortBy" aria-label="Ordenar productos" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-xl pl-4 pr-10 py-2 focus:outline-hidden appearance-none cursor-pointer hover:bg-slate-100 transition-colors">
-                  <option>Relevancia</option>
-                  <option>Nombre (A - Z)</option>
-                  <option>Más recientes</option>
+                <select v-model="sortBy" :aria-label="t('productosPage.sortLabel')" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-xl pl-4 pr-10 py-2 focus:outline-hidden appearance-none cursor-pointer hover:bg-slate-100 transition-colors">
+                  <option value="relevance">{{ t('productosPage.sortRelevance') }}</option>
+                  <option value="name">{{ t('productosPage.sortName') }}</option>
+                  <option value="recent">{{ t('productosPage.sortRecent') }}</option>
                 </select>
                 <LucideChevronDown class="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
@@ -227,17 +220,17 @@ const resetFilters = () => {
             <div class="w-16 h-16 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-400 mb-4 shadow-inner">
               <LucideSearchX class="w-8 h-8" />
             </div>
-            <h3 class="text-xl font-bold text-slate-900 mb-2">No se encontraron productos</h3>
-            <p class="text-slate-500 max-w-md text-sm">No hay resultados clínicos que coincidan con tus filtros seleccionados.</p>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">{{ t('productosPage.emptyTitle') }}</h3>
+            <p class="text-slate-500 max-w-md text-sm">{{ t('productosPage.emptyText') }}</p>
             <button @click="resetFilters" class="mt-6 text-teal-600 font-semibold hover:text-teal-700 flex items-center gap-2 bg-teal-50 px-4 py-2 rounded-lg transition-colors cursor-pointer text-sm">
-              <LucideRotateCcw class="w-4 h-4" /> Limpiar filtros
+              <LucideRotateCcw class="w-4 h-4" /> {{ t('productosPage.resetFilters') }}
             </button>
           </div>
 
           <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
             
             <div 
-              v-for="(producto, index) in paginatedProducts" :key="producto.id"
+              v-for="(producto, index) in displayProducts" :key="producto.id"
               class="relative h-105 rounded-4xl overflow-hidden group cursor-pointer border border-slate-200 hover:border-teal-300 transition-all duration-500 shadow-sm hover:shadow-xl bg-white animate-in fade-in"
               @click="openProductModal(producto)"
             >
@@ -263,7 +256,7 @@ const resetFilters = () => {
               <div class="absolute bottom-2 left-2 right-2 rounded-3xl bg-white/80 backdrop-blur-xl border border-white/40 p-5 transform transition-transform duration-500 z-30 flex flex-col justify-end shadow-sm">
                 
                 <span :class="['text-[10px] font-bold uppercase tracking-widest mb-1.5 block truncate', colorThemes[index % 3].badgeText]">
-                  {{ producto.category || 'Especialidad' }}
+                  {{ producto.category || catName() }}
                 </span>
                 
                 <h3 class="text-lg font-bold text-slate-900 mb-2 leading-tight truncate">
@@ -279,12 +272,12 @@ const resetFilters = () => {
                 
                 <div class="mt-auto pt-3 border-t border-slate-100 flex items-center justify-between">
                   <button @click.stop="handleFichaClick" class="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 hover:text-slate-700 transition-colors group/btn z-40 relative">
-                    <LucideFileText :size="14" class="group-hover/btn:text-rose-500 transition-colors" />
-                    <span>FICHA.PDF</span>
+                    <LucideFileText :size="14" class="group-hover/btn:text-teal-400 transition-colors" />
+                    <span>{{ t('portafolio.ficha') }}</span>
                   </button>
 
                   <div class="flex items-center gap-2 text-xs font-semibold text-slate-700 group-hover:text-teal-600 transition-colors relative z-40">
-                    <span>Detalles</span>
+                    <span>{{ t('portafolio.detalles') }}</span>
                     <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-teal-500 transition-colors border border-slate-200">
                       <LucideArrowRight :size="12" class="-rotate-45 group-hover:rotate-0 transition-transform duration-300 text-slate-500 group-hover:text-white" />
                     </div>
@@ -300,7 +293,7 @@ const resetFilters = () => {
               <button 
                 @click="currentPage > 1 && currentPage--" 
                 :disabled="currentPage === 1"
-                aria-label="Página anterior"
+                :aria-label="t('productosPage.prevAria')"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
               >
                 <LucideChevronLeft class="w-5 h-5" />
@@ -318,7 +311,7 @@ const resetFilters = () => {
               <button 
                 @click="currentPage < totalPages && currentPage++" 
                 :disabled="currentPage === totalPages"
-                aria-label="Página siguiente"
+                :aria-label="t('productosPage.nextAria')"
                 class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
               >
                 <LucideChevronRight class="w-5 h-5" />
@@ -351,9 +344,8 @@ const resetFilters = () => {
 </template>
 
 <style scoped>
-/* Scrollbar moderno */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.08); }
+::-webkit-scrollbar-thumb { background: #F40001; border-radius: 999px; border: 2px solid rgba(15, 23, 42, 0.08); }
+::-webkit-scrollbar-thumb:hover { background: #B30000; }
 </style>

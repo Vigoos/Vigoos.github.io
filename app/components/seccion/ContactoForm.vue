@@ -1,6 +1,10 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 
+const { t } = useI18n()
+
+useScrollReveal()
+
 const formStatus = ref('idle') // idle, submitting, success, error
 const submitted = ref(false)
 
@@ -15,7 +19,6 @@ const formData = reactive({
   mensaje: ''
 })
 
-// === VALIDACIÓN EN TIEMPO REAL ===
 const errors = reactive({
   nombre: '',
   email: '',
@@ -27,11 +30,11 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const validateField = (field) => {
   const val = formData[field].trim()
   if (field === 'nombre') {
-    errors.nombre = !val ? 'El nombre es obligatorio' : val.length < 3 ? 'Mínimo 3 caracteres' : ''
+    errors.nombre = !val ? t('contactForm.errNombreRequired') : val.length < 3 ? t('contactForm.errNombreMin') : ''
   } else if (field === 'email') {
-    errors.email = !val ? 'El email es obligatorio' : !emailRegex.test(val) ? 'Email no válido' : ''
+    errors.email = !val ? t('contactForm.errEmailRequired') : !emailRegex.test(val) ? t('contactForm.errEmailInvalid') : ''
   } else if (field === 'mensaje') {
-    errors.mensaje = !val ? 'El mensaje es obligatorio' : val.length < 10 ? 'Mínimo 10 caracteres' : ''
+    errors.mensaje = !val ? t('contactForm.errMensajeRequired') : val.length < 10 ? t('contactForm.errMensajeMin') : ''
   }
 }
 
@@ -54,7 +57,6 @@ const buildPayload = () => ({
 })
 
 const handleSubmit = async () => {
-  // Validar todos los campos antes de enviar
   validateField('nombre')
   validateField('email')
   validateField('mensaje')
@@ -139,111 +141,133 @@ const resetForm = () => {
         
         <div class="lg:col-span-2 space-y-8">
           
-          <div class="bg-slate-950 border border-slate-200 rounded-3xl p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-            <h3 class="text-2xl font-bold text-white mb-8">Sede Central</h3>
+          <div class="reveal-on-scroll opacity-0 translate-y-10 relative overflow-hidden bg-linear-to-br from-[#F40001] via-[#B30000] to-[#7F0000] border border-white/10 rounded-3xl p-8 shadow-[0_20px_40px_-15px_rgba(180,0,0,0.25)]" style="transition-delay: 0ms">
+            <div class="absolute -top-12 -right-12 w-40 h-40 bg-white/10 rounded-full blur-2xl" aria-hidden="true"></div>
+            <h3 class="text-2xl font-bold text-white mb-8 relative z-10">{{ t('contactForm.sedeTitle') }}</h3>
             
-            <ul class="space-y-8">
+            <ul class="space-y-8 relative z-10">
               <li class="flex items-start gap-4 group">
-                <div class="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 shrink-0 group-hover:bg-teal-500 group-hover:text-white transition-colors duration-300">
+                <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/25 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-biadoxid-700 transition-colors duration-300">
                   <LucideMapPin :size="22" />
                 </div>
                 <div>
-                  <h4 class="text-teal-400 font-bold mb-1">Dirección Legal</h4>
-                  <p class="text-slate-400 text-sm leading-relaxed">
-                    Av. Simón Bolívar, Edificio Altar II<br />
-                    Piso 2, Oficina 1 (Zona Miraflores)<br />
-                    La Paz, Bolivia
+                  <h4 class="text-white font-bold mb-1">{{ t('contactForm.dirLabel') }}</h4>
+                  <p class="text-white/80 text-sm leading-relaxed">
+                    {{ t('contactForm.dirAddress') }}<br />
+                    {{ t('contactForm.dirFloor') }}<br />
+                    {{ t('contactForm.dirCity') }}
                   </p>
                 </div>
               </li>
 
               <li class="flex items-start gap-4 group">
-                <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/25 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-biadoxid-700 transition-colors duration-300">
                   <LucidePhone :size="22" />
                 </div>
                 <div>
-                  <h4 class="text-teal-400 font-bold mb-1">Líneas de Atención</h4>
-                  <p class="text-slate-400 text-sm font-mono">+591 69105198 / 76265905</p>
+                  <h4 class="text-white font-bold mb-1">{{ t('contactForm.phoneLabel') }}</h4>
+                  <p class="text-white/80 text-sm font-mono">+591 69105198 / 76265905</p>
                 </div>
               </li>
 
               <li class="flex items-start gap-4 group">
-                <div class="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 shrink-0">
+                <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/25 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-biadoxid-700 transition-colors duration-300">
                   <LucideClock :size="22" />
                 </div>
                 <div>
-                  <h4 class="text-teal-400 font-bold mb-1">Horarios</h4>
-                  <p class="text-slate-400 text-sm">Lun - Vie: 9:00 - 20:00</p>
-                  <p class="text-rose-500 text-xs font-bold mt-1">Sábado y Domingo: Cerrado</p>
+                  <h4 class="text-white font-bold mb-1">{{ t('contactForm.hoursLabel') }}</h4>
+                  <p class="text-white/80 text-sm">{{ t('contactForm.hoursWeek') }}</p>
+                  <p class="text-white text-xs font-bold mt-1 bg-white/15 inline-block px-2 py-0.5 rounded-md">{{ t('contactForm.hoursWeekend') }}</p>
                 </div>
               </li>
             </ul>
           </div>
 
-          <div class="bg-linear-to-br from-blue-50 to-white border border-blue-100 rounded-3xl p-8 relative overflow-hidden">
-            <LucideShieldCheck :size="120" class="absolute -right-8 -top-8 text-blue-500/5" />
+          <div class="reveal-on-scroll opacity-0 translate-y-10 bg-linear-to-br from-teal-50 to-white border border-teal-100 rounded-3xl p-8 relative overflow-hidden" style="transition-delay: 100ms">
+            <LucideShieldCheck :size="120" class="absolute -right-8 -top-8 text-teal-500/5" />
             <div class="flex items-center gap-3 mb-4 relative z-10">
-              <LucideAlertCircle class="text-blue-600" :size="24" />
-              <h3 class="text-lg font-bold text-slate-900">Farmacovigilancia</h3>
+              <LucideAlertCircle class="text-teal-600" :size="24" />
+              <h3 class="text-lg font-bold text-slate-900">{{ t('contactForm.farmaTitle') }}</h3>
             </div>
-            <p class="text-sm text-slate-600 mb-5 relative z-10">Reporte eventos adversos o solicite información médica técnica.</p>
+            <p class="text-sm text-slate-600 mb-5 relative z-10">{{ t('contactForm.farmaText') }}</p>
             <a href="mailto:biadoxidpharma@outlook.com" class="inline-flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700 transition-colors bg-white px-4 py-2 rounded-xl shadow-xs border border-slate-100 relative z-10">
-              <LucideMail :size="16" /> Contactar área médica
+              <LucideMail :size="16" /> {{ t('contactForm.farmaCta') }}
             </a>
           </div>
         </div>
 
         <div class="lg:col-span-3">
-          <div class="bg-white border border-slate-200 rounded-4xl p-8 md:p-12 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-            <div v-if="formStatus === 'success'" class="text-center py-10 animate-in fade-in zoom-in duration-500">
+          <div
+            class="reveal-on-scroll opacity-0 translate-y-10 relative bg-white border border-slate-200/80 rounded-[2.5rem] p-8 md:p-12 shadow-[0_15px_40px_-15px_rgba(180,0,0,0.16)] transition-all duration-500 overflow-hidden hover:shadow-[0_25px_55px_-20px_rgba(180,0,0,0.22)]"
+            style="transition-delay: 150ms">
+            <span class="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-[#F40001] via-[#B30000] to-[#7F0000]" aria-hidden="true"></span>
+            <div class="absolute -top-24 -right-24 w-56 h-56 bg-teal-500/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+            <div class="relative z-10 flex items-start gap-4 mb-8">
+              <div
+                class="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 shrink-0 shadow-sm">
+                <LucideMessageSquare :size="22" />
+              </div>
+              <div class="min-w-0">
+                <span
+                  class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-teal-600 text-[10px] font-bold uppercase tracking-widest mb-2">
+                  <LucideLock :size="11" />
+                  {{ t('contactForm.formBadge') }}
+                </span>
+                <h3 class="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight">{{ t('contactForm.formTitle') }}</h3>
+                <p class="text-sm text-slate-500 mt-1 font-light">{{ t('contactForm.formSubtitle') }}</p>
+              </div>
+            </div>
+
+            <div v-if="formStatus === 'success'" class="relative text-center py-10 animate-in fade-in zoom-in duration-500">
               <div class="w-20 h-20 bg-teal-500 rounded-full flex items-center justify-center text-white mx-auto mb-6">
                 <LucideCheckCircle2 :size="40" />
               </div>
-              <h3 class="text-2xl font-bold text-slate-900">Mensaje Enviado</h3>
-              <p class="text-slate-500 mt-2">Nos comunicaremos con usted a la brevedad.</p>
+              <h3 class="text-2xl font-bold text-slate-900">{{ t('contactForm.successTitle') }}</h3>
+              <p class="text-slate-500 mt-2">{{ t('contactForm.successText') }}</p>
             </div>
 
-            <div v-else-if="formStatus === 'error'" class="text-center py-10">
-              <div class="w-20 h-20 bg-rose-500 rounded-full flex items-center justify-center text-white mx-auto mb-6">
+            <div v-else-if="formStatus === 'error'" class="relative text-center py-10">
+              <div class="w-20 h-20 bg-teal-600 rounded-full flex items-center justify-center text-white mx-auto mb-6">
                 <LucideAlertCircle :size="40" />
               </div>
-              <h3 class="text-2xl font-bold text-slate-900">No se pudo enviar</h3>
+              <h3 class="text-2xl font-bold text-slate-900">{{ t('contactForm.errorTitle') }}</h3>
               <p class="text-slate-500 mt-2">
-                Intenta de nuevo o escríbenos directo a
+                {{ t('contactForm.errorText') }}
                 <a href="mailto:biadoxidpharma@outlook.com" class="text-teal-600 font-bold underline">biadoxidpharma@outlook.com</a>
               </p>
               <button @click="formStatus = 'idle'" class="mt-6 text-sm font-bold text-slate-600 underline">
-                Volver a intentar
+                {{ t('contactForm.retry') }}
               </button>
             </div>
 
-            <form v-else @submit.prevent="handleSubmit" class="space-y-6" novalidate>
+            <form v-else @submit.prevent="handleSubmit" class="relative space-y-6" novalidate>
               <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                  <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Nombre Completo *</label>
+                  <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ t('contactForm.nameLabel') }}</label>
                   <input 
                     v-model="formData.nombre" 
                     type="text" 
                     @input="validateField('nombre')"
                     @blur="validateField('nombre')"
-                    :class="['w-full rounded-xl px-4 py-3.5 focus:outline-hidden focus:ring-2 transition-all', errors.nombre && submitted ? 'bg-rose-50 border border-rose-300 focus:border-rose-500 focus:ring-rose-500/20' : 'bg-slate-50 border border-slate-200 focus:border-teal-500 focus:ring-teal-500/20']"
-                    placeholder="Dr. Juan Pérez"
+                    :class="['w-full rounded-xl px-4 py-3.5 focus:outline-hidden focus:ring-2 transition-all', errors.nombre && submitted ? 'bg-teal-50 border border-teal-300 focus:border-teal-500 focus:ring-teal-500/20' : 'bg-slate-50 border border-slate-200 focus:border-teal-500 focus:ring-teal-500/20']"
+                    :placeholder="t('contactForm.namePlaceholder')"
                   />
-                  <p v-if="errors.nombre && submitted" class="text-rose-500 text-xs font-medium flex items-center gap-1">
+                  <p v-if="errors.nombre && submitted" class="text-teal-600 text-xs font-medium flex items-center gap-1">
                     <LucideAlertCircle :size="12" /> {{ errors.nombre }}
                   </p>
                 </div>
                 <div class="space-y-2">
-                  <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Email *</label>
+                  <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ t('contactForm.emailLabel') }}</label>
                   <input 
                     v-model="formData.email" 
                     type="email" 
                     @input="validateField('email')"
                     @blur="validateField('email')"
-                    :class="['w-full rounded-xl px-4 py-3.5 focus:outline-hidden focus:ring-2 transition-all', errors.email && submitted ? 'bg-rose-50 border border-rose-300 focus:border-rose-500 focus:ring-rose-500/20' : 'bg-slate-50 border border-slate-200 focus:border-teal-500 focus:ring-teal-500/20']"
-                    placeholder="contacto@ejemplo.com"
+                    :class="['w-full rounded-xl px-4 py-3.5 focus:outline-hidden focus:ring-2 transition-all', errors.email && submitted ? 'bg-teal-50 border border-teal-300 focus:border-teal-500 focus:ring-teal-500/20' : 'bg-slate-50 border border-slate-200 focus:border-teal-500 focus:ring-teal-500/20']"
+                    :placeholder="t('contactForm.emailPlaceholder')"
                   />
-                  <p v-if="errors.email && submitted" class="text-rose-500 text-xs font-medium flex items-center gap-1">
+                  <p v-if="errors.email && submitted" class="text-teal-600 text-xs font-medium flex items-center gap-1">
                     <LucideAlertCircle :size="12" /> {{ errors.email }}
                   </p>
                 </div>
@@ -251,31 +275,31 @@ const resetForm = () => {
 
               <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                  <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Institución</label>
-                  <input v-model="formData.institucion" type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 focus:outline-hidden focus:border-teal-500 transition-all" placeholder="Clínica / Hospital" />
+                  <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ t('contactForm.institucionLabel') }}</label>
+                  <input v-model="formData.institucion" type="text" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 focus:outline-hidden focus:border-teal-500 transition-all" :placeholder="t('contactForm.institucionPlaceholder')" />
                 </div>
                 <div class="space-y-2">
-                  <label for="contact-area" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Área de Consulta</label>
+                  <label for="contact-area" class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ t('contactForm.areaLabel') }}</label>
                   <select id="contact-area" v-model="formData.area" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 focus:outline-hidden focus:border-teal-500 transition-all cursor-pointer">
-                    <option value="ventas">Ventas Corporativas</option>
-                    <option value="info">Información Médica</option>
-                    <option value="proveedores">Proveedores</option>
-                    <option value="otros">General</option>
+                    <option value="ventas">{{ t('contactForm.areaVentas') }}</option>
+                    <option value="info">{{ t('contactForm.areaInfo') }}</option>
+                    <option value="proveedores">{{ t('contactForm.areaProveedores') }}</option>
+                    <option value="otros">{{ t('contactForm.areaGeneral') }}</option>
                   </select>
                 </div>
               </div>
 
               <div class="space-y-2">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Mensaje *</label>
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">{{ t('contactForm.messageLabel') }}</label>
                 <textarea 
                   v-model="formData.mensaje" 
                   rows="4" 
                   @input="validateField('mensaje')"
                   @blur="validateField('mensaje')"
-                  :class="['w-full rounded-xl px-4 py-3.5 focus:outline-hidden focus:ring-2 transition-all resize-none', errors.mensaje && submitted ? 'bg-rose-50 border border-rose-300 focus:border-rose-500 focus:ring-rose-500/20' : 'bg-slate-50 border border-slate-200 focus:border-teal-500 focus:ring-teal-500/20']"
-                  placeholder="¿Cómo podemos ayudarle?"
+                  :class="['w-full rounded-xl px-4 py-3.5 focus:outline-hidden focus:ring-2 transition-all resize-none', errors.mensaje && submitted ? 'bg-teal-50 border border-teal-300 focus:border-teal-500 focus:ring-teal-500/20' : 'bg-slate-50 border border-slate-200 focus:border-teal-500 focus:ring-teal-500/20']"
+                  :placeholder="t('contactForm.messagePlaceholder')"
                 ></textarea>
-                <p v-if="errors.mensaje && submitted" class="text-rose-500 text-xs font-medium flex items-center gap-1">
+                <p v-if="errors.mensaje && submitted" class="text-teal-600 text-xs font-medium flex items-center gap-1">
                   <LucideAlertCircle :size="12" /> {{ errors.mensaje }}
                 </p>
               </div>
@@ -283,13 +307,13 @@ const resetForm = () => {
               <button 
                 type="submit" 
                 :disabled="formStatus === 'submitting'"
-                class="w-full md:w-auto bg-linear-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-teal-500/40 flex items-center justify-center gap-3 disabled:opacity-50"
+                class="w-full md:w-auto bg-biadoxid-600 hover:bg-biadoxid-700 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-biadoxid-900/20 hover:shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
               >
                 <template v-if="formStatus === 'submitting'">
-                  <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> Procesando...
+                  <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div> {{ t('contactForm.submitting') }}
                 </template>
                 <template v-else>
-                  Enviar Mensaje Seguro <LucideSend :size="16" />
+                  {{ t('contactForm.submit') }} <LucideSend :size="16" />
                 </template>
               </button>
             </form>
@@ -299,3 +323,9 @@ const resetForm = () => {
     </div>
   </section>
 </template>
+
+<style scoped>
+.reveal-on-scroll {
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+</style>

@@ -1,6 +1,11 @@
 import { test, expect } from '@playwright/test'
 import { PAGES } from './helpers'
 
+// Los títulos están localizados (es/en). El contexto por defecto de Playwright usa
+// en-US, lo que renderizaría los títulos en inglés. Fijamos el locale en español para
+// validar el contenido primario del sitio (audiencia boliviana).
+test.use({ locale: 'es-ES' })
+
 test.describe('SEO - Meta tags', () => {
   for (const page of PAGES) {
     test(`${page.name} tiene title correcto`, async ({ page: p }) => {

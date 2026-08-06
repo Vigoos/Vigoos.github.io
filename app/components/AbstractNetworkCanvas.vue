@@ -4,16 +4,24 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 const canvasRef = ref(null)
 const containerRef = ref(null)
 
-// Declaramos las variables fuera para poder limpiarlas cuando el componente se destruya
+const props = defineProps({
+  variant: {
+    type: String,
+    default: 'dark', // 'dark' | 'light' | 'red' | 'crimson'
+    validator: (v) => ['dark', 'light', 'red', 'crimson'].includes(v)
+  }
+})
+
 let animationFrameId
 let resizeObserver
 let handleMouseMove
 let handleMouseLeave
 let visibilityObserver
-let isVisible = true // ← Nueva flag para pausar/reanudar animación
+let isVisible = true
+let isAnimating = false
+const reducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 onMounted(() => {
-  // En Vue, accedemos al elemento del DOM usando .value en lugar de .current
   const canvas = canvasRef.value
   const container = containerRef.value
   const ctx = canvas.getContext('2d')
@@ -75,14 +83,19 @@ onMounted(() => {
   }
 
   const animate = () => {
-    // Si el canvas no es visible, saltamos el frame (ahorra CPU/batería)
+    // Si el canvas no es visible, detenemos el bucle por completo (ahorra CPU/batería)
     if (!isVisible) {
-      animationFrameId = requestAnimationFrame(animate)
+      isAnimating = false
       return
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = 'rgba(20, 184, 166, 0.8)' // Teal-500
+    // Sobre fondo blanco las partículas rojas se ven más fuertes, se equilibra su opacidad.
+    // En las variantes 'red'/'crimson' (fondos rojos) las partículas blancas del logo se ven mejor que las rojas.
+    const isRedBg = props.variant === 'red' || props.variant === 'crimson'
+    ctx.fillStyle = props.variant === 'light'
+      ? 'rgba(244, 0, 1, 0.7)'
+      : isRedBg ? 'rgba(255, 255, 255, 0.9)' : 'rgba(244, 0, 1, 0.8)'
     
     for (let i = 0; i < particles.length; i++) {
       particles[i].update()
@@ -95,7 +108,10 @@ onMounted(() => {
         
         if (distSq < connDistSq) {
           let opacity = 1 - (distSq / connDistSq)
-          ctx.strokeStyle = `rgba(14, 165, 233, ${opacity * 0.4})` // Sky-500
+          const lineAlpha = props.variant === 'light' ? opacity * 0.55 : isRedBg ? opacity * 0.38 : opacity * 0.4
+          ctx.strokeStyle = isRedBg
+            ? `rgba(255, 255, 255, ${lineAlpha})` // Líneas blancas sutiles sobre fondos rojos
+            : `rgba(244, 0, 1, ${lineAlpha})` // Rojo Biadoxid
           ctx.lineWidth = 1
           ctx.beginPath()
           ctx.moveTo(particles[i].x, particles[i].y)
@@ -104,7 +120,13 @@ onMounted(() => {
         }
       }
     }
-    animationFrameId = requestAnimationFrame(animate)
+    if (!reducedMotion) animationFrameId = requestAnimationFrame(animate)
+  }
+
+  const start = () => {
+    if (isAnimating || reducedMotion) return
+    isAnimating = true
+    animate()
   }
 
   resizeObserver = new ResizeObserver(entries => {
@@ -127,7 +149,16 @@ onMounted(() => {
   }
   
   initParticles()
-  animate()
+  // En 'reduced motion' se dibuja un único frame estático (sin bucle)
+  if (reducedMotion) {
+    const isRedBg = props.variant === 'red' || props.variant === 'crimson'
+    ctx.fillStyle = props.variant === 'light'
+      ? 'rgba(244, 0, 1, 0.7)'
+      : isRedBg ? 'rgba(255, 255, 255, 0.9)' : 'rgba(244, 0, 1, 0.8)'
+    particles.forEach(p => p.draw())
+  } else {
+    start()
+  }
 
   handleMouseMove = (e) => {
     const rect = canvas.getBoundingClientRect()
@@ -143,10 +174,10 @@ onMounted(() => {
   canvas.addEventListener('mousemove', handleMouseMove)
   canvas.addEventListener('mouseleave', handleMouseLeave)
 
-  // === IntersectionObserver: pausa la animación cuando el canvas no está visible ===
   visibilityObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       isVisible = entry.isIntersecting
+      if (isVisible) start()
     })
   }, { threshold: 0.1 })
 
@@ -155,7 +186,6 @@ onMounted(() => {
   }
 })
 
-// Limpiamos los eventos cuando el componente se destruye (equivalente al return en useEffect)
 onBeforeUnmount(() => {
   cancelAnimationFrame(animationFrameId)
   if (resizeObserver) resizeObserver.disconnect()
@@ -172,7 +202,13 @@ onBeforeUnmount(() => {
     <canvas 
       ref="canvasRef" 
       class="w-full h-full pointer-events-auto block"
-      style="background: linear-gradient(to bottom right, #020617, #0f172a, #082f49);"
+      :style="{ background: variant === 'light'
+        ? 'linear-gradient(to bottom right, #ffffff, #ffecec 45%, #f3f4f6)'
+        : variant === 'crimson'
+          ? 'linear-gradient(to bottom right, #F40001, #b30000 45%, #7f0000)'
+          : variant === 'red'
+            ? 'linear-gradient(to bottom right, #0f0101, #1c0102 45%, #2b0103)'
+            : 'linear-gradient(to bottom right, #020617, #0f172a, #082f49)' }"
     />
   </div>
 </template>
