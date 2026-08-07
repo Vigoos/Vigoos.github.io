@@ -70,30 +70,7 @@ const handleSubmit = async () => {
 
   const payload = buildPayload()
 
-  // 1) Intentamos el server route proxy (key NO expuesta)
-  try {
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-
-    if (!response.ok) {
-      throw new Error('Server route not available')
-    }
-
-    const result = await response.json()
-
-    if (result.success) {
-      formStatus.value = 'success'
-      resetForm()
-      return
-    }
-  } catch (err) {
-    console.warn('Server route falló, usando Web3Forms directo:', err.message)
-  }
-
-  // 2) FALLBACK: Web3Forms directo con key pública (funciona en static)
+  // Envío directo a Web3Forms con la key pública (GitHub Pages no tiene servidor)
   try {
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
