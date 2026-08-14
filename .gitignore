@@ -26,3 +26,6 @@ logs
 playwright-report/
 test-results/
 
+# Logo fuente (PDF) - no debe servirse en la web
+public/logo-oficial-biadoxid/
+

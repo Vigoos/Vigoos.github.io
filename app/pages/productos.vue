@@ -245,7 +245,7 @@ const resetFilters = () => {
                   loading="lazy"
                   class="w-full h-full object-contain drop-shadow-md opacity-90 group-hover:opacity-100 transform group-hover:-translate-y-3 group-hover:scale-110 transition-all duration-700 ease-out mix-blend-multiply"
                   style="aspect-ratio: 1 / 1;"
-                  @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '20%'"
+                  @error="$event.target.src = '/BIADOXID-PHARMA-LOGO-v2.webp'; $event.target.style.padding = '20%'"
                 />
               </div>
 

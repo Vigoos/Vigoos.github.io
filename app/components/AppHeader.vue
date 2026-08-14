@@ -85,8 +85,8 @@ watch(() => route.path, () => nextTick(resetIndicatorToActive))
 
         <NuxtLink to="/" class="flex items-center gap-2 md:gap-3 cursor-pointer min-w-0">
           <!-- Logo + réplica tipográfica; tamaños compactos en móvil para que el nav no desborde -->
-          <img src="/BIADOXID-PHARMA-LOGO-v2.webp" alt="Biadoxid Pharma S.R.L."
-            class="w-7 h-7 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-xl object-contain shrink-0">
+          <img src="/BIADOXID-PHARMA-LOGO-OFICIAL.webp" alt="Biadoxid Pharma S.R.L."
+            class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl object-contain shrink-0">
           <div class="leading-none min-w-0">
             <div class="flex items-center gap-1 sm:gap-1.5 md:gap-2 whitespace-nowrap">
               <span

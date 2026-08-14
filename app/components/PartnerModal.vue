@@ -73,12 +73,12 @@ onBeforeUnmount(() => {
             <img :src="partner.logo" alt=""
               class="absolute -bottom-10 -right-10 w-44 h-44 object-contain opacity-10 mix-blend-multiply pointer-events-none select-none"
               loading="lazy" aria-hidden="true"
-              @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '4px'" />
+              @error="$event.target.src = '/BIADOXID-PHARMA-LOGO-v2.webp'; $event.target.style.padding = '4px'" />
             <div class="relative z-10 flex flex-col items-center gap-4">
               <img :src="partner.logo" :alt="partner.name"
                 class="w-32 h-32 object-contain mix-blend-multiply drop-shadow-md"
                 loading="lazy"
-                @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '8px'" />
+                @error="$event.target.src = '/BIADOXID-PHARMA-LOGO-v2.webp'; $event.target.style.padding = '8px'" />
               <span :class="['text-lg font-black uppercase tracking-[0.25em]', partner.colorClass]">
                 {{ partner.shortName }}
               </span>

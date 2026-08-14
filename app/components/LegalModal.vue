@@ -69,7 +69,7 @@ const handleDownloadPDF = () => {
           <div
             class="bg-linear-to-br from-[#F40001] via-[#B30000] to-[#7F0000] p-5 md:p-6 flex justify-between items-center border-b border-white/20 shrink-0 rounded-t-2xl">
             <div class="flex items-center gap-3 md:gap-4">
-              <img src="/BIADOXID-PHARMA-LOGO.webp" alt="Logo Biadoxid" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+              <img src="/BIADOXID-PHARMA-LOGO-v2.webp" alt="Logo Biadoxid" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
               <div class="h-8 w-px bg-white/25 hidden sm:block"></div>
 
               <LucideShieldCheck class="text-white hidden sm:block" :size="24" />
