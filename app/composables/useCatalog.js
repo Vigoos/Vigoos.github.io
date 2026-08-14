@@ -27,7 +27,8 @@ export const useCatalog = () => {
       name: t.name || p.name,
       category: t.category || p.category,
       shortDescription: t.shortDescription || p.shortDescription,
-      descriptionHtml: t.descriptionHtml || p.descriptionHtml
+      descriptionHtml: t.descriptionHtml || p.descriptionHtml,
+      usoHtml: t.usoHtml || p.usoHtml
     }
   }
 
