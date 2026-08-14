@@ -1,11 +1,11 @@
-// Script: extrae usoHtml del catálogo en inglés (catalogo_en.js) con marcadores EN,
-// replicando la misma lógica que el script ES. Inserta el campo `usoHtml` después
-// de cada `descriptionHtml` preservando el formato original (template literals).
+// Script: extrae usoHtml del catálogo en inglés (catalogo_en.js) con marcadores EN
+// y QUITA la sección de uso de descriptionHtml (consistente con ES).
+// Inserta `usoHtml` y reemplaza `descriptionHtml` preservando template literals.
 import fs from 'node:fs'
 import path from 'node:path'
 
 const file = path.resolve('app/data/catalogo_en.js')
-const src = fs.readFileSync(file, 'utf8')
+let src = fs.readFileSync(file, 'utf8')
 const mod = await import('file://' + file.replace(/\\/g, '/'))
 const map = mod.default
 
@@ -61,7 +61,6 @@ const BLOCK_OVERRIDES_EN = {
   'medicina-estetica': { start: 'usage recommendations' }
 }
 
-// Overrides para bloques donde el marcador de inicio está DENTRO del bloque
 const INSIDE_FROM_OVERRIDES_EN = {
   'antiaging-skin-oil': { insideFrom: 'use:', end: ['storage:', 'precautions', 'side effects'] },
   'cream-to-foam-lotion': { insideFrom: 'use:', end: ['storage:', 'precautions', 'side effects'] }
@@ -80,6 +79,14 @@ const splitByBr = (html) => {
   return parts
 }
 
+const joinParts = (ps) => ps.map((x, i) => x.html + (x.br || (i < ps.length - 1 ? '<br />' : ''))).join('')
+const wrapP = (s, abrir, cerrar) => {
+  let out = s
+  if (abrir && !out.startsWith('<p')) out = `<p>${out}`
+  if (cerrar && !out.endsWith('</p>')) out += '</p>'
+  return out
+}
+
 const cutInsideBlock = (blockHtml, endMarkers) => {
   const parts = splitByBr(blockHtml)
   let cutIdx = -1
@@ -88,12 +95,7 @@ const cutInsideBlock = (blockHtml, endMarkers) => {
     if (t && endMarkers.some((mk) => t.includes(mk))) { cutIdx = i; break }
   }
   if (cutIdx === -1) return null
-  const usoParts = parts.slice(0, cutIdx)
-  const join = (ps) => ps.map((x, i) => x.html + (x.br || (i < ps.length - 1 ? '<br />' : ''))).join('')
-  let uso = join(usoParts).trim()
-  if (!uso.startsWith('<p')) uso = `<p>${uso}`
-  if (!uso.endsWith('</p>')) uso += '</p>'
-  return uso
+  return { uso: wrapP(joinParts(parts.slice(0, cutIdx)), true, true), resto: wrapP(joinParts(parts.slice(cutIdx)), true, true) }
 }
 
 const cutFromInside = (blockHtml, marker, endMarkers) => {
@@ -109,65 +111,72 @@ const cutFromInside = (blockHtml, marker, endMarkers) => {
     const t = norm(parts[i].html.replace(/<[^>]+>/g, ' '))
     if (t && endMarkers.some((mk) => t.includes(mk))) { to = i; break }
   }
-  const usoParts = parts.slice(from, to)
-  const join = (ps) => ps.map((x, i) => x.html + (x.br || (i < ps.length - 1 ? '<br />' : ''))).join('')
-  let uso = join(usoParts).trim()
-  if (!uso.startsWith('<p')) uso = `<p>${uso}`
-  if (!uso.endsWith('</p>')) uso += '</p>'
-  return uso
+  return {
+    uso: wrapP(joinParts(parts.slice(from, to)), true, true),
+    resto: wrapP(joinParts([...parts.slice(0, from), ...parts.slice(to)]), true, true)
+  }
 }
 
 const clean = (h) => h.replace(/&nbsp;/g, ' ').replace(/\s+</g, '<').replace(/>\s+/g, '>').trim()
 const htmlToText = (h) => norm(h.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim()
 
-// Extraer uso para cada slug
 const extraer = (slug, html) => {
-  if (!html) return ''
+  if (!html) return { uso: '', resto: html }
   const ins = INSIDE_FROM_OVERRIDES_EN[slug]
   if (ins) {
-    const uso = cutFromInside(html, ins.insideFrom, ins.end)
-    return clean(uso || '')
+    const cut = cutFromInside(html, ins.insideFrom, ins.end)
+    return cut ? { uso: clean(cut.uso), resto: clean(cut.resto) } : { uso: '', resto: html }
   }
   const blocks = splitBlocks(html)
   const ov = BLOCK_OVERRIDES_EN[slug]
   const startMarkers = ov ? [ov.start] : USO_START_EN
   const startIdx = blocks.findIndex((b) => b.text && startMarkers.some((s) => b.text.includes(s)))
-  if (startIdx === -1) return ''
+  if (startIdx === -1) return { uso: '', resto: html }
   const inner = cutInsideBlock(blocks[startIdx].html, OTHER_SECTIONS_EN)
-  if (inner) return clean(inner)
+  if (inner) {
+    const restBlocks = [
+      ...blocks.slice(0, startIdx),
+      { html: inner.resto, text: norm(inner.resto.replace(/<[^>]+>/g, ' ')) },
+      ...blocks.slice(startIdx + 1)
+    ]
+    return { uso: clean(inner.uso), resto: clean(restBlocks.map((b) => b.html).join('')) }
+  }
   let endIdx = blocks.length
   for (let i = startIdx + 1; i < blocks.length; i++) {
     if (blocks[i].text && OTHER_SECTIONS_EN.some((s) => blocks[i].text.includes(s))) { endIdx = i; break }
   }
-  return clean(blocks.slice(startIdx, endIdx).map((b) => b.html).join(''))
+  return {
+    uso: clean(blocks.slice(startIdx, endIdx).map((b) => b.html).join('')),
+    resto: clean([...blocks.slice(0, startIdx), ...blocks.slice(endIdx)].map((b) => b.html).join(''))
+  }
 }
 
-// Insertar usoHtml después de cada descriptionHtml (template literal)
+// Reemplaza el contenido de un campo template literal en el archivo fuente
+function reemplazarCampo(src, slug, campo, nuevoValor) {
+  const keyRe = new RegExp(`('${slug}'\\s*:\\s*\\{[\\s\\S]*?${campo}:\\s*\`)`)
+  const m = keyRe.exec(src)
+  if (!m) { console.error('  ! no encontré', slug, campo); return src }
+  const openIdx = m.index + m[1].length
+  const closeIdx = src.indexOf('`', openIdx)
+  if (closeIdx === -1) { console.error('  ! sin cierre para', slug, campo); return src }
+  const esc = nuevoValor.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$\{/g, '\\${')
+  return src.slice(0, openIdx) + esc + src.slice(closeIdx)
+}
+
 const results = []
-let out = src
 let inserted = 0
 for (const [slug, item] of Object.entries(map)) {
-  const uso = extraer(slug, item.descriptionHtml || '')
-  results.push({ slug, name: item.name || slug, uso })
+  const { uso, resto } = extraer(slug, item.descriptionHtml || '')
+  results.push({ slug, name: item.name || slug, uso, resto })
   if (!uso) continue
-  const esc = uso.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$\{/g, '\\${')
-  // Buscar el cierre del template literal de descriptionHtml de ESTE slug
-  const keyRe = new RegExp(`('${slug}'\\s*:\\s*\\{[\\s\\S]*?descriptionHtml:\\s*\`)`)
-  const m = keyRe.exec(out)
-  if (!m) { console.error('No encontré descriptionHtml de', slug); continue }
-  const descStart = m.index + m[1].length
-  // el template literal termina en el primer backtick no escapado después de descStart
-  const closeIdx = out.indexOf('`', descStart)
-  if (closeIdx === -1) { console.error('Sin cierre de template para', slug); continue }
-  const insertAt = closeIdx + 1
-  out = out.slice(0, insertAt) + `,\n    usoHtml: \`${esc}\`` + out.slice(insertAt)
+  src = reemplazarCampo(src, slug, 'descriptionHtml', resto)
+  src = reemplazarCampo(src, slug, 'usoHtml', uso)
   inserted++
 }
 
-fs.writeFileSync(file, out)
-console.log(`✅ usoHtml insertado en ${inserted}/${results.length} productos`)
+fs.writeFileSync(file, src)
+console.log(`✅ usoHtml insertado + descripción limpiada en ${inserted}/${results.length} productos`)
 
-// Reporte
 for (const r of results) {
-  console.log(`${r.uso ? '✅' : '⬜'} ${r.name} [${r.slug}]${r.uso ? ` (${r.uso.length} ch): ${htmlToText(r.uso).slice(0, 90)}...` : ' (vacío → fallback)'}`)
+  console.log(`${r.uso ? '✅' : '⬜'} ${r.name} [${r.slug}]${r.uso ? ` (${r.uso.length} ch) uso | resto ${r.resto.length} ch` : ' (vacío → fallback)'}`)
 }
