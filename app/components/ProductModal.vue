@@ -146,17 +146,27 @@ const triggerAction = (msg) => {
             <div class="p-5 md:p-8 flex-1 overflow-y-auto overscroll-contain custom-scrollbar relative">
               
               <div v-show="activeTab === 'desc'" class="animate-fadeIn wp-content">
-                <div v-html="sanitizeHtml(displayProduct.descriptionHtml)"></div>
+                <!-- Si la descripción larga quedó vacía (productos donde todo era uso),
+                     mostramos la descripción corta real -->
+                <div v-if="displayProduct.descriptionHtml" v-html="sanitizeHtml(displayProduct.descriptionHtml)"></div>
+                <div v-else>
+                  <p class="text-slate-500 leading-relaxed">{{ displayProduct.shortDescription }}</p>
+                </div>
               </div>
 
               <div v-show="activeTab === 'uso'" class="animate-fadeIn">
-                 <div class="bg-biadoxid-50 border border-biadoxid-100 rounded-xl p-5 flex gap-4">
-                  <LucideInfo class="w-6 h-6 text-biadoxid-600 shrink-0" />
-                  <div>
-                    <h4 class="text-slate-800 font-medium text-sm mb-1">{{ t('productModal.presTitle') }}</h4>
-                    <p class="text-slate-500 text-sm leading-relaxed">{{ t('productModal.presText') }}</p>
+                <template v-if="displayProduct.usoHtml">
+                  <div class="wp-content" v-html="sanitizeHtml(displayProduct.usoHtml)"></div>
+                </template>
+                <template v-else>
+                  <div class="bg-biadoxid-50 border border-biadoxid-100 rounded-xl p-5 flex gap-4">
+                    <LucideInfo class="w-6 h-6 text-biadoxid-600 shrink-0" />
+                    <div>
+                      <h4 class="text-slate-800 font-medium text-sm mb-1">{{ t('productModal.presTitle') }}</h4>
+                      <p class="text-slate-500 text-sm leading-relaxed">{{ t('productModal.presText') }}</p>
+                    </div>
                   </div>
-                </div>
+                </template>
               </div>
 
               <div v-show="activeTab === 'tips'" class="animate-fadeIn space-y-4">

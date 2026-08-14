@@ -22,7 +22,8 @@ export default {
 <hr />
 <h3><span style="color:#F40001">Important</span></h3>
 <p>It is not used to prevent clots, but <strong>to treat them when they are already causing a severe obstruction</strong>.</p>
-<p>Its administration requires <strong>strict medical monitoring</strong>, as it may cause bleeding if not managed correctly.</p>`
+<p>Its administration requires <strong>strict medical monitoring</strong>, as it may cause bleeding if not managed correctly.</p>`,
+    usoHtml: `<h3><span style="color:#F40001">Main Uses</span></h3><p><strong style="color:#F40001">Acute myocardial infarction (heart attack)</strong></p><p>This is its main, officially approved use. It dissolves the clot blocking a coronary artery, allowing blood to circulate again and reducing damage to the heart muscle. It decreases the risk of death when administered within the first hours of the infarction.</p><p><strong style="color:#F40001">Ischemic cerebrovascular accident (stroke caused by a clot)</strong><em>(medically controlled use, in hospitals)</em></p><p>Used in some protocols to dissolve clots in the brain and prevent permanent neurological damage. It is only administered in specialized centers within the first hours of the event.</p><p><strong style="color:#F40001">Severe pulmonary embolism (clot in the lungs)</strong><em>(specific medical use)</em></p><p>It can help dissolve clots blocking pulmonary arteries, improving breathing and preventing heart failure.</p><h3><span style="color:#F40001">How it works</span></h3><p>Tenecteplase<strong>activates the body's natural system for dissolving clots</strong>. It converts<strong>plasminogen</strong>into<strong>plasmin</strong>, an enzyme that breaks down fibrin (the "net" that forms the clot). Thus, the clot dissolves and<strong>blood flow is restored</strong>within minutes.</p><hr /><h3><span style="color:#F40001">Common presentation</span></h3><p><strong>50 mg</strong>vial of powder for reconstitution and administration<strong>intravenously (a single injection or "bolus")</strong>.</p><p>Used in<strong>hospital emergencies</strong>under medical supervision.</p><hr /><h3><span style="color:#F40001">Important</span></h3><p>It is not used to prevent clots, but<strong>to treat them when they are already causing a severe obstruction</strong>.</p><p>Its administration requires<strong>strict medical monitoring</strong>, as it may cause bleeding if not managed correctly.</p>`
   },
   'antiaging-skin-oil': {
     name: 'PROVIT-B12 SPRAY',
@@ -53,7 +54,8 @@ Serving size: 4 sprays</strong> (approx. 0.5 ml)<br />
 <span style="color:#F40001">Warning:</span> Because it contains sodium benzoate as an excipient, it may slightly irritate the eyes, skin and mucous membranes. It may increase the risk of yellowish skin discoloration (jaundice) in newborns.<br />
 Because it contains sodium methyl and propylparaben as excipients, this medicine may cause hives. It can generally produce delayed reactions such as contact dermatitis. In rare cases, immediate reactions with hives and bronchospasm may occur.<br />
 <strong>KEEP OUT OF REACH OF CHILDREN.<br />
-STORE IN A COOL, DRY PLACE AT 25°C.</strong></p>`
+STORE IN A COOL, DRY PLACE AT 25°C.</strong></p>`,
+    usoHtml: `<p><strong>Use:</strong>Shake before use. No more than 4 sprays at a time, or as directed by your dietitian.<br /></p>`
   },
   'cream-to-foam-lotion': {
     name: 'Provit D3 Spray',
@@ -83,7 +85,8 @@ Serving size: 4 sprays</strong> (approx. 0.5 ml)<br />
 <span style="color:#F40001">Warning:</span> Because it contains sodium benzoate as an excipient, it may slightly irritate the eyes, skin and mucous membranes. It may increase the risk of yellowish skin discoloration (jaundice) in newborns.<br />
 Because it contains sodium methyl and propylparaben as excipients, this medicine may cause hives. It can generally produce delayed reactions such as contact dermatitis. In rare cases, immediate reactions with hives and bronchospasm may occur.<br />
 <strong>KEEP OUT OF REACH OF CHILDREN.<br />
-STORE IN A COOL, DRY PLACE AT 25°C.</strong></p>`
+STORE IN A COOL, DRY PLACE AT 25°C.</strong></p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>Use:</strong></span>Shake before use. No more than 4 sprays at a time, or as directed by your dietitian.<br /></p>`
   },
   'refreshing-cleansing-balm': {
     name: 'Sun Block 50+',
@@ -99,7 +102,8 @@ Skin type: All skin types<br />
 Treatment area: Face and body<br />
 Recommended for: Sun protection.</p>
 <p><span style="color:#F40001"><strong>Usage recommendations</strong></span></p>
-<p>Apply after cleansing the skin. Apply to the face and neck before sun exposure. Apply with gentle movements until fully absorbed. Reapply frequently throughout the day. Use every day.</p>`
+<p>Apply after cleansing the skin. Apply to the face and neck before sun exposure. Apply with gentle movements until fully absorbed. Reapply frequently throughout the day. Use every day.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>Usage recommendations</strong></span></p><p>Apply after cleansing the skin. Apply to the face and neck before sun exposure. Apply with gentle movements until fully absorbed. Reapply frequently throughout the day. Use every day.</p>`
   },
   'arnik-baby': {
     name: 'Arnik BaBy',
@@ -112,7 +116,8 @@ Apply generously before each diaper change, every day, as many times as you cons
 Keep out of reach of children. If you observe any adverse reaction, discontinue use. If it persists, consult your doctor. Do not apply to cavities.<br />
 <strong><span style="color:#F40001">STORAGE</span></strong><br />
 Keep in cool, dry places. INGREDIENTS<br />
-Water, Zinc Oxide, Prunus Amygdalus Dulcis Oil, Cera Alba, Talc, Glyceryl Stearate, Ceteareth-12, Ceteareth-20, Polysorbate 80, Glycerin, Calendula Officinalis Flower Oil, Alcloxa, Arnica Montana Flower Oil, Chamomilla Recutita Extract, Avena Sativa Kernel Oil, Tocopherol and Preservative (Phenoxyethanol, Potassium Sorbate and Water).</p>`
+Water, Zinc Oxide, Prunus Amygdalus Dulcis Oil, Cera Alba, Talc, Glyceryl Stearate, Ceteareth-12, Ceteareth-20, Polysorbate 80, Glycerin, Calendula Officinalis Flower Oil, Alcloxa, Arnica Montana Flower Oil, Chamomilla Recutita Extract, Avena Sativa Kernel Oil, Tocopherol and Preservative (Phenoxyethanol, Potassium Sorbate and Water).</p>`,
+    usoHtml: `<p><strong><span style="color:#F40001">USES</span></strong><br />Anti-chafing protective cream that protects the baby's skin in contact with the diaper.<strong><span style="color:#F40001">HOW TO USE</span></strong><br />Apply generously before each diaper change, every day, as many times as you consider necessary.<br /></p>`
   },
   'arnik-forte-crema-2': {
     name: 'Arnik Forte Crema',
@@ -122,7 +127,8 @@ Water, Zinc Oxide, Prunus Amygdalus Dulcis Oil, Cera Alba, Talc, Glyceryl Steara
 <p><strong>Composition</strong> Stearyl Alcohol, Cetyl Alcohol, Glyceryl Stearate, Paraffinum Liquidum, Sodium Laureth Sulfate, Sodium Methylparaben, Sodium Propylparaben, Methyl Salicylate, Menthol, Arnica Montana Extract, Calendula Officinalis Extract.</p>
 <p><strong>Contraindications and warnings</strong> Hypersensitivity to any of its components.</p>
 <p><strong>Storage</strong> Keep out of reach of children in a cool, dry place. For external use.</p>
-<p><strong>Content</strong> Net content 60 g.</p>`
+<p><strong>Content</strong> Net content 60 g.</p>`,
+    usoHtml: `<p><strong>Instructions for use</strong>Apply a small amount to the affected area and rub gently.</p>`
   },
   'colageno-marino-hidrolizado': {
     name: 'Normal Human Immunoglobulin 5%',
@@ -141,7 +147,8 @@ Myeloma or chronic lymphocytic leukemia with severe secondary hypogammaglobuline
 Idiopathic thrombocytopenic purpura (ITP), in children or adults at high risk of bleeding or before surgery to correct platelet count.<br />
 Guillain-Barré syndrome.<br />
 Kawasaki disease.<br />
-Allogeneic bone marrow transplantation.</p>`
+Allogeneic bone marrow transplantation.</p>`,
+    usoHtml: `<p><strong><span style="color:#F40001">INDICATIONS</span></strong><br />Intravenous human immunoglobulin is indicated for:</p><p><strong><span style="color:#F40001">Replacement therapy in:</span></strong><br />Primary immunodeficiency syndromes such as:<br />Congenital agammaglobulinemias and hypogammaglobulinemias.<br />Severe combined immunodeficiency / Common variable immunodeficiency.<br />Wiskott-Aldrich syndrome.<br />Myeloma or chronic lymphocytic leukemia with severe secondary hypogammaglobulinemia and recurrent infections.<br /><strong>Children with congenital AIDS and recurrent infections.</strong></p><p><strong>Immunomodulation</strong><br />Idiopathic thrombocytopenic purpura (ITP), in children or adults at high risk of bleeding or before surgery to correct platelet count.<br />Guillain-Barré syndrome.<br />Kawasaki disease.<br />Allogeneic bone marrow transplantation.</p>`
   },
   'arnik-capsaicina': {
     name: 'Arnik Capsaicina Crema',
@@ -156,7 +163,8 @@ Allogeneic bone marrow transplantation.</p>`
 <p><span style="color:#F40001"><strong>Storage</strong></span></p>
 <p>Keep out of reach of children in a cool, dry place. For external use.</p>
 <p><span style="color:#F40001"><strong>Content</strong></span></p>
-<p>Net content 60 g.</p>`
+<p>Net content 60 g.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>Instructions for use</strong></span></p><p>Apply a small amount to the affected area and rub gently.</p>`
   },
   'clarisa-intima-crema': {
     name: 'Clarisa Intima Crema',
@@ -169,7 +177,8 @@ Water, Cetyl Alcohol, Stearyl Alcohol, Glyceryl Stearate, Niacinamide, Polysorba
 <span style="color:#F40001"><strong>CONTRAINDICATIONS AND WARNINGS</strong></span><br />
 Hypersensitivity to any of its components. Avoid contact with eyes.<br />
 <span style="color:#F40001"><strong>STORAGE</strong></span><br />
-Keep in a cool, dry place. FOR EXTERNAL USE.</p>`
+Keep in a cool, dry place. FOR EXTERNAL USE.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>USES</strong></span><br />Suitable for underarms and other intimate body areas, such as legs, knees and private parts.<br /></p>`
   },
   'cvim': {
     name: 'C Vim',
@@ -185,7 +194,8 @@ Keep in a cool, dry place. FOR EXTERNAL USE.</p>`
 <h3><span style="color:#F40001">Recommendations</span></h3>
 <p>Avoid direct contact with the eyes.</p>
 <p>If you use another exfoliating product or one with acids, alternate days to avoid irritation.</p>
-<p>Store the serum in a cool place away from direct sunlight to preserve its effectiveness.</p>`
+<p>Store the serum in a cool place away from direct sunlight to preserve its effectiveness.</p>`,
+    usoHtml: `<h3><span style="color:#F40001">How to use it correctly</span></h3><p><strong>Cleanse your face</strong>with a facial soap or gentle foam.</p><p><strong>Dry your skin well</strong>, without rubbing.</p><p><strong>Apply 3 to 5 drops</strong>of the serum to the face and neck.</p><p><strong>Spread with gentle movements</strong>, circular or with light taps of the fingers.</p><p><strong>Use preferably in the morning and/or at night</strong>, before moisturizer or sunscreen.</p>`
   },
   'arnik-forte-sachet': {
     name: 'Arnik Forte Sachet',
@@ -209,7 +219,8 @@ Keep in a cool, dry place. FOR EXTERNAL USE.</p>`
 <p>If strong irritation, intense burning or an allergic reaction appears, discontinue use and consult a professional.</p>
 <p>Keep the product in a cool, dry place, protected from light.</p>
 <p>Check the expiry date and do not use the product after it has expired.</p>
-<p>If you are pregnant, breastfeeding, under medical treatment or have special skin conditions, consult a healthcare professional before use.</p>`
+<p>If you are pregnant, breastfeeding, under medical treatment or have special skin conditions, consult a healthcare professional before use.</p>`,
+    usoHtml: `<h3><span style="color:#F40001">How to use it</span></h3><p>To use Arnik Forte Sachet properly:</p><p>Clean and dry the area where you wish to apply the product.</p><p>Open the sachet and extract the amount corresponding to the affected area.</p><p>Apply to the skin with a gentle massage until the formula is absorbed.</p><p>It is suggested to apply<strong>several times a day</strong>, according to the intensity of the discomfort or the product recommendation.</p><p>Avoid contact with eyes, mucous membranes or open wounds.</p>`
   },
   'arnik-forte-roll-on': {
     name: 'Arnik Forte Roll-On',
@@ -224,14 +235,16 @@ Keep in a cool, dry place. FOR EXTERNAL USE.</p>`
 <p>Apply the product (roll-on) to the skin with a light massage until absorbed.</p>
 <p><strong>Estimated frequency:</strong> 1 to 2 times a day, or according to the professional's recommendation or the product leaflet.</p>
 <p>Avoid contact with eyes, mucous membranes or open wounds.</p>
-<p>Discontinue use if irritation or hypersensitivity appears.</p>`
+<p>Discontinue use if irritation or hypersensitivity appears.</p>`,
+    usoHtml: `<h3><span style="color:#F40001">How to use it</span></h3><p><strong>Clean and dry the affected area</strong>before application.</p><p>Apply the product (roll-on) to the skin with a light massage until absorbed.</p><p><strong>Estimated frequency:</strong>1 to 2 times a day, or according to the professional's recommendation or the product leaflet.</p><p>Avoid contact with eyes, mucous membranes or open wounds.</p><p>Discontinue use if irritation or hypersensitivity appears.</p>`
   },
   'locion-zhar': {
     name: 'ZHAR Lotion',
     category: 'Aesthetic Medicine',
     shortDescription: `Zhar Spot-Removal Lotion by Laboratorios VIM is a cosmetic treatment specially formulated to help reduce spots, unify skin tone and improve its natural luminosity. Its composition acts directly on hyperpigmented areas, favoring a more uniform and healthy appearance. Thanks to its light texture, it is easily absorbed and leaves the skin fresh and soft. Ideal for skin with spots caused by the sun, age or residual imperfections.`,
     descriptionHtml: `<p><span style="color:#F40001"><strong>How to use:</strong></span><br />Apply on clean, dry skin, only on the areas affected by spots or uneven tone. Preferably use at night and complement with sunscreen during the day. Avoid contact with eyes and mucous membranes.</p>
-<p><span style="color:#F40001"><strong>Recommendations:</strong></span><br />Perform a sensitivity test before first use. In case of irritation, discontinue application. Keep out of reach of children and store in a cool place, protected from direct sunlight.</p>`
+<p><span style="color:#F40001"><strong>Recommendations:</strong></span><br />Perform a sensitivity test before first use. In case of irritation, discontinue application. Keep out of reach of children and store in a cool place, protected from direct sunlight.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>How to use:</strong></span><br />Apply on clean, dry skin, only on the areas affected by spots or uneven tone. Preferably use at night and complement with sunscreen during the day. Avoid contact with eyes and mucous membranes.</p>`
   },
   'clarisa-intima': {
     name: 'Clarisa Intima',
@@ -240,7 +253,8 @@ Keep in a cool, dry place. FOR EXTERNAL USE.</p>`
     descriptionHtml: `<p><span style="color:#F40001"><strong>USES</strong></span><br />Whitening and spot-removing cream for the body, suitable for underarms, breasts, inner thighs, buttocks and the bikini area. Helps treat spots caused by contraceptives, citrus burns and mild burns.</p>
 <p><span style="color:#F40001"><strong>INGREDIENTS</strong></span><br />Water, Alpha-Arbutin, Niacinamide, Calendula Officinalis Flower Extract, Aloe Barbadensis Leaf Polysaccharides, Tocopheryl Acetate, Retinol, Glycerin and Preservatives.</p>
 <p><span style="color:#F40001"><strong>CONTRAINDICATIONS AND WARNINGS</strong></span><br />Hypersensitivity to any of its components. Avoid contact with the eyes. Do not apply on irritated or injured skin.</p>
-<p><span style="color:#F40001"><strong>STORAGE</strong></span><br />Keep in a cool, dry place. FOR EXTERNAL USE.</p>`
+<p><span style="color:#F40001"><strong>STORAGE</strong></span><br />Keep in a cool, dry place. FOR EXTERNAL USE.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>USES</strong></span><br />Whitening and spot-removing cream for the body, suitable for underarms, breasts, inner thighs, buttocks and the bikini area. Helps treat spots caused by contraceptives, citrus burns and mild burns.</p>`
   },
   'cicalaser': {
     name: 'Cicalaser',
@@ -255,7 +269,8 @@ Keep in a cool, dry place. FOR EXTERNAL USE.</p>`
 <p><strong>Prior cleansing:</strong> wash the area with a gentle soap and pat dry (without rubbing).</p>
 <p><strong>Application:</strong> take a small amount of the product (cream or gel) and apply it to the affected area with a light massage so that it is absorbed.</p>
 <p><strong>Frequency:</strong> apply <strong>1 to 2 times a day</strong>, according to skin tolerance and the manufacturer's recommendation.</p>
-<p><strong>Monitoring:</strong> observe the evolution of the skin; if excessive redness, intense burning or adverse reactions appear, discontinue use and consult a professional.</p>`
+<p><strong>Monitoring:</strong> observe the evolution of the skin; if excessive redness, intense burning or adverse reactions appear, discontinue use and consult a professional.</p>`,
+    usoHtml: `<h3><span style="color:#F40001">How to use it (estimated mode)</span></h3><p><strong>Prior cleansing:</strong>wash the area with a gentle soap and pat dry (without rubbing).</p><p><strong>Application:</strong>take a small amount of the product (cream or gel) and apply it to the affected area with a light massage so that it is absorbed.</p><p><strong>Frequency:</strong>apply<strong>1 to 2 times a day</strong>, according to skin tolerance and the manufacturer's recommendation.</p><p><strong>Monitoring:</strong>observe the evolution of the skin; if excessive redness, intense burning or adverse reactions appear, discontinue use and consult a professional.</p>`
   },
   'mesoterapia': {
     name: 'Mesotherapy Roller Line',
@@ -275,7 +290,8 @@ Keep in a cool, dry place. FOR EXTERNAL USE.</p>`
 <p><span style="color:#F40001"><b>Hygiene is key:</b></span> the box specifies that it is a "disposable tip" and "sterile". <b>Never share this device with anyone</b>, as there is a very high risk of infection.</p>
 <p><span style="color:#F40001"><b>Read the instructions:</b></span> it is crucial to read the manual or instructions provided by the manufacturer for safe and proper use.</p>
 <p><span style="color:#F40001"><b>Do not use on irritated or damaged skin:</b></span> avoid using the roller on areas with active acne, eczema, rosacea, cold sores or other skin conditions.</p>
-<p><span style="color:#F40001"><b>Packaging attention:</b></span> the box indicates: "DO NOT USE IF THE SEALED PACKAGING HAS BEEN OPENED OR DAMAGED". This is essential to guarantee the sterility of the product.</p>`
+<p><span style="color:#F40001"><b>Packaging attention:</b></span> the box indicates: "DO NOT USE IF THE SEALED PACKAGING HAS BEEN OPENED OR DAMAGED". This is essential to guarantee the sterility of the product.</p>`,
+    usoHtml: `<h3><span style="color:#F40001">How to use it</span></h3><p>Although the exact use may vary, the general procedure is as follows:</p><p><span style="color:#F40001"><b>Cleansing:</b></span>the skin must be completely clean and disinfected.</p><p><span style="color:#F40001"><b>Roller disinfection:</b></span>the roller must be disinfected with alcohol before each use.</p><p><span style="color:#F40001"><b>Application:</b></span>gently slide the roller over the skin, moving it in different directions (horizontal, vertical and diagonal) on the area to be treated. Apply gentle pressure, without forcing.</p><p><span style="color:#F40001"><b>Serum application:</b></span>after using the roller, a specific serum or skin product can be applied.</p>`
   },
   'paquete-de-tratamiento-del-acne': {
     name: 'Acne Treatment Pack',
@@ -290,7 +306,8 @@ Keep in a cool, dry place. FOR EXTERNAL USE.</p>`
 Step 2: Apply the "pre-treatment" product evenly over the entire face using circular movements, avoiding the eye contour. Let it dry for a few seconds.<br />
 Step 3: Apply the "hemp" product to greasy areas with pimples, blackheads or other acne lesions.<br />
 Step 4: Apply the "post-treatment" product evenly over the entire face, using circular movements and avoiding the eye contour.<br />
-In the morning: apply the "acne cream" daily, evenly over the entire face.</p>`
+In the morning: apply the "acne cream" daily, evenly over the entire face.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>Usage recommendations</strong></span></p><p>Step 1: Clean the area to be treated with your usual hygiene product.<br />Step 2: Apply the "pre-treatment" product evenly over the entire face using circular movements, avoiding the eye contour. Let it dry for a few seconds.<br />Step 3: Apply the "hemp" product to greasy areas with pimples, blackheads or other acne lesions.<br />Step 4: Apply the "post-treatment" product evenly over the entire face, using circular movements and avoiding the eye contour.<br />In the morning: apply the "acne cream" daily, evenly over the entire face.</p>`
   },
   '2343': {
     name: 'Magic Champagne',
@@ -316,7 +333,8 @@ Recommended for: expression lines and wrinkles, ideal for special events, weddin
 3. Apply the champagne mask evenly to the skin.<br />
 4. Apply vitamin C over the powder, massage gently and leave for 15 minutes.<br />
 5. Remove the mask with cold water and serum solution until the skin is completely clean.<br />
-6. Finish by applying a brightening cream and 50+ sunscreen.</p>`
+6. Finish by applying a brightening cream and 50+ sunscreen.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>Usage recommendations</strong></span></p><p>1. Cleanse and tone the skin.<br />2. Apply the humidifying spray to moisten the skin.<br />3. Apply the champagne mask evenly to the skin.<br />4. Apply vitamin C over the powder, massage gently and leave for 15 minutes.<br />5. Remove the mask with cold water and serum solution until the skin is completely clean.<br />6. Finish by applying a brightening cream and 50+ sunscreen.</p>`
   },
   'tranexamicum': {
     name: 'Prof. Tranexamicum 1500 IU',
@@ -332,7 +350,8 @@ Recommended for: expression lines and wrinkles, ideal for special events, weddin
 Main ingredients: Tranexamic acid 1500 IU<br />
 Treatment frequency: Every 2 weeks (approx. 5-10 sessions). Maintenance treatment: 1 session every 1-2 months<br />
 Treatment area: Face and body<br />
-Recommended for: Spots, dark circles, melasma</p>`
+Recommended for: Spots, dark circles, melasma</p>`,
+    usoHtml: `<p>Suggestion 1: Whitening / melasma</p><p>Tranexamicum 1500 IU - Applied amount: 1 bottle of serum solution - Applied amount: 10 cc</p><p>Application protocol: napage technique or intradermal injection. It is also an excellent way to apply with dermapen. Deep application: 1 mm to 2 mm deep in the area with pigmentation or melasma; amount per orifice: 0.01 cc - 0.1 cc</p><p>Dilute prof. Tranexamicum with 10 cc of saline solution. Use 5 ml per session.</p>`
   },
   'acido-hyaluronico': {
     name: 'Prof. Hyaluronic Acid',
@@ -355,7 +374,8 @@ argireline - Applied amount: 2 cc</p>
 Glutathione wrinkles - Applied amount: 3 cc<br />
 vitamin a - Applied amount: 2 cc<br />
 hyaluronic acid 3.5% - Applied amount: 1 cc</p>
-<p>It can be used topically, transdermally with virtual mesotherapy (iontophoresis or electroporation), with radiofrequency, ultrasound, with microneedling (dermapen or derma-roller).</p>`
+<p>It can be used topically, transdermally with virtual mesotherapy (iontophoresis or electroporation), with radiofrequency, ultrasound, with microneedling (dermapen or derma-roller).</p>`,
+    usoHtml: `<p>Suggestion 1: Lifting<br />hyaluronic acid 3.5% - Applied amount: 1 cc<br />dmae - Applied amount: 2 cc<br />argireline - Applied amount: 2 cc</p><p>Suggestion 2:<br />Glutathione wrinkles - Applied amount: 3 cc<br />vitamin a - Applied amount: 2 cc<br />hyaluronic acid 3.5% - Applied amount: 1 cc</p><p>It can be used topically, transdermally with virtual mesotherapy (iontophoresis or electroporation), with radiofrequency, ultrasound, with microneedling (dermapen or derma-roller).</p>`
   },
   'vitamina-c': {
     name: 'Prof. Vitamin C 1500 IU',
@@ -380,7 +400,8 @@ vitamin c 1500 IU - Applied amount: 3 cc<br />
 organic silicon - Applied amount: 2 cc<br />
 glutathione - Applied amount: 2 cc</p>
 <p>Dilute prof. Vitamin C 1500 IU with 10 cc of organic silicon. Use 5 ml to mix with glutathione.</p>
-<p>It can be used topically, transdermally with virtual mesotherapy (iontophoresis or electroporation), with radiofrequency, ultrasound, with microneedling (dermapen or derma-roller).</p>`
+<p>It can be used topically, transdermally with virtual mesotherapy (iontophoresis or electroporation), with radiofrequency, ultrasound, with microneedling (dermapen or derma-roller).</p>`,
+    usoHtml: `<p>Suggestion 1: Stretch marks<br />vitamin c 1500 IU - Applied amount: 1 bottle<br />organic silicon - Applied amount: 10 cc</p><p>Dilute prof. Vitamin C 1500 IU with 10 cc of organic silicon. You can use up to 10 ml on the body per session and 5 ml on the face per session.</p><p>Suggestion 2: Meso glow<br />vitamin c 1500 IU - Applied amount: 3 cc<br />organic silicon - Applied amount: 2 cc<br />glutathione - Applied amount: 2 cc</p><p>Dilute prof. Vitamin C 1500 IU with 10 cc of organic silicon. Use 5 ml to mix with glutathione.</p><p>It can be used topically, transdermally with virtual mesotherapy (iontophoresis or electroporation), with radiofrequency, ultrasound, with microneedling (dermapen or derma-roller).</p>`
   },
   'pack-melanopeel': {
     name: 'Melanopeel Pack',
@@ -408,7 +429,8 @@ Recommended for: Melasma, dark spots, acne scars.</p>
 4. Apply the Melanopeel mask with a brush. Leave the mask according to skin phototype: Phototype I and II - 4 hours; Phototype III and IV - 5-8 hours; Phototype V and VI - 9-12 hours.<br />
 5. Remove the Melanopeel mask with cold water.<br />
 6. Apply a moisturizing cream to the face and neck.<br />
-7. Apply 50+ sunscreen to the face and neck.</p>`
+7. Apply 50+ sunscreen to the face and neck.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>Usage recommendations</strong></span></p><p>1. Cleanse the skin.<br />2. Apply the degreasing solution with a gauze pad to remove all impurities from the skin.<br />3. Apply the pre-treatment with a gauze pad to reduce the pH of the skin.<br />4. Apply the Melanopeel mask with a brush. Leave the mask according to skin phototype: Phototype I and II - 4 hours; Phototype III and IV - 5-8 hours; Phototype V and VI - 9-12 hours.<br />5. Remove the Melanopeel mask with cold water.<br />6. Apply a moisturizing cream to the face and neck.<br />7. Apply 50+ sunscreen to the face and neck.</p>`
   },
   'arnik-forte-spray': {
     name: 'Arnik Forte Spray',
@@ -424,7 +446,8 @@ Recommended for: Melasma, dark spots, acne scars.</p>
 <hr />
 <h3><span style="color:#F40001">Ideal for:</span></h3>
 <p>Athletes, physiotherapists or people with frequent muscle pain.</p>
-<p>Quick use without dirtying your hands, thanks to its <strong>spray presentation</strong>, which allows a <strong>uniform and practical application</strong>.</p>`
+<p>Quick use without dirtying your hands, thanks to its <strong>spray presentation</strong>, which allows a <strong>uniform and practical application</strong>.</p>`,
+    usoHtml: `<h3><span style="color:#F40001">How to use:</span></h3><p><strong>Shake the container</strong>before use.</p><p><strong>Apply directly</strong>to the affected area, keeping a distance of about 10 to 15 cm.</p><p><strong>Let it dry naturally</strong>or perform a<strong>gentle circular massage</strong>to improve absorption.</p><p><strong>Repeat 2 to 3 times a day</strong>, or as needed.</p><p><span style="color:#F40001"><strong>Do not apply on open wounds, mucous membranes or irritated skin.</strong></span></p><p><strong>Avoid contact with the eyes.</strong><br /><strong>For external use only.</strong></p>`
   },
   'vitamina-a': {
     name: 'Arnik Baby Sachet',
@@ -437,7 +460,8 @@ Apply generously before each diaper change, every day, as many times as you cons
 Keep out of reach of children. If you observe any adverse reaction, discontinue use. If it persists, consult your doctor. Do not apply to cavities.<br />
 <strong><span style="color:#F40001">STORAGE</span></strong><br />
 Keep in cool, dry places. INGREDIENTS<br />
-Water, Zinc Oxide, Prunus Amygdalus Dulcis Oil, Cera Alba, Talc, Glyceryl Stearate, Ceteareth-12, Ceteareth-20, Polysorbate 80, Glycerin, Calendula Officinalis Flower Extract, Alcloxa, Arnica Montana Flower Extract, Chamomilla Recutita Extract, Avena Sativa Kernel Oil, Tocopherol and Preservative (Phenoxyethanol, Potassium Sorbate and Water).</p>`
+Water, Zinc Oxide, Prunus Amygdalus Dulcis Oil, Cera Alba, Talc, Glyceryl Stearate, Ceteareth-12, Ceteareth-20, Polysorbate 80, Glycerin, Calendula Officinalis Flower Extract, Alcloxa, Arnica Montana Flower Extract, Chamomilla Recutita Extract, Avena Sativa Kernel Oil, Tocopherol and Preservative (Phenoxyethanol, Potassium Sorbate and Water).</p>`,
+    usoHtml: `<p><strong><span style="color:#F40001">USES</span></strong><br />Anti-chafing protective cream, protects the baby's skin that remains in contact with the diaper.<strong><span style="color:#F40001">HOW TO USE</span></strong><br />Apply generously before each diaper change, every day, as many times as you consider necessary.<br /></p>`
   },
   'vitamina-ce-boitin': {
     name: 'Dreamfix Melatonin',
@@ -459,7 +483,8 @@ Water, Zinc Oxide, Prunus Amygdalus Dulcis Oil, Cera Alba, Talc, Glyceryl Steara
 <p><strong>Do not drive or operate machinery</strong> after consuming it.</p>
 <p>Avoid combined consumption with alcohol or sedatives.</p>
 <p>Keep in a cool, dry place, protected from light.</p>
-<p>Consult a healthcare professional if you are under medical treatment or have a chronic condition.</p>`
+<p>Consult a healthcare professional if you are under medical treatment or have a chronic condition.</p>`,
+    usoHtml: `<h3><span style="color:#F40001">How to use it</span></h3><p><strong>Shake before use.</strong></p><p>Apply<strong>1 to 2 sprays under the tongue or inside the mouth</strong>, approximately<strong>30 minutes before sleeping</strong>.</p><p>Do not exceed the recommended dose.</p><p>Avoid eating or drinking immediately after application to optimize absorption.</p>`
   },
   'anti-aging-skin-toner': {
     name: 'Arnik Forte Gel',
@@ -470,7 +495,8 @@ Apply a sufficient amount to the desired area. For external use.<br />
 <strong><span style="color:#F40001">INGREDIENTS:</span></strong><br />
 Alcohol, Water (aqua), Arnica Montana Extract, Calendula officinalis Extract, Methyl Salicylate, Carbomer, Menthol, Triethanolamine, Sodium Methylparaben.<br />
 <strong><span style="color:#F40001">CONTRAINDICATIONS AND WARNINGS:</span></strong><br />
-Hypersensitivity to any of its components.</p>`
+Hypersensitivity to any of its components.</p>`,
+    usoHtml: `<p><strong><span style="color:#F40001">INSTRUCTIONS FOR USE:</span></strong><br />Apply a sufficient amount to the desired area. For external use.<br /></p>`
   },
   'coco-body-oil': {
     name: 'Calostro Boost',
@@ -488,7 +514,8 @@ Calostro Boost is a nutritional supplement in <strong>powder mix to prepare</str
 <p>Dissolve <strong>one portion (approx. 30 g)</strong> of the product in a glass with <strong>150 ml of water, milk or juice</strong>.</p>
 <p>Mix until you obtain a homogeneous preparation and consume immediately.</p>
 <p>It can be taken <strong>once a day</strong>, preferably after exercise or as a daily nutritional supplement.</p>
-<p>Keep the container well closed, in a cool and dry place.</p>`
+<p>Keep the container well closed, in a cool and dry place.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>How to use it?</strong></span></p><p>Dissolve<strong>one portion (approx. 30 g)</strong>of the product in a glass with<strong>150 ml of water, milk or juice</strong>.</p><p>Mix until you obtain a homogeneous preparation and consume immediately.</p><p>It can be taken<strong>once a day</strong>, preferably after exercise or as a daily nutritional supplement.</p><p>Keep the container well closed, in a cool and dry place.</p>`
   },
   'medicina-estetica': {
     name: 'Sun Block Color 50+',
@@ -504,6 +531,7 @@ Skin type: All skin types<br />
 Treatment area: Face and body<br />
 Recommended for: Sun protection.</p>
 <p><span style="color:#F40001"><strong>Usage recommendations</strong></span></p>
-<p>Apply after cleansing the skin. Apply to the face and neck before sun exposure. Apply with gentle movements until fully absorbed. Reapply frequently during the day. Use it every day.</p>`
+<p>Apply after cleansing the skin. Apply to the face and neck before sun exposure. Apply with gentle movements until fully absorbed. Reapply frequently during the day. Use it every day.</p>`,
+    usoHtml: `<p><span style="color:#F40001"><strong>Usage recommendations</strong></span></p><p>Apply after cleansing the skin. Apply to the face and neck before sun exposure. Apply with gentle movements until fully absorbed. Reapply frequently during the day. Use it every day.</p>`
   }
 }
