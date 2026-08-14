@@ -1,0 +1,22 @@
+# Configuración para Cloudflare Workers con static assets (proyecto tipo Worker).
+#
+# Este proyecto es 100% estático (SSG): `nuxi generate` produce .output/public
+# y wrangler lo sube como assets, SIN Worker script (sin `main`).
+#
+# En el dashboard de Cloudflare (Settings → Builds):
+#   - Build command:  pnpm dlx nuxi generate
+#   - Deploy command: npx wrangler deploy
+#   - Root directory: /
+#   - Variable: NUXT_PUBLIC_WEB3FORMS_KEY (clave pública de Web3Forms, en build time)
+#
+# Importante: NO agregar `main` ni secciones de Workers (kv, d1, etc.): este
+# archivo describe SOLO assets estáticos.
+
+name = "biadoxid-pharma"
+compatibility_date = "2026-08-13"
+
+[assets]
+directory = "./.output/public"
+# Reproduce el comportamiento de Pages/GitHub Pages: las rutas inexistentes
+# sirven el 404.html generado por Nuxt en lugar de un 404 genérico.
+not_found_handling = "404-page"
