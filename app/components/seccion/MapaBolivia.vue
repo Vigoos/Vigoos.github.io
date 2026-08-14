@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
 
             <div class="relative">
               <img :src="site.image" :alt="t(site.nameKey)" loading="lazy" class="w-full h-36 object-cover"
-                @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '12px'; $event.target.style.objectFit = 'contain'" />
+                @error="$event.target.src = '/BIADOXID-PHARMA-LOGO-v2.webp'; $event.target.style.padding = '12px'; $event.target.style.objectFit = 'contain'" />
               <div class="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent pointer-events-none"
                 aria-hidden="true"></div>
 

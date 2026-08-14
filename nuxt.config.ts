@@ -15,9 +15,9 @@ export default defineNuxtConfig({
       link: [
         // ?v=2: bust de caché (navegador + service worker PWA) tras sustituir el icono
         // por el logo real de la empresa. Sin esto, el icono antiguo persiste hasta 30 días.
-        { rel: 'icon', type: 'image/png', sizes: '48x48', href: '/favicon.png?v=2' },
-        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png?v=2' },
-        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon-180x180.png?v=2' },
+        { rel: 'icon', type: 'image/png', sizes: '48x48', href: '/favicon.png?v=3' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png?v=3' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon-180x180.png?v=3' },
         // Preload de la fuente principal (Inter Variable latin): llega ANTES del primer
         // pintado para evitar el font-swap que causa layout shift en el hero.
         { rel: 'preload', as: 'font', type: 'font/woff2', href: '/_nuxt/inter-latin-wght-normal.Dx4kXJAl.woff2', crossorigin: '' },
@@ -46,6 +46,7 @@ export default defineNuxtConfig({
       'pwa-192x192.png',
       'pwa-512x512.png',
       'BIADOXID-PHARMA-LOGO-v2.webp',
+      'BIADOXID-PHARMA-LOGO-OFICIAL.webp',
       'HERO-IMAGEN.webp'
     ],
     manifest: {

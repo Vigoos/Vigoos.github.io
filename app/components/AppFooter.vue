@@ -23,9 +23,8 @@ const openModal = (type) => {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
 
         <div class="lg:col-span-4">
-          <NuxtLink to="/" class="flex items-center gap-2.5 md:gap-3 cursor-pointer mb-6">
-            <img src="/BIADOXID-PHARMA-LOGO-v2.webp" alt="Biadoxid Pharma S.R.L."
-              class="w-9 h-9 md:w-10 md:h-10 rounded-xl object-contain shrink-0" loading="lazy">
+          <NuxtLink to="/" class="flex items-center gap-2.5 md:gap-3 cursor-pointer mb-6">              <img src="/BIADOXID-PHARMA-LOGO-OFICIAL.webp" alt="Biadoxid Pharma S.R.L."
+              class="w-20 h-12 md:w-24 md:h-14 rounded-xl object-contain shrink-0 bg-white p-1.5 shadow-lg" loading="lazy">
             <div class="leading-none">
               <div class="flex items-center gap-1 sm:gap-1.5 md:gap-2">
                 <span

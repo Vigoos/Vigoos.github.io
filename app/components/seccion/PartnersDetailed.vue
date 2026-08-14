@@ -161,14 +161,14 @@ const detailedPartners = [
               class="absolute -bottom-8 -right-8 w-36 h-36 object-contain opacity-10 mix-blend-multiply pointer-events-none select-none"
               loading="lazy"
               aria-hidden="true"
-              @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '4px'"
+              @error="$event.target.src = '/BIADOXID-PHARMA-LOGO-v2.webp'; $event.target.style.padding = '4px'"
             />
             <img 
               :src="partner.logo" 
               :alt="partner.name" 
               class="w-24 h-24 object-contain mix-blend-multiply drop-shadow-sm transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
-              @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '4px'"
+              @error="$event.target.src = '/BIADOXID-PHARMA-LOGO-v2.webp'; $event.target.style.padding = '4px'"
             />
             <button type="button" @click="openPartnerModal(partner)"
               class="absolute top-3 left-3 z-20 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 flex items-center justify-center text-slate-600 shadow-lg hover:bg-teal-500 hover:text-white hover:border-teal-500 hover:shadow-[0_0_15px_rgba(244,0,1,0.4)] transition-all duration-300 cursor-pointer"

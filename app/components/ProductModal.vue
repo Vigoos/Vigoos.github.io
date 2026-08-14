@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, onUnmounted } from 'vue'
 import catalogo from '../data/catalogo.json'
 import DOMPurify from 'dompurify'
 import { useCatalog } from '../composables/useCatalog'
@@ -7,10 +7,24 @@ import { useCatalog } from '../composables/useCatalog'
 const { t } = useI18n()
 const { catName, localizeProduct } = useCatalog()
 
+// Limpia residuos de Word/Office pegados desde documentos (atributos data-*,
+// espacios de alineación y &nbsp;) para que el contenido fluya ordenado.
+const cleanDescriptionHtml = (html) => {
+  if (!html) return html
+  return html
+    .replace(/\sdata-(contrast|ccp-props|start|end)="[^"]*"/gi, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\u00a0/g, ' ')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\s*\n\s*/g, '\n')
+    .replace(/>\s+</g, '><')
+    .trim()
+}
+
 // Función para sanitizar HTML antes de renderizar con v-html
 const sanitizeHtml = (html) => {
   if (!html) return `<p>${t('productModal.fallback')}</p>`
-  return DOMPurify.sanitize(html)
+  return DOMPurify.sanitize(cleanDescriptionHtml(html))
 }
 
 const props = defineProps({
@@ -30,6 +44,17 @@ const toast = ref({ show: false, message: '' })
 watch(() => props.product, () => {
   activeTab.value = 'desc'
   isExpanded.value = false
+})
+
+// Bloquea el scroll del body mientras el modal está abierto (evita que en móvil
+// el gesto dentro del modal arrastre la página de fondo)
+watch(() => props.show, (val) => {
+  if (import.meta.server || typeof document === 'undefined') return
+  document.body.style.overflow = val ? 'hidden' : ''
+}, { immediate: true })
+
+onUnmounted(() => {
+  document.body.style.overflow = ''
 })
 
 const tabs = [
@@ -67,13 +92,13 @@ const triggerAction = (msg) => {
     <Transition name="modal">
       <div v-if="show && product" class="fixed inset-0 z-110 flex items-center justify-center p-4 sm:p-6 pointer-events-none">
         
-        <div class="w-full max-w-5xl bg-white border border-slate-200 rounded-[2rem] shadow-2xl overflow-hidden pointer-events-auto flex flex-col md:flex-row h-[85vh] md:h-162.5 relative">
+        <div class="w-full max-w-5xl bg-white border border-slate-200 rounded-[2rem] shadow-2xl overflow-hidden pointer-events-auto flex flex-col md:flex-row h-[92dvh] md:h-162.5 relative">
           
           <button @click="emit('close')" class="absolute top-5 right-5 z-30 w-10 h-10 rounded-full bg-white/90 border border-slate-200 flex items-center justify-center text-slate-500 hover:text-white hover:bg-biadoxid-600 hover:border-biadoxid-600 transition-all backdrop-blur-md">
             <LucideX :size="20" />
           </button>
 
-          <div class="w-full md:w-5/12 bg-linear-to-br from-[#FFF6F6] via-[#FFECEC] to-[#FFE0E1] relative flex items-center justify-center p-8 border-b md:border-b-0 md:border-r border-slate-200 group h-64 md:h-full shrink-0">
+          <div class="w-full md:w-5/12 bg-linear-to-br from-[#FFF6F6] via-[#FFECEC] to-[#FFE0E1] relative flex items-center justify-center p-6 md:p-8 border-b md:border-b-0 md:border-r border-slate-200 group h-44 md:h-full shrink-0">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(244,0,1,0.08)_0%,transparent_70%)]"></div>
             
             <div class="absolute top-6 left-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-white text-[10px] font-bold uppercase tracking-widest z-10 bg-linear-to-br from-[#F40001] via-[#B30000] to-[#7F0000] shadow-lg shadow-biadoxid-900/30">
@@ -81,10 +106,10 @@ const triggerAction = (msg) => {
               {{ displayProduct.category || catName() }}
             </div>
 
-            <img :src="product.image" :alt="displayProduct.name" loading="lazy" style="aspect-ratio: 1 / 1;" class="relative z-10 w-full h-full object-contain drop-shadow-[0_14px_24px_rgba(180,0,0,0.22)] transform group-hover:scale-105 transition-transform duration-700 ease-out" @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'; $event.target.style.padding = '20%'" />
+            <img :src="product.image" :alt="displayProduct.name" loading="lazy" style="aspect-ratio: 1 / 1;" class="relative z-10 w-full h-full object-contain drop-shadow-[0_14px_24px_rgba(180,0,0,0.22)] transform group-hover:scale-105 transition-transform duration-700 ease-out" @error="$event.target.src = '/BIADOXID-PHARMA-LOGO-v2.webp'; $event.target.style.padding = '20%'" />
           </div>
 
-          <div class="w-full md:w-7/12 flex flex-col bg-white h-full relative">
+          <div class="w-full md:w-7/12 flex flex-col bg-white min-h-0 md:h-full relative">
             
             <Transition name="toast-anim">
               <div v-if="toast.show" class="absolute top-6 left-1/2 -translate-x-1/2 z-50 bg-white border border-biadoxid-200 text-slate-700 px-5 py-2.5 rounded-full shadow-xl flex items-center gap-3 w-max">
@@ -93,8 +118,8 @@ const triggerAction = (msg) => {
               </div>
             </Transition>
 
-            <div class="p-6 md:p-8 pb-4 shrink-0 bg-white z-20">
-              <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">{{ displayProduct.name }}</h2>
+            <div class="p-5 md:p-8 pb-3 shrink-0 bg-white z-20">
+              <h2 class="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">{{ displayProduct.name }}</h2>
               
               <div class="relative transition-all duration-500" :class="isExpanded ? '' : 'max-h-15 overflow-hidden'">
                 <p class="text-slate-500 text-sm md:text-base leading-relaxed pb-1">{{ displayProduct.shortDescription }}</p>
@@ -111,15 +136,14 @@ const triggerAction = (msg) => {
               </button>
             </div>
 
-            <div class="px-6 md:px-8 border-b border-slate-200 shrink-0 flex gap-6 overflow-x-auto custom-scrollbar">
+            <div class="px-5 md:px-8 border-b border-slate-200 shrink-0 flex gap-6 overflow-x-auto custom-scrollbar">
               <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" class="pb-3 text-sm font-semibold tracking-wide transition-all relative whitespace-nowrap" :class="activeTab === tab.id ? 'text-biadoxid-600' : 'text-slate-500 hover:text-slate-700'">
                 {{ t(tab.nameKey) }}
                 <div v-if="activeTab === tab.id" class="absolute bottom-0 left-0 w-full h-0.5 bg-biadoxid-600 rounded-t-full shadow-[0_-2px_10px_rgba(244,0,1,0.35)]"></div>
               </button>
             </div>
 
-            <div class="p-6 md:p-8 flex-1 overflow-y-auto custom-scrollbar relative">
-              <div class="absolute top-0 left-0 right-0 h-4 bg-linear-to-b from-white to-transparent pointer-events-none z-10"></div>
+            <div class="p-5 md:p-8 flex-1 overflow-y-auto overscroll-contain custom-scrollbar relative">
               
               <div v-show="activeTab === 'desc'" class="animate-fadeIn wp-content">
                 <div v-html="sanitizeHtml(displayProduct.descriptionHtml)"></div>
@@ -158,7 +182,7 @@ const triggerAction = (msg) => {
                   <div v-for="related in relatedProducts" :key="related.slug" @click="emit('change-product', related)" class="group flex items-center gap-4 p-3 rounded-2xl bg-slate-50 border border-slate-200 hover:border-biadoxid-300 hover:bg-white hover:shadow-md transition-all cursor-pointer">
                     <div class="w-16 h-16 rounded-xl bg-white border border-slate-200 shrink-0 overflow-hidden relative">
                       <div class="absolute inset-0 bg-linear-to-br from-biadoxid-500/10 to-transparent z-10"></div>
-                      <img :src="related.image" :alt="related.name" loading="lazy" style="aspect-ratio: 1 / 1;" class="relative z-20 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" @error="$event.target.src = '/BIADOXID-PHARMA-LOGO.webp'">
+                      <img :src="related.image" :alt="related.name" loading="lazy" style="aspect-ratio: 1 / 1;" class="relative z-20 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" @error="$event.target.src = '/BIADOXID-PHARMA-LOGO-v2.webp'">
                     </div>
                     <div class="flex-1 min-w-0">
                       <p class="text-[9px] uppercase tracking-widest text-biadoxid-600 font-semibold mb-0.5 truncate">{{ related.category || catName() }}</p>
@@ -171,10 +195,9 @@ const triggerAction = (msg) => {
                 </div>
               </div>
 
-              <div class="absolute bottom-0 left-0 right-0 h-8 bg-linear-to-t from-white to-transparent pointer-events-none z-10"></div>
             </div>
 
-            <div class="p-6 md:p-8 border-t border-slate-200 bg-white/95 backdrop-blur-md shrink-0 flex flex-col sm:flex-row gap-4">
+            <div class="p-4 md:p-8 border-t border-slate-200 bg-white/95 backdrop-blur-md shrink-0 flex flex-col sm:flex-row gap-3">
               <button @click="triggerAction(t('productModal.fichaToast'))" class="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-semibold transition-all group">
                 <LucideDownload :size="16" class="text-slate-500 group-hover:text-slate-700 transition-colors" /> {{ t('productModal.fichaBtn') }}
               </button>
@@ -212,11 +235,11 @@ const triggerAction = (msg) => {
 :deep(.wp-content h2), :deep(.wp-content h3), :deep(.wp-content h6) { font-size: 1rem; font-weight: 700; color: #0f172a; margin-top: 1.5rem; margin-bottom: 0.5rem; }
 :deep(.wp-content h2) { font-size: 1.125rem; }
 :deep(.wp-content h6) { font-size: 0.9375rem; }
-:deep(.wp-content p) { color: #64748b; line-height: 1.7; margin-bottom: 1rem; font-size: 0.875rem; }
+:deep(.wp-content p) { color: #334155; line-height: 1.7; margin-bottom: 1rem; font-size: 0.9375rem; }
 :deep(.wp-content strong), :deep(.wp-content b) { color: #334155; }
-:deep(.wp-content em) { color: #64748b; }
+:deep(.wp-content em) { color: #475569; }
 :deep(.wp-content hr) { border: none; height: 1px; background: rgba(100,116,139,0.2); margin: 1.5rem 0; }
-:deep(.wp-content ul), :deep(.wp-content ol) { color: #64748b; padding-left: 1.25rem; margin-bottom: 1rem; }
+:deep(.wp-content ul), :deep(.wp-content ol) { color: #334155; padding-left: 1.25rem; margin-bottom: 1rem; }
 :deep(.wp-content li) { margin-bottom: 0.35rem; }
 :deep(.wp-content span[style*="color"]) { color: #F40001 !important; }
 :deep(.wp-content span[style*="color"]) strong,
