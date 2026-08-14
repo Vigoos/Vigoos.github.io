@@ -1,0 +1,16 @@
+# Configuración de referencia para Cloudflare Pages.
+#
+# Nota: con la integración de Git (dashboard de Cloudflare → Workers & Pages →
+# Import an existing Git repository) este archivo NO se usa para el build; ahí
+# se configuran:
+#   - Build command:        pnpm build:cf
+#   - Build output dir:     dist
+#   - Variables (Production): NUXT_PUBLIC_WEB3FORMS_KEY
+#
+# Este archivo sirve para comandos locales del CLI de Wrangler:
+#   pnpm build:cf
+#   pnpm dlx wrangler pages dev dist        # servidor local de pruebas
+#   pnpm dlx wrangler pages deploy dist     # deploy manual (direct upload)
+
+name = "biadoxid-pharma"
+compatibility_date = "2026-08-13"
