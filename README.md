@@ -80,26 +80,42 @@ El sitio usa el preset de Nitro `cloudflare_pages` (script `pnpm build:cf`) para
 generar un Worker que incluye las rutas de servidor (p. ej. `/api/contact` del
 formulario) junto con los assets estáticos. Todo queda en la carpeta `dist/`.
 
+> ⚠️ **IMPORTANTE: NO crear un `wrangler.toml` en la raíz del repo.**
+> Cloudflare detecta la presencia de `wrangler.toml` y asume que el proyecto es
+> de tipo **Workers** (no Pages), por lo que el dashboard muestra el comando
+> `npx wrangler deploy` (comando de Workers) y falla con *"Missing entry-point
+> to Worker script or to assets directory"*. Para Pages con Git integration el
+> archivo de configuración NO se usa: todo se configura en el dashboard.
+
 ### Desde el dashboard de Cloudflare (Git integration)
 
 1. Cuenta en Cloudflare → **Workers & Pages** → **Create application** → pestaña **Pages**.
 2. **Import an existing Git repository** y conecta tu repo (GitHub/GitLab).
-3. Configuración del build:
+3. Si Cloudflare te ofrece el flujo de **Workers** (comando `npx wrangler deploy`),
+   cancela y vuelve a empezar eligiendo la pestaña **Pages** → **Import an existing
+   Git repository**. Verifica que la sección *Set up builds and deployments* muestre
+   campos de *Build command* y *Build output directory* (esos campos solo existen en
+   el flujo Pages, no en Workers).
+4. Configuración del build:
    - **Build command:** `pnpm build:cf`
    - **Build output directory:** `dist`
-4. En **Settings → Variables and Secrets** (entorno *Production*):
+5. En **Settings → Variables and Secrets** (entorno *Production*):
    - `NUXT_PUBLIC_WEB3FORMS_KEY` = clave pública de Web3Forms (la misma que hoy
      inyecta el workflow de GitHub Actions; la ruta `/api/contact` usa esta key
      o, si existe, la privada `WEB3FORMS_KEY`).
-5. **Save and Deploy**. Cada push a `main` (y cada PR) genera un deploy automático
+6. **Save and Deploy**. Cada push a `main` (y cada PR) genera un deploy automático
    con preview en una URL real.
 
-### Localmente (wrangler)
+### Localmente (wrangler, opcional)
 
 ```bash
 pnpm build:cf
 pnpm dlx wrangler pages dev dist    # servidor local en http://localhost:8788
 ```
+
+> Nota: para el desarrollo local con `wrangler pages dev` tampoco se necesita un
+> `wrangler.toml`; el output de `pnpm build:cf` ya incluye `_worker.js`,
+> `_routes.json` y `_headers` generados por Nitro.
 
 ### Notas
 
