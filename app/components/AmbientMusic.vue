@@ -30,9 +30,11 @@ const active = ref(false)    // ¿se activó la música alguna vez en esta carga
 const playing = ref(false)   // ¿está sonando ahora mismo?
 const muted = ref(false)     // ¿está silenciado?
 const collapsed = ref(false) // ¿el usuario cerró el widget?
+const widgetRef = ref(null)  // raíz del widget expandido (para tap-outside)
 
 let removeGestureListeners = null
 let autoCollapseTimer = null
+let lastOpenAt = 0 // marca de la última apertura/interacción (cooldown del tap-outside)
 
 const isMobileView = () => {
   if (import.meta.server || typeof window === 'undefined') return false
@@ -46,14 +48,28 @@ const clearAutoCollapse = () => {
   }
 }
 
-// Solo en móvil y solo en la primera aparición: autocontrae SIN pausar la música.
+// En móvil: si el widget queda abierto sin interacción, se autocontrae solo
+// (SIN pausar la música). Se re-arma en cada apertura e interacción.
 const scheduleAutoCollapse = () => {
   clearAutoCollapse()
   if (!isMobileView()) return
+  lastOpenAt = Date.now()
   autoCollapseTimer = setTimeout(() => {
     collapsed.value = true
     autoCollapseTimer = null
   }, AUTO_COLLAPSE_MS)
+}
+
+// En móvil, tocar FUERA del widget lo contrae al instante (sin pausar).
+// La X sigue siendo la única forma de apagar y cerrar.
+const onDocumentClick = (e) => {
+  if (!active.value || collapsed.value) return
+  if (!isMobileView()) return
+  // Ignora el mismo click que acaba de abrir el widget
+  if (Date.now() - lastOpenAt < 300) return
+  if (widgetRef.value?.contains(e.target)) return
+  collapsed.value = true
+  clearAutoCollapse()
 }
 
 const startRandomTrack = () => {
@@ -105,6 +121,7 @@ const pause = () => {
 }
 
 const togglePlay = () => {
+  scheduleAutoCollapse() // sigue abierto mientras se use
   if (playing.value) pause()
   else if (audio.value) play()
   else startRandomTrack()
@@ -112,6 +129,7 @@ const togglePlay = () => {
 
 const toggleMute = () => {
   if (!audio.value) return
+  scheduleAutoCollapse() // sigue abierto mientras se use
   muted.value = !muted.value
   audio.value.muted = muted.value
 }
@@ -123,9 +141,9 @@ const closeWidget = () => {
 }
 
 const reopenWidget = () => {
-  // Al reabrir manualmente, el widget se queda abierto (sin autocontraerse)
-  clearAutoCollapse()
   collapsed.value = false
+  // En móvil se vuelve a armar: si no se interactúa, se autocontrae otra vez
+  scheduleAutoCollapse()
   if (audio.value) play()
   else startRandomTrack()
 }
@@ -151,10 +169,12 @@ const armGestureListener = () => {
 
 onMounted(() => {
   armGestureListener()
+  document.addEventListener('click', onDocumentClick)
 })
 
 onUnmounted(() => {
   clearAutoCollapse()
+  document.removeEventListener('click', onDocumentClick)
   if (removeGestureListeners) removeGestureListeners()
   audio.value?.pause()
 })
@@ -169,7 +189,7 @@ onUnmounted(() => {
       enter-from-class="opacity-0 translate-y-4 scale-95"
       leave-to-class="opacity-0 translate-y-4 scale-95"
     >
-      <div v-if="active && !collapsed" class="fixed bottom-6 left-6 z-170">
+      <div v-if="active && !collapsed" ref="widgetRef" class="fixed bottom-6 left-6 z-170">
         <div
           class="relative bg-white rounded-2xl shadow-xl border border-slate-200 pl-4 pr-2.5 py-2.5 flex items-center gap-3 max-w-[calc(100vw-3rem)]"
           role="group" :aria-label="t('ambientMusic.label')">
