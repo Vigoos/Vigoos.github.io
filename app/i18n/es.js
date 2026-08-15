@@ -372,6 +372,23 @@ export default {
     updateBtn: 'Actualizar',
     close: 'Cerrar'
   },
+  welcome: {
+    brand: 'BIADOXID PHARMA',
+    tagline: 'Innovation for better health',
+    title: 'Bienvenido',
+    text: 'Red internacional de especialidades farmacéuticas, suplementos clínicos y medicina estética con los más altos estándares de calidad.',
+    enter: 'Entrar',
+    enterAria: 'Ingresar al sitio',
+    musicHint: 'Con música'
+  },
+  ambientMusic: {
+    label: 'Música de ambiente',
+    playAria: 'Reproducir música de ambiente',
+    pauseAria: 'Pausar música',
+    muteAria: 'Silenciar música',
+    unmuteAria: 'Activar sonido',
+    closeAria: 'Cerrar música'
+  },
   error: {
     badge: 'Error {code}',
     unknown: 'desconocido',
