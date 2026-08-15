@@ -32,3 +32,7 @@ public/logo-oficial-biadoxid/
 # Estado local de Wrangler (Cloudflare)
 .wrangler
 
+# Overlay de bienvenida (descartado por ahora; se conserva por si el cliente
+# aprueba la opción del overlay/toast para activar la música)
+app/components/WelcomeOverlay.vue
+
