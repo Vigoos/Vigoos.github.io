@@ -6,7 +6,7 @@ export async function waitForPageReady(page: Page) {
 
 export const PAGES = [
   { url: '/', name: 'Home', title: 'Biadoxid Pharma S.R.L.' },
-  { url: '/productos', name: 'Productos', title: 'Portafolio Clínico' },
+  { url: '/productos', name: 'Productos', title: 'Productos' },
   { url: '/nosotros', name: 'Nosotros', title: 'Identidad Corporativa' },
   { url: '/contacto', name: 'Contacto', title: 'Contacto' },
 ] as const
