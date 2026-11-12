@@ -88,7 +88,7 @@ assets (`[assets] directory = "./.output/public"`) y cómo servir el `404.html`.
 > preset `cloudflare_pages` (`build:cf`) ni la pestaña de creación **Pages**: el
 > proyecto Workers estático no genera `_worker.js` ni rutas de servidor. La ruta
 > `/api/contact` del formulario NO existe en estático: el formulario usa el
-> fallback directo a Web3Forms (igual que hoy en GitHub Pages), que funciona
+> fallback directo a Web3Forms, que funciona
 > porque `NUXT_PUBLIC_WEB3FORMS_KEY` se inyecta en tiempo de build.
 
 ### Desde el dashboard de Cloudflare (Git integration)
@@ -118,10 +118,9 @@ pnpm dlx wrangler dev                # sirve .output/public en http://localhost:
 
 - `wrangler.toml` NO lleva `main` ni bindings (KV, D1…): es un proyecto de solo
   assets. Si agregaras `main`, wrangler intentaría desplegar un Worker script.
-- Los headers de seguridad (CSP, HSTS…) que genera `nuxt-security` aplican al
-  servidor (GitHub Actions/Pages); en el hosting estático de Cloudflare se sirven
-  sin headers personalizados (igual que hoy en GitHub Pages).
+- Los headers de seguridad (CSP, HSTS…) los genera `nuxt-security` desde
+  `nuxt.config.ts`.
 - `.output/` está en `.gitignore` (se genera en cada build); `wrangler.toml` SÍ
   se commitea porque Cloudflare lo lee en el deploy.
-- El workflow `deploy.yml` (GitHub Pages) sigue usando `nuxt generate` y es
-  independiente del despliegue en Cloudflare.
+- El sitio se publica SOLO en Cloudflare (biadoxidpharma.com). GitHub Pages
+  (vigoos.github.io) se desactivó para evitar contenido duplicado en Google.
