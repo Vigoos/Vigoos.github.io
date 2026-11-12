@@ -121,3 +121,16 @@ test.describe('SEO - Enlaces internos', () => {
     }
   })
 })
+
+test.describe('SEO - Idioma por defecto', () => {
+  // Googlebot renderiza con un navegador en inglés: la web debe seguir en español
+  // salvo que el visitante elija inglés en el selector.
+  test.use({ locale: 'en-US' })
+
+  test('un navegador en inglés ve la página en español', async ({ page }) => {
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+    expect(await page.title()).toContain('Importación y Distribución Farmacéutica')
+    await expect(page.locator('html')).toHaveAttribute('lang', /^es/)
+  })
+})
