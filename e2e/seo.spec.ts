@@ -102,6 +102,23 @@ test.describe('SEO - Canonical, Open Graph y datos estructurados', () => {
     expect(resp?.status()).toBe(200)
   })
 
+  test('los favicons declarados existen y Google tiene uno múltiplo de 48px', async ({ page }) => {
+    await page.goto('/')
+    const icons = await page.locator('link[rel="icon"]').evaluateAll(els =>
+      els.map(el => ({ href: (el as HTMLLinkElement).href, sizes: el.getAttribute('sizes') ?? '' }))
+    )
+    expect(icons.some(i => /^(48|96|144|192)x\1$/.test(i.sizes))).toBe(true)
+    for (const icon of icons) {
+      const real = await page.evaluate(async src => {
+        const img = new Image()
+        img.src = src
+        await img.decode()
+        return `${img.naturalWidth}x${img.naturalHeight}`
+      }, icon.href)
+      expect(real, icon.href).toBe(icon.sizes)
+    }
+  })
+
   test('Logo principal es accesible', async ({ page }) => {
     const resp = await page.goto('/BIADOXID-PHARMA-LOGO.webp')
     expect(resp?.status()).toBe(200)

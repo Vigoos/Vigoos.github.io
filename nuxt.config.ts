@@ -15,8 +15,11 @@ export default defineNuxtConfig({
       link: [
         // ?v=2: bust de caché (navegador + service worker PWA) tras sustituir el icono
         // por el logo real de la empresa. Sin esto, el icono antiguo persiste hasta 30 días.
-        { rel: 'icon', type: 'image/png', sizes: '48x48', href: '/favicon.png?v=3' },
-        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png?v=3' },
+        // Google solo muestra el favicon en los resultados si es cuadrado y, de preferencia,
+        // múltiplo de 48px (48, 96, 192...). favicon.png mide 64x64, así que el principal es el de 96/192.
+        { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/favicon-192.png?v=4' },
+        { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96.png?v=4' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png?v=4' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon-180x180.png?v=3' },
         // Preload de la fuente principal (Inter Variable latin): llega ANTES del primer
         // pintado para evitar el font-swap que causa layout shift en el hero.
@@ -39,6 +42,8 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     includeAssets: [
       'favicon.png',
+      'favicon-96.png',
+      'favicon-192.png',
       'favicon-32.png',
       'apple-touch-icon-180x180.png',
       'maskable-icon-512x512.png',
