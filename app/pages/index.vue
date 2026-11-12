@@ -126,6 +126,7 @@ const logisticaItems = [
             </div>
 
             <div
+              data-nosnippet
               class="absolute bottom-2 left-2 right-2 rounded-3xl bg-white/80 backdrop-blur-xl border border-white/40 p-5 transform transition-transform duration-500 z-30 flex flex-col justify-end shadow-sm">
 
               <span

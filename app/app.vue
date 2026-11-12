@@ -47,7 +47,8 @@ const organizationSchema = {
       '@type': 'Organization',
       '@id': `${SITE_URL}/#organization`,
       name: 'Biadoxid Pharma S.R.L.',
-      alternateName: 'Biadoxid Pharma',
+      // Variantes con las que la gente busca la marca (ayuda a asociar "Biadoxid Farma" o "Biadoxid" con la empresa).
+      alternateName: ['Biadoxid Pharma', 'Biadoxid Farma', 'Biadoxid'],
       url: `${SITE_URL}/`,
       logo: `${SITE_URL}/BIADOXID-PHARMA-LOGO-OFICIAL.webp`,
       image: `${SITE_URL}/og-image.jpg`,
