@@ -11,7 +11,7 @@ export default {
     homeTitle: 'Biadoxid Pharma S.R.L. | Pharmaceutical Import & Distribution',
     homeDescription: 'Biadoxid Pharma S.R.L. Import and distribution of high-quality medicines in Bolivia. Exclusive representation of international laboratories. Guaranteed cold chain.',
     identidadTitle: 'Corporate Identity | Biadoxid Pharma',
-    identidadDescription: 'Discover the history, mission and vision of Biadoxid Pharma S.R.L. More than 15 years importing health to Bolivia.',
+    identidadDescription: 'Discover the history, mission and vision of Biadoxid Pharma S.R.L. More than 25 years importing health to Bolivia.',
     contactoTitle: 'Contact | Biadoxid Pharma S.R.L.',
     contactoDescription: 'Contact our specialized team. Medical support, hospital sales and general inquiries at Biadoxid Pharma Bolivia.'
   },
@@ -176,7 +176,7 @@ export default {
   nosotrosPage: {
     heroBadge: 'Our Legacy',
     heroTitlePre: 'More than',
-    heroTitleHighlight: '15 years',
+    heroTitleHighlight: '25 years',
     heroTitlePost: 'transforming health.',
     heroText: 'We were born in La Paz with a clear conviction: Bolivia deserved a solid, transparent, world-class network for pharmaceutical import.',
     hito1Tag: 'The Origin',
