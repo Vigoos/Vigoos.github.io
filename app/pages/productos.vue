@@ -255,7 +255,7 @@ const resetFilters = () => {
                 {{ getInitials(producto.name) }}
               </div>
 
-              <div class="absolute bottom-2 left-2 right-2 rounded-3xl bg-white/80 backdrop-blur-xl border border-white/40 p-5 transform transition-transform duration-500 z-30 flex flex-col justify-end shadow-sm">
+              <div data-nosnippet class="absolute bottom-2 left-2 right-2 rounded-3xl bg-white/80 backdrop-blur-xl border border-white/40 p-5 transform transition-transform duration-500 z-30 flex flex-col justify-end shadow-sm">
                 
                 <span :class="['text-[10px] font-bold uppercase tracking-widest mb-1.5 block truncate', colorThemes[index % 3].badgeText]">
                   {{ producto.category || catName() }}

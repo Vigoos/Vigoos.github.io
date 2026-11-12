@@ -97,6 +97,18 @@ test.describe('SEO - Canonical, Open Graph y datos estructurados', () => {
     expect(org.address.addressCountry).toBe('BO')
   })
 
+  test('las tarjetas de producto no se usan como descripción en Google', async ({ page }) => {
+    // Sin esto Google mostraba "Sirve para prevenir deficiencias de vitamina B12..." como descripción de la web.
+    for (const url of ['/', '/productos']) {
+      await page.goto(url)
+      const tarjetas = page.locator('h3').filter({ hasText: /PROVIT|ARNIK/ })
+      const total = await tarjetas.count()
+      expect(total, url).toBeGreaterThan(0)
+      const protegidas = await tarjetas.evaluateAll(els => els.filter(el => el.closest('[data-nosnippet]')).length)
+      expect(protegidas, url).toBe(total)
+    }
+  })
+
   test('favicon es accesible', async ({ page }) => {
     const resp = await page.goto('/favicon.ico')
     expect(resp?.status()).toBe(200)
