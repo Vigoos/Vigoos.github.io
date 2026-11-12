@@ -23,10 +23,12 @@ const applyLocale = (l) => {
 const detectLocale = () => {
   if (typeof window === 'undefined') return 'es'
   try {
+    // Solo se respeta la elección explícita del visitante (selector de idioma).
+    // NO se detecta navigator.language: Googlebot navega en en-US y, con detección
+    // automática, Google indexaba la versión en inglés en lugar de la española.
     const saved = localStorage.getItem('biadoxid-locale')
     if (saved && supportedLocales.includes(saved)) return saved
-    const nav = (navigator.language || 'es').toLowerCase()
-    return nav.startsWith('en') ? 'en' : 'es'
+    return 'es'
   } catch {
     return 'es'
   }
