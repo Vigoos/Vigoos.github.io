@@ -194,12 +194,13 @@ export default defineNuxtConfig({
           'https://ui-avatars.com',
           'https://images.unsplash.com'
         ],
-        'script-src': ["'self'", "'unsafe-inline'", "'wasm-unsafe-eval'"],
+        // static.cloudflareinsights.com: Cloudflare Web Analytics (sin cookies)
+        'script-src': ["'self'", "'unsafe-inline'", "'wasm-unsafe-eval'", 'https://static.cloudflareinsights.com'],
         'worker-src': ["'self'", 'blob:'],
         // Fuentes auto-hospedadas (Inter + JetBrains Mono vía @fontsource): sin terceros
         'style-src': ["'self'", "'unsafe-inline'"],
         'font-src': ["'self'", 'data:'],
-        'connect-src': ["'self'", "https://api.web3forms.com"],
+        'connect-src': ["'self'", "https://api.web3forms.com", 'https://cloudflareinsights.com'],
         // iframe de Google Maps en la página de contacto (embed oficial de www.google.com)
         'frame-src': ["'self'", 'https://maps.google.com', 'https://www.google.com'],
         // === NUEVAS DIRECTIVAS DE SEGURIDAD ===

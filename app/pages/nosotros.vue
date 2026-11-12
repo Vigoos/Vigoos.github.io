@@ -18,7 +18,9 @@ const { t } = useI18n()
 useHead({
   title: computed(() => t('seo.identidadTitle')),
   meta: [
-    { name: 'description', content: computed(() => t('seo.identidadDescription')) }
+    { name: 'description', content: computed(() => t('seo.identidadDescription')) },
+    { property: 'og:title', content: computed(() => t('seo.identidadTitle')) },
+    { property: 'og:description', content: computed(() => t('seo.identidadDescription')) }
   ]
 })
 </script>

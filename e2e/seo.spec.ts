@@ -58,6 +58,43 @@ test.describe('SEO - Recursos estáticos', () => {
     expect(resp?.status()).toBe(200)
     const text = await resp?.text()
     expect(text).toContain('User-Agent')
+    expect(text).toContain('Sitemap: https://biadoxidpharma.com/sitemap.xml')
+  })
+
+  test('sitemap.xml lista las páginas públicas', async ({ page }) => {
+    const resp = await page.goto('/sitemap.xml')
+    expect(resp?.status()).toBe(200)
+    const text = await resp?.text()
+    for (const p of PAGES) {
+      expect(text).toContain(`<loc>https://biadoxidpharma.com${p.url}</loc>`)
+    }
+  })
+
+  test('imagen para redes sociales (og:image) es accesible', async ({ page }) => {
+    const resp = await page.goto('/og-image.jpg')
+    expect(resp?.status()).toBe(200)
+  })
+})
+
+test.describe('SEO - Canonical, Open Graph y datos estructurados', () => {
+  for (const pg of PAGES) {
+    test(`${pg.name} tiene canonical y og:url absolutos`, async ({ page }) => {
+      await page.goto(pg.url)
+      const expected = `https://biadoxidpharma.com${pg.url}`
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', expected)
+      await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', expected)
+      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /.+/)
+      await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://biadoxidpharma.com/og-image.jpg')
+    })
+  }
+
+  test('JSON-LD de la organización es válido', async ({ page }) => {
+    await page.goto('/')
+    const raw = await page.locator('script[type="application/ld+json"]').first().textContent()
+    const data = JSON.parse(raw ?? '{}')
+    const org = data['@graph'].find((n: { '@type': string }) => n['@type'] === 'Organization')
+    expect(org.name).toBe('Biadoxid Pharma S.R.L.')
+    expect(org.address.addressCountry).toBe('BO')
   })
 
   test('favicon es accesible', async ({ page }) => {
