@@ -10,7 +10,9 @@ const { catName, localizeProduct, searchText } = useCatalog()
 useHead({
   title: computed(() => `${t('productosPage.title')} | Biadoxid Pharma`),
   meta: [
-    { name: 'description', content: computed(() => t('productosPage.metaDescription')) }
+    { name: 'description', content: computed(() => t('productosPage.metaDescription')) },
+    { property: 'og:title', content: computed(() => `${t('productosPage.title')} | Biadoxid Pharma`) },
+    { property: 'og:description', content: computed(() => t('productosPage.metaDescription')) }
   ]
 })
 

@@ -4,7 +4,9 @@ const { t } = useI18n()
 useHead({
   title: computed(() => t('seo.contactoTitle')),
   meta: [
-    { name: 'description', content: computed(() => t('seo.contactoDescription')) }
+    { name: 'description', content: computed(() => t('seo.contactoDescription')) },
+    { property: 'og:title', content: computed(() => t('seo.contactoTitle')) },
+    { property: 'og:description', content: computed(() => t('seo.contactoDescription')) }
   ]
 })
 </script>

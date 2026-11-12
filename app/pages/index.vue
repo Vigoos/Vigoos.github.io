@@ -9,7 +9,9 @@ useScrollReveal()
 useHead({
   title: computed(() => t('seo.homeTitle')),
   meta: [
-    { name: 'description', content: computed(() => t('seo.homeDescription')) }
+    { name: 'description', content: computed(() => t('seo.homeDescription')) },
+    { property: 'og:title', content: computed(() => t('seo.homeTitle')) },
+    { property: 'og:description', content: computed(() => t('seo.homeDescription')) }
   ]
 })
 
